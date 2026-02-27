@@ -35,7 +35,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#0B0C0F",
+  themeColor: "#FFFFFF",
 }
 
 export default function RootLayout({
@@ -44,8 +44,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-[#0B0C0F]">
-      <body className={`font-sans antialiased bg-[#0B0C0F]`}>
+    <html lang="en" className="bg-white">
+      <body className={`font-sans antialiased bg-white`}>
         {children}
         <Analytics />
       </body>

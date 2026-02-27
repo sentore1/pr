@@ -5,11 +5,11 @@
 
 :root {
   /* LUMERA Design Tokens */
-  --bg-primary: #0b0c0f;
-  --text-primary: #f2f3f5;
-  --text-secondary: #a7abb3;
-  --glass-bg: rgba(15, 17, 23, 0.3);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --bg-primary: #ffffff;
+  --text-primary: #0f1117;
+  --text-secondary: #4a5568;
+  --glass-bg: rgba(255, 255, 255, 0.3);
+  --glass-border: rgba(0, 0, 0, 0.08);
   --accent-pink: #ec4899;
   --accent-purple: #a855f7;
 
@@ -112,12 +112,12 @@
 
 /* New left-aligned nav with 16px border-radius */
 .glass-nav-left {
-  background: rgba(15, 17, 23, 0.35);
+  background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 16px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 }
 
 .glass-container {
@@ -125,18 +125,18 @@
 }
 
 .glass-card {
-  background: rgba(15, 17, 23, 0.25);
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
 }
 
 .glass-card-inner {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.03);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   animation: float-in 0.6s ease-out forwards;
   opacity: 0;
 }
@@ -144,17 +144,17 @@
 .glass-button {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  /* ensure text is white and visible */
-  color: #f2f3f5;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  /* ensure text is dark and visible */
+  color: #0f1117;
   font-weight: 500;
 }
 
 .glass-pill {
-  background: rgba(15, 17, 23, 0.4);
+  background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* LUMERA Animations */
@@ -287,6 +287,25 @@ html {
 
 .progress-bar {
   animation: progress 6s linear;
+}
+
+/* Animated gradient button */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient-button {
+  background: linear-gradient(90deg, #3B82F6, #FFFFFF, #3B82F6);
+  background-size: 200% 100%;
+  animation: gradient-shift 3s ease infinite;
 }
 
 /* Added infinite scrolling marquee animation for partner logos */
