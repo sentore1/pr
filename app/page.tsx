@@ -51,7 +51,7 @@ function AnimatedCounter({ value, suffix = "" }: { value: string; suffix?: strin
   )
 }
 
-export default function TerraPage() {
+export default function PryroPage() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
@@ -79,7 +79,7 @@ export default function TerraPage() {
   const heroRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<IntersectionObserver>(null)
 
-  const dynamicWords = ["forests", "nature", "animals", "ecosystems", "biodiversity", "wildlife", "habitats"]
+  const dynamicWords = ["business", "operations", "workflows", "processes", "everything", "teams", "growth"]
 
   useEffect(() => {
     const wordInterval = setInterval(() => {
@@ -292,22 +292,21 @@ export default function TerraPage() {
                 }`}
                 style={{ textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)" }}
               >
-                Protect <AnimatedText key={dynamicWordIndex} text={dynamicWords[dynamicWordIndex]} delay={0} />
+                Streamline <AnimatedText key={dynamicWordIndex} text={dynamicWords[dynamicWordIndex]} delay={0} />
               </span>
               <span className="block stagger-reveal text-7xl font-light md:text-8xl text-white" style={{ animationDelay: "90ms", textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)" }}>
-                at scale
+                effortlessly
               </span>
             </h1>
             <p
               className="text-white text-base md:text-lg max-w-[520px] mx-auto mb-8 leading-relaxed stagger-reveal"
               style={{ animationDelay: "180ms", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)" }}
             >
-              Real-time forest monitoring with AI. Detect threats, track biodiversity, preserve nature for future
-              generations.
+              Complete ERP solution with AI-powered insights. Manage finance, inventory, HR, and operations in one unified platform.
             </p>
             <div className="stagger-reveal" style={{ animationDelay: "270ms" }}>
               <Button className="glass-button px-8 py-6 text-base rounded-full bg-white border border-white hover:bg-white/90 hover:border-white/90 transition-all duration-300 text-gray-900">
-                Start Protecting
+                Start Free Trial
               </Button>
             </div>
           </div>
@@ -336,7 +335,7 @@ export default function TerraPage() {
       <section className="relative py-12 border-y border-black/5 bg-white overflow-hidden md:py-8 md:pt-8 md:pb-4">
         <div className="w-full">
           <p className="text-center text-xs md:text-sm uppercase tracking-[0.2em] text-[#4a5568] mb-8">
-            Trusted by leading conservation organizations
+            Trusted by leading enterprises worldwide
           </p>
           <div className="logo-marquee">
             <div className="logo-marquee-content">
@@ -374,7 +373,7 @@ export default function TerraPage() {
       <section id="metrics" className="relative py-20 md:py-32 px-4 animate-on-scroll md:pt-24 md:pb-20">
         <div className="max-w-[1120px] w-full mx-auto">
           <h2 className="font-serif text-[32px] leading-[1.15] md:text-[48px] md:leading-[1.1] font-medium mb-6 md:mb-8 text-center text-balance">
-            Conservation{" "}
+            Business{" "}
             <span
               className="inline-block"
               style={{
@@ -384,21 +383,21 @@ export default function TerraPage() {
                 backgroundClip: "text",
               }}
             >
-              Impact
+              Performance
             </span>{" "}
             at Scale
           </h2>
 
           <p className="text-[#4a5568] text-sm md:text-base mb-12 md:mb-16 text-center max-w-[600px] mx-auto leading-relaxed">
-            Trusted by conservation organizations worldwide. Powered by nature-first technology.
+            Trusted by enterprises worldwide. Powered by intelligent automation.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-[800px] mx-auto">
             {[
-              { label: "FORESTS PROTECTED", value: "2.4M", desc: "hectares globally", color: "pink" },
-              { label: "SPECIES MONITORED", value: "12K+", desc: "wildlife species", color: "purple" },
-              { label: "CARBON SEQUESTERED", value: "18M", desc: "tons CO2", color: "pink" },
-              { label: "THREAT DETECTION", value: "99.4%", desc: "accuracy rate", color: "purple" },
+              { label: "ACTIVE USERS", value: "50K+", desc: "worldwide", color: "blue" },
+              { label: "TRANSACTIONS PROCESSED", value: "2.4M", desc: "monthly", color: "blue" },
+              { label: "COST REDUCTION", value: "35%", desc: "average savings", color: "pink" },
+              { label: "UPTIME", value: "99.9%", desc: "reliability", color: "purple" },
             ].map((metric, i) => (
               <div
                 key={i}
@@ -490,10 +489,10 @@ export default function TerraPage() {
                 </div>
                 <div className="space-y-4">
                   {[
-                    { name: "Amazon Rainforest", status: "Active", progress: 85 },
-                    { name: "Congo Basin", status: "Active", progress: 72 },
-                    { name: "Borneo Forest", status: "Planning", progress: 45 },
-                    { name: "Pacific Northwest", status: "Active", progress: 90 },
+                    { name: "Q4 Financial Close", status: "Active", progress: 85 },
+                    { name: "Inventory Optimization", status: "Active", progress: 72 },
+                    { name: "HR System Migration", status: "Planning", progress: 45 },
+                    { name: "Sales Dashboard", status: "Active", progress: 90 },
                   ].map((project, i) => (
                     <div key={i} className="flex items-center justify-between py-4 border-b border-gray-100 last:border-0">
                       <div className="flex-1">
@@ -517,7 +516,7 @@ export default function TerraPage() {
                 Keep every project moving forward
               </h2>
               <p className="text-gray-600 text-base md:text-lg mb-8 leading-relaxed">
-                Plan, organize, and collaborate your work - all in one place. Track progress, manage resources, and achieve your conservation goals.
+                Plan, organize, and collaborate your work - all in one place. Track progress, manage resources, and achieve your business goals.
               </p>
               <div className="mb-8">
                 <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
@@ -548,7 +547,7 @@ export default function TerraPage() {
                 Track income, get paid, stress less
               </h2>
               <p className="text-gray-600 text-base md:text-lg mb-8 leading-relaxed">
-                Create detailed invoices, track payments, and monitor your conservation project finances. Keep track of your project, membership, and donor funds all in one place.
+                Create detailed invoices, track payments, and monitor your business finances. Keep track of your revenue, expenses, and cash flow all in one place.
               </p>
               <div className="mb-8">
                 <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
@@ -609,10 +608,10 @@ export default function TerraPage() {
             GLOBAL REACH
           </div>
           <h2 className="font-serif text-[32px] leading-[1.15] md:text-[48px] md:leading-[1.1] font-medium mb-6 text-balance">
-            Conservation Projects Worldwide
+            Serving Businesses Worldwide
           </h2>
           <p className="text-[#4a5568] text-sm md:text-base max-w-[600px] mx-auto leading-relaxed">
-            Monitoring and protecting critical forest ecosystems across five continents
+            Empowering enterprises across five continents with intelligent ERP solutions
           </p>
         </div>
 
@@ -629,10 +628,10 @@ export default function TerraPage() {
             <div className="max-w-[720px]">
               <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-6 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
-                CONSERVATION TECHNOLOGY
+                ENTERPRISE TECHNOLOGY
               </div>
               <h2 className="font-serif text-[36px] leading-[1.15] md:text-[56px] md:leading-[1.1] font-medium mb-8 text-balance">
-                Every forest ecosystem{" "}
+                Every business process{" "}
                 <span
                   className="inline-block"
                   style={{
@@ -642,12 +641,11 @@ export default function TerraPage() {
                     backgroundClip: "text",
                   }}
                 >
-                  matters
+                  optimized
                 </span>
               </h2>
               <p className="text-[#4a5568] text-base md:text-lg leading-relaxed mb-12">
-                Our satellite and AI technology monitors biodiversity, detects illegal logging, tracks deforestation
-                patterns, and alerts teams in real-time. Preservation at the speed of nature demands.
+                Our AI-powered ERP platform automates workflows, manages inventory, tracks finances, and provides real-time analytics. Business intelligence at the speed your company demands.
               </p>
 
               <div className="md:hidden mb-8">
@@ -672,27 +670,27 @@ export default function TerraPage() {
               <div className="space-y-6">
                 {[
                   {
-                    title: "Drone Surveys",
-                    desc: "Aerial surveys to catalog wildlife and species diversity",
-                    icon: CustomDroneIcon,
+                    title: "Financial Management",
+                    desc: "Complete accounting, invoicing, and financial reporting",
+                    icon: Receipt,
                     image: "/drone.png",
                   },
                   {
-                    title: "Real-time Monitoring",
-                    desc: "24/7 satellite surveillance with instant alerts",
-                    icon: Satellite,
+                    title: "Real-time Analytics",
+                    desc: "24/7 business intelligence with instant insights",
+                    icon: BarChart3,
                     image: "/real-time-satellite.png",
                   },
                   {
-                    title: "Biodiversity Tracking",
-                    desc: "Map and monitor wildlife populations across regions",
-                    icon: PawPrint,
+                    title: "Inventory Management",
+                    desc: "Track stock levels and supply chain across locations",
+                    icon: ListTodo,
                     image: "/biodiversity-tracking.png",
                   },
                   {
-                    title: "Deforestation Prevention",
-                    desc: "Detect threats before they escalate",
-                    icon: Trees,
+                    title: "HR & Payroll",
+                    desc: "Manage employees, attendance, and payroll seamlessly",
+                    icon: Clock,
                     image: "/deforestation-detect.png",
                   },
                 ].map((feature, i) => (
@@ -733,19 +731,19 @@ export default function TerraPage() {
               <div className="relative w-full h-full min-h-[500px]">
                 {[
                   {
-                    title: "Drone Surveys",
+                    title: "Financial Management",
                     image: "/drone.png",
                   },
                   {
-                    title: "Real-time Monitoring",
+                    title: "Real-time Analytics",
                     image: "/real-time-satellite.png",
                   },
                   {
-                    title: "Biodiversity Tracking",
+                    title: "Inventory Management",
                     image: "/biodiversity-tracking.png",
                   },
                   {
-                    title: "Deforestation Prevention",
+                    title: "HR & Payroll",
                     image: "/deforestation-detect.png",
                   },
                 ].map((feature, i) => {
@@ -776,6 +774,147 @@ export default function TerraPage() {
         </div>
       </section>
 
+      <section className="relative py-20 md:py-32 px-4 animate-on-scroll bg-white">
+        <div className="max-w-[1200px] w-full mx-auto space-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-12 items-start">
+            <div className="group cursor-pointer">
+              <div className="flex items-start justify-between mb-4">
+                <h2 className="text-[28px] md:text-[36px] font-normal leading-tight text-gray-900 flex-1">
+                  Financial Management Suite
+                </h2>
+                <div className="transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 mt-1">
+                  <svg className="w-5 h-5 -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                Complete accounting, invoicing, and financial reporting system. Track revenue, expenses, and cash flow in real-time.
+              </p>
+            </div>
+            <div className="bg-gradient-to-br from-blue-600 to-blue-400 rounded-[48px] p-8 flex items-center justify-center h-[420px] relative overflow-hidden">
+              <div className="bg-white rounded-[32px] p-5 w-[85%] h-[70%] flex flex-col">
+                <h3 className="text-sm font-semibold text-gray-900 mb-3">Revenue Overview</h3>
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-gray-50 rounded-lg p-2">
+                    <div className="text-[10px] text-gray-500 mb-1">Q4 Revenue</div>
+                    <div className="text-base font-bold text-gray-900">$2.4M</div>
+                    <div className="text-[10px] text-green-600 mt-1">↑ 18.3%</div>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-2">
+                    <div className="text-[10px] text-gray-500 mb-1">Expenses</div>
+                    <div className="text-base font-bold text-gray-900">$1.8M</div>
+                    <div className="text-[10px] text-gray-500 mt-1">75.0%</div>
+                  </div>
+                </div>
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">Monthly Trends</h3>
+                <div className="flex-1 bg-gradient-to-br from-blue-50 to-white rounded-lg flex items-end justify-around p-2">
+                  {[55, 70, 48, 85, 65, 92].map((height, i) => (
+                    <div key={i} className="w-5 bg-blue-500 rounded-t" style={{ height: `${height}%` }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-12 items-start">
+            <div className="group cursor-pointer">
+              <div className="flex items-start justify-between mb-4">
+                <h2 className="text-[28px] md:text-[36px] font-normal leading-tight text-gray-900 flex-1">
+                  Inventory Management
+                </h2>
+                <div className="transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 mt-1">
+                  <svg className="w-5 h-5 -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                Track stock levels, manage suppliers, and optimize supply chain across multiple locations with real-time updates.
+              </p>
+            </div>
+            <div className="bg-gradient-to-br from-blue-600 to-blue-400 rounded-[48px] p-8 flex items-center justify-center h-[420px] relative overflow-hidden">
+              <div className="bg-white rounded-[32px] p-5 w-[85%] h-[70%] flex flex-col">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-base font-semibold">Stock Levels</h3>
+                  <button className="text-xs text-blue-600">Details</button>
+                </div>
+                <div className="flex-1 space-y-2 overflow-auto">
+                  {[
+                    { name: "Raw Materials", stock: 3420, status: "Optimal", color: "green" },
+                    { name: "Finished Goods", stock: 1890, status: "Reorder Soon", color: "yellow" },
+                    { name: "Components", stock: 5200, status: "Optimal", color: "green" },
+                    { name: "Packaging", stock: 780, status: "Critical", color: "red" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center justify-between py-1.5 border-b border-gray-100 last:border-0">
+                      <div className="flex-1">
+                        <div className="text-xs font-medium text-gray-900">{item.name}</div>
+                        <div className="text-[10px] text-gray-500 mt-0.5">{item.status}</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-gray-700">{item.stock}</span>
+                        <div className={`w-1.5 h-1.5 rounded-full ${item.color === 'green' ? 'bg-green-500' : item.color === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'}`} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-12 items-start">
+            <div className="group cursor-pointer">
+              <div className="flex items-start justify-between mb-4">
+                <h2 className="text-[28px] md:text-[36px] font-normal leading-tight text-gray-900 flex-1">
+                  HR & Payroll System
+                </h2>
+                <div className="transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 mt-1">
+                  <svg className="w-5 h-5 -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                Manage employees, attendance, payroll processing, and benefits administration all in one unified platform.
+              </p>
+            </div>
+            <div className="bg-gradient-to-br from-blue-600 to-blue-400 rounded-[48px] p-8 flex items-center justify-center h-[420px] relative overflow-hidden">
+              <div className="bg-white rounded-[32px] p-5 w-[85%] h-[70%] flex flex-col overflow-hidden">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">Workforce Analytics</h3>
+                <div className="grid grid-cols-2 gap-2 mb-2">
+                  <div className="bg-gray-50 rounded-lg p-2">
+                    <div className="text-[10px] text-gray-500 mb-1">Active Staff</div>
+                    <div className="text-base font-bold text-gray-900">342</div>
+                    <div className="text-[10px] text-green-600 mt-1">↑ 12.4%</div>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-2">
+                    <div className="text-[10px] text-gray-500 mb-1">Total Cost</div>
+                    <div className="text-base font-bold text-gray-900">$685K</div>
+                    <div className="text-[10px] text-gray-500 mt-1">Per Month</div>
+                  </div>
+                </div>
+                <div className="flex-1 space-y-1 overflow-auto">
+                  {[
+                    { dept: "Technology", count: 128 },
+                    { dept: "Marketing", count: 74 },
+                    { dept: "Finance", count: 56 },
+                    { dept: "Operations", count: 84 },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center justify-between text-xs py-1 border-b border-gray-100 last:border-0">
+                      <span className="text-gray-600">{item.dept}</span>
+                      <span className="font-medium text-gray-900">{item.count}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="faq" className="relative py-20 md:py-32 px-4 animate-on-scroll">
         <div className="max-w-[800px] w-full mx-auto">
           <div className="text-center mb-12 md:mb-16">
@@ -799,41 +938,41 @@ export default function TerraPage() {
               ?
             </h2>
             <p className="text-[#4a5568] text-sm md:text-base max-w-[600px] mx-auto leading-relaxed">
-              Everything you need to know about TERRA and our conservation technology platform.
+              Everything you need to know about our ERP platform and enterprise solutions.
             </p>
           </div>
 
           <div className="space-y-4">
             {[
               {
-                question: "How does TERRA's satellite monitoring work?",
+                question: "How does the ERP system integrate with existing tools?",
                 answer:
-                  "Our platform uses a network of satellites combined with AI algorithms to analyze forest coverage in real-time. We detect changes as small as 0.5 hectares within 24 hours, allowing for rapid response to threats like illegal logging or forest fires.",
+                  "Our platform offers seamless integration with popular business tools through REST APIs and pre-built connectors. We support integration with accounting software, CRM systems, e-commerce platforms, and more. Our technical team provides full support during implementation.",
               },
               {
-                question: "What regions does TERRA currently cover?",
+                question: "What industries does the ERP solution support?",
                 answer:
-                  "TERRA currently monitors over 2.4 million hectares across five continents, including the Amazon rainforest, Congo Basin, Borneo, Russian Taiga, and Pacific Northwest. We're continuously expanding our coverage to protect more critical ecosystems.",
+                  "Our ERP platform is designed for versatility across industries including manufacturing, retail, healthcare, logistics, professional services, and more. We offer industry-specific modules and can customize workflows to match your business processes.",
               },
               {
-                question: "How accurate is the threat detection system?",
+                question: "How secure is our business data?",
                 answer:
-                  "Our AI-powered threat detection achieves a 99.4% accuracy rate. We use machine learning models trained on millions of satellite images to distinguish between natural changes and human-caused deforestation or illegal activities.",
+                  "We implement enterprise-grade security with 256-bit encryption, regular security audits, and compliance with SOC 2, GDPR, and ISO 27001 standards. Your data is backed up daily with 99.9% uptime guarantee and stored in secure data centers.",
               },
               {
-                question: "Can organizations integrate TERRA with their existing systems?",
+                question: "Can we customize the ERP to our specific needs?",
                 answer:
-                  "Yes, TERRA offers a comprehensive API that allows seamless integration with existing conservation management systems, GIS platforms, and alert systems. Our documentation provides detailed guides for implementation.",
+                  "Yes, our platform is highly customizable. You can configure workflows, create custom fields, design reports, and build automation rules without coding. For advanced customization, our development team can create bespoke modules.",
               },
               {
-                question: "What is the pricing model for TERRA?",
+                question: "What is the implementation timeline?",
                 answer:
-                  "We offer tiered pricing based on coverage area and feature requirements. Non-profit conservation organizations may qualify for discounted rates or grants. Contact our team for a customized quote based on your needs.",
+                  "Implementation typically takes 4-12 weeks depending on company size and complexity. This includes data migration, system configuration, staff training, and testing. We provide dedicated project managers to ensure smooth deployment.",
               },
               {
-                question: "How can I contribute to forest conservation through TERRA?",
+                question: "What kind of support and training do you provide?",
                 answer:
-                  "There are several ways to contribute: donate to support monitoring of unprotected regions, volunteer for on-ground verification teams, or partner with us as a corporate sponsor. Every contribution helps protect critical ecosystems.",
+                  "We offer 24/7 customer support via phone, email, and chat. All plans include comprehensive onboarding, video tutorials, documentation, and live training sessions. Enterprise customers get dedicated account managers and priority support.",
               },
             ].map((faq, i) => (
               <div
@@ -898,12 +1037,16 @@ export default function TerraPage() {
               <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Try Freelio free</button>
             </div>
 
-            <div className="bg-blue-100 rounded-3xl p-8 border-2 border-blue-400 relative">
-              <div className="absolute top-4 right-4 bg-green-400 text-xs font-medium px-3 py-1 rounded-full">Save 20%</div>
+            <div className="bg-white rounded-3xl p-8 border border-gray-200 relative">
+              {pricingToggle === "annually" && <div className="absolute top-4 right-4 bg-green-400 text-xs font-medium px-3 py-1 rounded-full">Save 20%</div>}
               <div className="mb-6">
-                <div className="text-sm text-gray-700 mb-2">Dreelio Premium</div>
-                <div className="text-4xl font-bold mb-2">$189/mo</div>
-                <div className="text-sm text-gray-700">For pro use with light needs.</div>
+                <div className="text-sm text-gray-600 mb-2">Dreelio Premium</div>
+                <div className="text-4xl font-bold mb-2 h-12 flex items-center">
+                  <span key={pricingToggle} className="inline-block animate-[flip_0.5s_ease-in-out]">
+                    {pricingToggle === "annually" ? "$189/mo" : "$229/mo"}
+                  </span>
+                </div>
+                <div className="text-sm text-gray-600">For pro use with light needs.</div>
               </div>
               <div className="space-y-3 mb-8">
                 {['Everything in Basic', 'Invoices & payments', 'Expense tracking', 'Income tracking', 'Scheduling'].map((feature, i) => (
@@ -913,7 +1056,7 @@ export default function TerraPage() {
                   </div>
                 ))}
               </div>
-              <button className="w-full py-3 rounded-full bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all">Get started</button>
+              <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Get started</button>
             </div>
 
             <div className="bg-white rounded-3xl p-8 border border-gray-200">
@@ -941,13 +1084,13 @@ export default function TerraPage() {
       <section className="relative py-20 md:py-32 px-4 animate-on-scroll overflow-hidden bg-gray-50">
         <div className="max-w-[1120px] w-full mx-auto text-center">
           <h2 className="text-[32px] md:text-[48px] font-bold mb-12 leading-tight text-gray-900">
-            "TERRA is by far the best<br />conservation tool I have ever used"
+            "This ERP platform transformed<br />how we run our business"
           </h2>
           <div className="flex justify-center mb-4">
             <img src="/placeholder-user.jpg" alt="Featured" className="w-16 h-16 rounded-full object-cover" />
           </div>
-          <div className="text-base font-medium mb-1">Martha Panta</div>
-          <div className="text-sm text-gray-600 mb-16">VP Conservation, WWF</div>
+          <div className="text-base font-medium mb-1">Sarah Mitchell</div>
+          <div className="text-sm text-gray-600 mb-16">CEO, TechCorp Industries</div>
 
           <div className="relative max-w-6xl mx-auto">
             <div className="flex items-stretch justify-center gap-6">
@@ -955,10 +1098,10 @@ export default function TerraPage() {
                 { text: '"Duct-tape tools together. Contracts, time tracking, and invoices in one clean system. It\'s a small team needs to stay organized."', name: 'Kwame Osei', role: 'Founder, Google', avatar: 'https://i.pravatar.cc/150?img=12' },
                 { text: '"Managing projects used to mean spreadsheets, DMs, and missed invoices. This platform keeps our workflows tight and our clients impressed."', name: 'Sarah Johnson', role: 'Art Director, Instagram', avatar: 'https://i.pravatar.cc/150?img=47' },
                 { text: '"As a fast-moving design team, we needed a tool that matched our pace. From client onboarding to getting paid, this just works clean, fast, and beautifully built."', name: 'Amara Nwosu', role: 'Design Ops Lead, Teamwork', avatar: 'https://i.pravatar.cc/150?img=38' },
-                { text: '"Real-time monitoring has transformed how we protect endangered species. The AI detection is incredibly accurate and saves us countless hours."', name: 'Michael Chen', role: 'Wildlife Biologist, National Parks', avatar: 'https://i.pravatar.cc/150?img=33' },
-                { text: '"The satellite imagery combined with drone surveys gives us unprecedented visibility into forest health. This is the future of conservation."', name: 'Fatima Diallo', role: 'Forest Manager, Amazon Watch', avatar: 'https://i.pravatar.cc/150?img=45' },
-                { text: '"We\'ve reduced illegal logging incidents by 60% since implementing TERRA. The real-time alerts are game-changing for rapid response."', name: 'James Anderson', role: 'Conservation Director, Wildlife Trust', avatar: 'https://i.pravatar.cc/150?img=15' },
-                { text: '"From biodiversity tracking to carbon sequestration reporting, everything we need is in one platform. It\'s made our work so much more efficient."', name: 'Chioma Okeke', role: 'Program Lead, Global Forest Alliance', avatar: 'https://i.pravatar.cc/150?img=44' },
+                { text: '"The financial automation has saved us 20+ hours per week. Real-time reporting gives us insights we never had before."', name: 'Michael Chen', role: 'CFO, Global Manufacturing', avatar: 'https://i.pravatar.cc/150?img=33' },
+                { text: '"Inventory management across 15 warehouses is now seamless. We\'ve reduced stockouts by 75% and improved cash flow significantly."', name: 'Fatima Diallo', role: 'Operations Director, RetailCo', avatar: 'https://i.pravatar.cc/150?img=45' },
+                { text: '"We\'ve cut operational costs by 35% since implementing this ERP. The automation and analytics are game-changing for our business."', name: 'James Anderson', role: 'VP Operations, LogisticsPro', avatar: 'https://i.pravatar.cc/150?img=15' },
+                { text: '"From HR to finance to inventory, everything we need is in one platform. It\'s made our entire organization so much more efficient."', name: 'Chioma Okeke', role: 'COO, Enterprise Solutions', avatar: 'https://i.pravatar.cc/150?img=44' },
               ].map((testimonial, i) => {
                 const offset = (i - testimonialIndex + 7) % 7
                 const isCenter = offset === 0
@@ -1023,14 +1166,14 @@ export default function TerraPage() {
         <div className="max-w-[800px] w-full mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 glass-pill px-4 py-2 rounded-full mb-8 text-xs md:text-sm text-[#4a5568]">
             <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
-            Save the world
+            Transform your business
           </div>
 
           <h2 className="font-serif text-[40px] leading-[1.15] md:text-[64px] md:leading-[1.1] font-medium mb-6 text-balance">
-            Join the global conservation movement
+            Join thousands of successful businesses
           </h2>
           <p className="text-[#4a5568] text-base md:text-lg mb-10 leading-relaxed max-w-[560px] mx-auto">
-            Together, we're building a sustainable future. Start protecting forests today.
+            Together, we're building smarter enterprises. Start optimizing your operations today.
           </p>
 
           <Button className="glass-button text-base rounded-full bg-black/5 border border-black/20 hover:bg-black/15 hover:border-black/30 transition-all duration-300 text-gray-900 px-8 py-6 md:text-base">
@@ -1044,9 +1187,9 @@ export default function TerraPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-12">
             {/* Brand Column */}
             <div className="flex flex-col gap-4">
-              <div className="text-lg font-semibold font-mono text-white">TERRA</div>
+              <div className="text-lg font-semibold font-mono text-white">Pryro</div>
               <p className="text-xs text-white/80 leading-relaxed">
-                Protecting global forests through real-time monitoring and AI technology.
+                Empowering businesses worldwide with intelligent ERP solutions and automation.
               </p>
               <div className="flex items-center gap-4 mt-2">
                 <a
@@ -1122,7 +1265,7 @@ export default function TerraPage() {
             {/* Newsletter Subscription */}
             <div className="flex flex-col gap-4">
               <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Newsletter</div>
-              <p className="text-xs text-white/80 mb-3">Get updates on forest conservation insights.</p>
+              <p className="text-xs text-white/80 mb-3">Get updates on business optimization insights.</p>
               <div className="flex flex-col gap-2">
                 <input
                   type="email"
@@ -1138,7 +1281,7 @@ export default function TerraPage() {
 
           {/* Footer Bottom */}
           <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/80">
-            <div>© 2025 TERRA. All rights reserved.</div>
+            <div>© 2025 Pryro. All rights reserved.</div>
             <div className="flex gap-6">
               <a href="#" className="hover:text-white transition-colors">
                 Privacy Policy
