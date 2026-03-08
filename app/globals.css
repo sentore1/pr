@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* LUMERA Design Tokens */
+  /* Pryro Design Tokens */
   --bg-primary: #ffffff;
   --text-primary: #0f1117;
   --text-secondary: #4a5568;
@@ -100,7 +100,7 @@
   }
 }
 
-/* LUMERA Glass Morphism Styles */
+/* Pryro Glass Morphism Styles */
 .glass-nav {
   background: rgba(15, 17, 23, 0.35);
   backdrop-filter: blur(24px);
@@ -157,7 +157,7 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* LUMERA Animations */
+/* Pryro Animations */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -354,18 +354,29 @@ html {
   }
 }
 
-/* Price flip animation */
-@keyframes flip {
+/* Price dust + counter animation */
+@keyframes dustCounterUp {
   0% {
-    transform: rotateX(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: rotateX(90deg);
     opacity: 0;
+    filter: blur(4px);
+    transform: translateY(20px) scale(0.95);
   }
   100% {
-    transform: rotateX(0deg);
     opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dustCounterDown {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(-20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
   }
 }

@@ -72,7 +72,26 @@ export function WorldMap({ experiences, selectedExperience, onSelectExperience }
   return (
     <div ref={containerRef} className="relative w-full h-full">
       <div className="relative w-full h-auto">
-        <img src="/map.svg" alt="World Map" className="w-full h-auto" />
+        <img src="/map.svg" alt="World Map" className="w-full h-auto" style={{ filter: 'grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(300%)' }} />
+        
+        {experiences.map((exp) => {
+          const pos = getMarkerPosition(exp)
+          if (!pos) return null
+          
+          return (
+            <div
+              key={exp.id}
+              className="absolute w-12 h-12 -ml-6 -mt-6 cursor-pointer group"
+              style={{ left: `${(pos[0] / dimensions.width) * 100}%`, top: `${(pos[1] / dimensions.height) * 100}%` }}
+            >
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-lg shadow-xl p-3 pointer-events-none border border-gray-200 whitespace-nowrap z-50">
+                <div className="text-sm font-semibold text-gray-900">{exp.company}</div>
+                <div className="text-xs text-gray-600">{exp.location.city}, {exp.location.country}</div>
+                <div className="text-xs text-gray-500 mt-1">{exp.title}</div>
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )

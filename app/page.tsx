@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { PawPrint, Trees, Satellite, Menu, X, Youtube, Instagram, ChevronDown, ListTodo, Clock, FileText, BarChart3, Receipt, Wallet, TrendingUp, Plug } from "lucide-react"
+import { PawPrint, Zap, Package, ShoppingCart, DollarSign, Calendar, Users, Trees, Satellite, Menu, X, Youtube, Instagram, ChevronDown, ListTodo, Clock, FileText, BarChart3, Receipt, Wallet, TrendingUp, Plug, Building2, Briefcase, UserCircle, Boxes, HeartHandshake, Hammer, Truck, Mail, Phone, Bot } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AnimatedText } from "@/components/animated-text"
 import { CustomDroneIcon } from "@/components/drone-icon"
@@ -55,6 +55,8 @@ export default function PryroPage() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [showProductsMenu, setShowProductsMenu] = useState(false)
+  const [showSolutionsMenu, setShowSolutionsMenu] = useState(false)
   const [selectedFeature, setSelectedFeature] = useState(0)
   const [imageFade, setImageFade] = useState(true)
   const [autoRotationKey, setAutoRotationKey] = useState(0)
@@ -189,36 +191,170 @@ export default function PryroPage() {
             </button>
 
             <nav className="hidden md:flex items-center gap-8">
-              <button
-                onClick={() => scrollToSection("metrics")}
-                className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300"
+              <div 
+                className="relative"
+                onMouseEnter={() => setShowProductsMenu(true)}
+                onMouseLeave={() => setShowProductsMenu(false)}
               >
-                Impact
-              </button>
-              <button
-                onClick={() => scrollToSection("map")}
-                className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300"
+                <a href="/products" className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300">
+                  Products
+                </a>
+                {showProductsMenu && (
+                  <div className="absolute top-full left-0 pt-2">
+                    <div className="bg-white border border-black/10 rounded-2xl shadow-xl p-6 w-[600px] backdrop-blur-md">
+                      <div className="grid grid-cols-2 gap-4">
+                        <a href="/features" className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                          <Zap className="w-5 h-5 text-blue-500 mt-0.5" />
+                          <div>
+                            <div className="font-medium text-sm text-gray-900">Features</div>
+                            <div className="text-xs text-gray-500 mt-0.5">Explore all capabilities</div>
+                          </div>
+                        </a>
+                        <a href="/pricing" className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                          <DollarSign className="w-5 h-5 text-blue-500 mt-0.5" />
+                          <div>
+                            <div className="font-medium text-sm text-gray-900">Pricing</div>
+                            <div className="text-xs text-gray-500 mt-0.5">Simple, transparent plans</div>
+                          </div>
+                        </a>
+                        <a href="/documentation" className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                          <FileText className="w-5 h-5 text-blue-500 mt-0.5" />
+                          <div>
+                            <div className="font-medium text-sm text-gray-900">Documentation</div>
+                            <div className="text-xs text-gray-500 mt-0.5">Complete guides</div>
+                          </div>
+                        </a>
+                        <a href="/api" className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                          <Plug className="w-5 h-5 text-blue-500 mt-0.5" />
+                          <div>
+                            <div className="font-medium text-sm text-gray-900">API</div>
+                            <div className="text-xs text-gray-500 mt-0.5">Developer resources</div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div 
+                className="relative"
+                onMouseEnter={() => setShowSolutionsMenu(true)}
+                onMouseLeave={() => setShowSolutionsMenu(false)}
               >
-                Projects
-              </button>
-              <button
-                onClick={() => scrollToSection("narrative")}
-                className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300"
-              >
-                Technology
-              </button>
-              <button
-                onClick={() => scrollToSection("faq")}
-                className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300"
-              >
-                FAQ
-              </button>
-              <button
-                onClick={() => scrollToSection("cta")}
-                className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300"
-              >
-                Join us
-              </button>
+                <button className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300">
+                  Solutions
+                </button>
+                {showSolutionsMenu && (
+                  <div className="absolute top-full left-0 pt-2">
+                    <div className="bg-white border border-black/10 rounded-2xl shadow-xl p-6 w-[700px] backdrop-blur-md">
+                      <div className="grid grid-cols-3 gap-3">
+                      <a href="/small-business" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Building2 className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Small Business</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">For growing teams</div>
+                        </div>
+                      </a>
+                      <a href="/accountants-bookkeepers" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Receipt className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Accountants</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Financial experts</div>
+                        </div>
+                      </a>
+                      <a href="/project" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Briefcase className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Project</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Manage projects</div>
+                        </div>
+                      </a>
+                      <a href="/human-resource" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <UserCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Human Resource</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">HR management</div>
+                        </div>
+                      </a>
+                      <a href="/stock-management" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Boxes className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Stock Management</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Inventory control</div>
+                        </div>
+                      </a>
+                      <a href="/customer-relation" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Users className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">CRM</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Customer relations</div>
+                        </div>
+                      </a>
+                      <a href="/self-employed" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <UserCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Self-employed</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Freelancers</div>
+                        </div>
+                      </a>
+                      <a href="/non-profit" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <HeartHandshake className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Non-profit</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">NGO solutions</div>
+                        </div>
+                      </a>
+                      <a href="/hospitality" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Building2 className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Hospitality</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Hotels & restaurants</div>
+                        </div>
+                      </a>
+                      <a href="/construction" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Hammer className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Construction</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Build projects</div>
+                        </div>
+                      </a>
+                      <a href="/logistic" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Truck className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Logistic</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Supply chain</div>
+                        </div>
+                      </a>
+                      <a href="/marketing-mail" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Mail className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Marketing (Mail)</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Email campaigns</div>
+                        </div>
+                      </a>
+                      <a href="/marketing-call" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Phone className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">Marketing (Call)</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">Call center</div>
+                        </div>
+                      </a>
+                      <a href="/ai-enterprise" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                        <Bot className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-xs text-gray-900">AI Enterprise</div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">AI-powered tools</div>
+                        </div>
+                      </a>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <a href="/about" className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300">About</a>
+              <a href="/contact" className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300">Contact</a>
             </nav>
 
             <button
@@ -235,36 +371,10 @@ export default function PryroPage() {
       {isMenuOpen && (
         <div className="fixed inset-0 bg-white/95 backdrop-blur-md z-50 flex flex-col items-start justify-end pb-20 pt-20 px-6">
           <div className="flex flex-col gap-8 items-start text-left w-full">
-            <button
-              onClick={() => scrollToSection("metrics")}
-              className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300"
-            >
-              Impact
-            </button>
-            <button
-              onClick={() => scrollToSection("map")}
-              className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300"
-            >
-              Projects
-            </button>
-            <button
-              onClick={() => scrollToSection("narrative")}
-              className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300"
-            >
-              Technology
-            </button>
-            <button
-              onClick={() => scrollToSection("faq")}
-              className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300"
-            >
-              FAQ
-            </button>
-            <button
-              onClick={() => scrollToSection("cta")}
-              className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300"
-            >
-              Join us
-            </button>
+            <a href="/products" className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300">Products</a>
+            <a href="/about" className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300">About</a>
+            <a href="/demo" className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300">Demo</a>
+            <a href="/contact" className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300">Contact</a>
           </div>
         </div>
       )}
@@ -305,9 +415,11 @@ export default function PryroPage() {
               Complete ERP solution with AI-powered insights. Manage finance, inventory, HR, and operations in one unified platform.
             </p>
             <div className="stagger-reveal" style={{ animationDelay: "270ms" }}>
-              <Button className="glass-button px-8 py-6 text-base rounded-full bg-white border border-white hover:bg-white/90 hover:border-white/90 transition-all duration-300 text-gray-900">
-                Start Free Trial
-              </Button>
+              <a href="https://login.pryro.com">
+                <Button className="glass-button px-8 py-6 text-base rounded-full bg-white border border-white hover:bg-white/90 hover:border-white/90 transition-all duration-300 text-gray-900">
+                  Start Free Trial
+                </Button>
+              </a>
             </div>
           </div>
 
@@ -332,7 +444,7 @@ export default function PryroPage() {
         </div>
       </section>
 
-      <section className="relative py-12 border-y border-black/5 bg-white overflow-hidden md:py-8 md:pt-8 md:pb-4">
+      <section className="relative py-12 bg-white overflow-hidden md:py-8 md:pt-8 md:pb-4">
         <div className="w-full">
           <p className="text-center text-xs md:text-sm uppercase tracking-[0.2em] text-[#4a5568] mb-8">
             Trusted by leading enterprises worldwide
@@ -348,6 +460,8 @@ export default function PryroPage() {
                 "/logos/frame-2.png",
                 "/logos/frame-3.png",
                 "/logos/frame-7.png",
+                "/logos/Frame 12.png",
+                "/logos/Frame 63.png",
                 "/logos/frame-11.png",
                 "/logos/frame-55.png",
                 "/logos/frame-4.png",
@@ -356,12 +470,15 @@ export default function PryroPage() {
                 "/logos/frame-2.png",
                 "/logos/frame-3.png",
                 "/logos/frame-7.png",
+                "/logos/Frame 12.png",
+                "/logos/Frame 63.png",
               ].map((logo, i) => (
-                <div key={i} className="px-8 md:px-12 flex items-center justify-center flex-shrink-0">
+                <div key={i} className="px-4 md:px-6 flex items-center justify-center flex-shrink-0">
                   <img
                     src={logo || "/placeholder.svg"}
                     alt={`Partner logo ${i + 1}`}
-                    className="h-32 md:h-24 w-auto object-contain opacity-60 hover:opacity-60 transition-all duration-300"
+                    className="h-12 md:h-16 w-auto object-contain opacity-60 hover:opacity-80 transition-all duration-300"
+                    style={{ filter: 'brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)' }}
                   />
                 </div>
               ))}
@@ -389,25 +506,25 @@ export default function PryroPage() {
           </h2>
 
           <p className="text-[#4a5568] text-sm md:text-base mb-12 md:mb-16 text-center max-w-[600px] mx-auto leading-relaxed">
-            Trusted by enterprises worldwide. Powered by intelligent automation.
+            Trusted by enterprises and NGO worldwide. Powered by intelligent automation.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-[800px] mx-auto">
             {[
-              { label: "ACTIVE USERS", value: "50K+", desc: "worldwide", color: "blue" },
-              { label: "TRANSACTIONS PROCESSED", value: "2.4M", desc: "monthly", color: "blue" },
-              { label: "COST REDUCTION", value: "35%", desc: "average savings", color: "pink" },
-              { label: "UPTIME", value: "99.9%", desc: "reliability", color: "purple" },
+              { label: "ACTIVE USERS", value: "64K+", desc: "worldwide", color: "blue" },
+              { label: "FINANCIAL ENTRIES PROCESSED", value: "2.4M", desc: "monthly", color: "blue" },
+              { label: "COST REDUCTION", value: "38%", desc: "average savings", color: "blue" },
+              { label: "UPTIME", value: "99.9%", desc: "reliability", color: "blue" },
             ].map((metric, i) => (
               <div
                 key={i}
-                className="p-6 md:p-10 text-center border border-black/10 border-t-0 border-b border-l-0 border-r-0 md:py-10 md:pb-20"
+                className="p-6 md:p-10 text-center md:py-10 md:pb-20"
               >
                 <div
                   className={`text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4 flex items-center justify-center gap-2`}
                 >
                   <span
-                    className={`w-1.5 h-1.5 rounded-full ${metric.color === "pink" ? "bg-pink-400/60" : "bg-purple-400/60"}`}
+                    className={`w-1.5 h-1.5 rounded-full ${metric.color === "blue" ? "bg-blue-400/60" : "bg-blue-400/60"}`}
                   />
                   {metric.label}
                 </div>
@@ -481,27 +598,52 @@ export default function PryroPage() {
         <div className="max-w-[1120px] w-full mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16 items-stretch">
             {/* Left - Card */}
-            <div className="rounded-[32px] p-8 md:p-12 flex items-center justify-center min-h-[600px]" style={{ background: "linear-gradient(to bottom, #3B82F6 0%, #60A5FA 30%, #DBEAFE 60%, #FFFFFF 100%)" }}>
-              <div className="bg-white rounded-[24px] p-8 shadow-lg w-full max-w-md">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold">Projects</h3>
-                  <button className="text-sm text-gray-600">View</button>
+            <div className="rounded-[32px] p-8 md:p-12 flex items-center justify-center min-h-[450px]" style={{ background: "linear-gradient(to bottom, #2563EB 0%, #2563EB 40%, #FFFFFF 100%)" }}>
+              <div className="bg-white rounded-[24px] p-6 shadow-lg w-full max-w-md">
+                <div className="flex items-center justify-between mb-5">
+                  <h3 className="text-lg font-semibold">Projects</h3>
+                  <button className="text-sm text-blue-600">View All</button>
                 </div>
-                <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-2 mb-4">
+                  <div className="bg-gray-50 rounded p-2.5">
+                    <div className="text-[10px] text-gray-500 mb-0.5">In Progress</div>
+                    <div className="text-xl font-bold text-gray-900">8</div>
+                  </div>
+                  <div className="bg-gray-50 rounded p-2.5">
+                    <div className="text-[10px] text-gray-500 mb-0.5">Completed</div>
+                    <div className="text-xl font-bold text-gray-900">32</div>
+                  </div>
+                  <div className="bg-gray-50 rounded p-2.5">
+                    <div className="text-[10px] text-gray-500 mb-0.5">Members</div>
+                    <div className="text-xl font-bold text-gray-900">18</div>
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <h4 className="text-xs font-semibold text-gray-700 mb-2">Completion Trend</h4>
+                  <div className="h-20 bg-gradient-to-br from-blue-50 to-white rounded p-2 relative">
+                    <svg className="w-full h-full" viewBox="0 0 300 60" preserveAspectRatio="none">
+                      <polyline points="0,45 50,35 100,38 150,22 200,26 250,12 300,15" fill="none" stroke="#3B82F6" strokeWidth="2" />
+                      <polyline points="0,45 50,35 100,38 150,22 200,26 250,12 300,15 300,60 0,60" fill="url(#grad)" opacity="0.3" />
+                      <defs><linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stopColor="#3B82F6" stopOpacity="0.4" /><stop offset="100%" stopColor="#3B82F6" stopOpacity="0" /></linearGradient></defs>
+                    </svg>
+                  </div>
+                </div>
+                <div className="space-y-3">
                   {[
-                    { name: "Q4 Financial Close", status: "Active", progress: 85 },
-                    { name: "Inventory Optimization", status: "Active", progress: 72 },
-                    { name: "HR System Migration", status: "Planning", progress: 45 },
-                    { name: "Sales Dashboard", status: "Active", progress: 90 },
+                    { name: "Strategy Redesign", status: "Active", progress: 78 },
+                    { name: "New Product Launch", status: "Active", progress: 65 },
+                    { name: "Marketing Campaign", status: "Review", progress: 92 },
                   ].map((project, i) => (
-                    <div key={i} className="flex items-center justify-between py-4 border-b border-gray-100 last:border-0">
-                      <div className="flex-1">
-                        <div className="text-base font-medium text-gray-900">{project.name}</div>
-                        <div className="text-sm text-gray-500 mt-1">{project.status}</div>
+                    <div key={i} className="py-2 border-b border-gray-100 last:border-0">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <div className="flex-1">
+                          <div className="text-sm font-medium text-gray-900">{project.name}</div>
+                          <div className="text-xs text-gray-500 mt-0.5">{project.status}</div>
+                        </div>
+                        <span className="text-sm font-semibold text-gray-700">{project.progress}%</span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-base font-medium text-gray-700">{project.progress}%</span>
-                        <div className="w-2 h-2 rounded-full bg-green-500" />
+                      <div className="w-full bg-gray-100 rounded-full h-1">
+                        <div className="bg-blue-500 h-1 rounded-full" style={{ width: `${project.progress}%` }} />
                       </div>
                     </div>
                   ))}
@@ -519,9 +661,11 @@ export default function PryroPage() {
                 Plan, organize, and collaborate your work - all in one place. Track progress, manage resources, and achieve your business goals.
               </p>
               <div className="mb-8">
-                <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
-                  Get Started
-                </Button>
+                <a href="https://login.pryro.com">
+                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
+                    Get Started
+                  </Button>
+                </a>
               </div>
               <div className="grid grid-cols-2 gap-3 max-w-md">
                 {[
@@ -539,7 +683,7 @@ export default function PryroPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16 items-stretch">
             {/* Left - Text */}
             <div className="flex flex-col justify-center min-h-[600px]">
               <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">FINANCIAL MANAGEMENT</div>
@@ -550,9 +694,11 @@ export default function PryroPage() {
                 Create detailed invoices, track payments, and monitor your business finances. Keep track of your revenue, expenses, and cash flow all in one place.
               </p>
               <div className="mb-8">
-                <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
-                  Get Started
-                </Button>
+                <a href="https://login.pryro.com">
+                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
+                    Get Started
+                  </Button>
+                </a>
               </div>
               <div className="grid grid-cols-2 gap-3 max-w-md">
                 {[
@@ -570,7 +716,7 @@ export default function PryroPage() {
             </div>
 
             {/* Right - Card */}
-            <div className="rounded-[32px] p-8 md:p-12 flex items-center justify-center min-h-[600px]" style={{ background: "linear-gradient(to bottom, #3B82F6 0%, #60A5FA 30%, #DBEAFE 60%, #FFFFFF 100%)" }}>
+            <div className="rounded-[32px] p-8 md:p-12 flex items-center justify-center min-h-[600px]" style={{ background: "linear-gradient(to bottom, #2563EB 0%, #2563EB 40%, #FFFFFF 100%)" }}>
               <div className="bg-white rounded-[24px] p-8 shadow-lg w-full max-w-md">
                 <div className="mb-8">
                   <h3 className="text-base font-semibold text-gray-700 mb-6">Project budget</h3>
@@ -589,9 +735,9 @@ export default function PryroPage() {
                 </div>
                 <div>
                   <h3 className="text-base font-semibold text-gray-700 mb-6">Analytics</h3>
-                  <div className="h-40 bg-gradient-to-br from-blue-50 to-white rounded-lg flex items-end justify-around p-4">
-                    {[40, 65, 45, 80, 60, 90].map((height, i) => (
-                      <div key={i} className="w-10 bg-blue-500 rounded-t" style={{ height: `${height}%` }} />
+                  <div className="h-40 bg-gradient-to-br from-blue-50 to-white rounded-lg flex items-end justify-around p-1">
+                    {[20, 65, 45,45, 80, 60, 90, 90,45, 80, 45, 80, 60, 60, 90,75,].map((height, i) => (
+                      <div key={i} className="w-3 bg-blue-500 rounded-t" style={{ height: `${height}%` }} />
                     ))}
                   </div>
                 </div>
@@ -601,10 +747,10 @@ export default function PryroPage() {
         </div>
       </section>
 
-      <section id="map" className="relative py-20 md:py-32 animate-on-scroll bg-white">
+      <section id="map" className="relative py-20 md:py-32 animate-on-scroll">
         <div className="text-center mb-12 md:mb-16 px-4">
           <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-6 flex items-center justify-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
             GLOBAL REACH
           </div>
           <h2 className="font-serif text-[32px] leading-[1.15] md:text-[48px] md:leading-[1.1] font-medium mb-6 text-balance">
@@ -627,7 +773,7 @@ export default function PryroPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-stretch">
             <div className="max-w-[720px]">
               <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-6 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
                 ENTERPRISE TECHNOLOGY
               </div>
               <h2 className="font-serif text-[36px] leading-[1.15] md:text-[56px] md:leading-[1.1] font-medium mb-8 text-balance">
@@ -635,7 +781,7 @@ export default function PryroPage() {
                 <span
                   className="inline-block"
                   style={{
-                    background: "linear-gradient(135deg, #d9a7c7 0%, #fffcdc 100%)",
+                    background: "linear-gradient(135deg, #0077ff 0%, #ffffff 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -653,10 +799,10 @@ export default function PryroPage() {
                   <img
                     src={
                       [
-                        "/drone.png",
-                        "/real-time-satellite.png",
-                        "/biodiversity-tracking.png",
-                        "/deforestation-detect.png",
+                        "/images/25164.jpg",
+                        "/images/77570.jpg",
+                        "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
+                        "moreimages/office2.jpg",
                       ][selectedFeature] || "/placeholder.svg"
                     }
                     alt="Feature preview"
@@ -673,25 +819,25 @@ export default function PryroPage() {
                     title: "Financial Management",
                     desc: "Complete accounting, invoicing, and financial reporting",
                     icon: Receipt,
-                    image: "/drone.png",
+                    image: "/images/25164.jpg",
                   },
                   {
                     title: "Real-time Analytics",
                     desc: "24/7 business intelligence with instant insights",
                     icon: BarChart3,
-                    image: "/real-time-satellite.png",
+                    image: "/images/77570.jpg",
                   },
                   {
                     title: "Inventory Management",
                     desc: "Track stock levels and supply chain across locations",
                     icon: ListTodo,
-                    image: "/biodiversity-tracking.png",
+                    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
                   },
                   {
                     title: "HR & Payroll",
                     desc: "Manage employees, attendance, and payroll seamlessly",
                     icon: Clock,
-                    image: "/deforestation-detect.png",
+                    image: "moreimages/office2.jpg",
                   },
                 ].map((feature, i) => (
                   <button
@@ -705,12 +851,12 @@ export default function PryroPage() {
                       }, 300)
                     }}
                     className={`relative w-full text-left flex gap-4 items-start p-5 transition-all duration-300 rounded-xs py-4 overflow-hidden ${
-                      selectedFeature === i ? "border border-black/20" : "border border-black/10"
+                      selectedFeature === i ? "" : ""
                     }`}
                   >
                     <feature.icon
-                      className={`w-6 h-6 flex-shrink-0 mt-1 transition-colors ${
-                        selectedFeature === i ? "text-green-400" : "text-green-500/60"
+                      className={`w-5 h-5 flex-shrink-0 mt-1 transition-colors ${
+                        selectedFeature === i ? "text-blue-500" : "text-blue-400"
                       }`}
                     />
                     <div className="flex-1">
@@ -718,8 +864,8 @@ export default function PryroPage() {
                       <p className="text-sm md:text-base text-[#4a5568]">{feature.desc}</p>
                     </div>
                     {selectedFeature === i && (
-                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-black/10">
-                        <div className="h-full bg-gray-900 progress-bar" />
+                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-100">
+                        <div className="h-full bg-blue-500 progress-bar" />
                       </div>
                     )}
                   </button>
@@ -732,19 +878,19 @@ export default function PryroPage() {
                 {[
                   {
                     title: "Financial Management",
-                    image: "/drone.png",
+                    image: "/images/25164.jpg",
                   },
                   {
                     title: "Real-time Analytics",
-                    image: "/real-time-satellite.png",
+                    image: "/images/77570.jpg",
                   },
                   {
                     title: "Inventory Management",
-                    image: "/biodiversity-tracking.png",
+                    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
                   },
                   {
                     title: "HR & Payroll",
-                    image: "/deforestation-detect.png",
+                    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80",
                   },
                 ].map((feature, i) => {
                   const positionInStack = (i - selectedFeature + 4) % 4
@@ -775,12 +921,13 @@ export default function PryroPage() {
       </section>
 
       <section className="relative py-20 md:py-32 px-4 animate-on-scroll bg-white">
-        <div className="max-w-[1200px] w-full mx-auto space-y-12">
+        <div className="max-w-[1200px] w-full mx-auto space-y-16">
           <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-12 items-start">
             <div className="group cursor-pointer">
+              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">FINANCIAL MANAGEMENT SUITE</div>
               <div className="flex items-start justify-between mb-4">
-                <h2 className="text-[28px] md:text-[36px] font-normal leading-tight text-gray-900 flex-1">
-                  Financial Management Suite
+                <h2 className="text-[28px] md:text-[36px] font-bold leading-tight text-gray-900 flex-1">
+                  Complete financial insight
                 </h2>
                 <div className="transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 mt-1">
                   <svg className="w-5 h-5 -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -789,26 +936,62 @@ export default function PryroPage() {
                   </svg>
                 </div>
               </div>
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-                Complete accounting, invoicing, and financial reporting system. Track revenue, expenses, and cash flow in real-time.
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-blue-600 to-blue-400 rounded-[48px] p-8 flex items-center justify-center h-[420px] relative overflow-hidden">
-              <div className="bg-white rounded-[32px] p-5 w-[85%] h-[70%] flex flex-col">
-                <h3 className="text-sm font-semibold text-gray-900 mb-3">Revenue Overview</h3>
-                <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="bg-gray-50 rounded-lg p-2">
-                    <div className="text-[10px] text-gray-500 mb-1">Q4 Revenue</div>
-                    <div className="text-base font-bold text-gray-900">$2.4M</div>
-                    <div className="text-[10px] text-green-600 mt-1">↑ 18.3%</div>
+              <p className="text-gray-600 text-sm md:text-base mb-8 leading-relaxed">
+               Complete accounting, proposal , quotation, invoicing, and financial reporting system. Track revenue, expenses, and cash flow in real-time.              </p>
+              <div className="mb-8">
+                <a href="https://login.pryro.com">
+                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
+                    Get Started
+                  </Button>
+                </a>
+              </div>
+              <div className="grid grid-cols-2 gap-3 max-w-md">
+                {[
+                  { label: "quotation", icon: Receipt },
+                  { label: "Budgets", icon: Wallet },
+                  { label: "Forecasting", icon: TrendingUp },
+                  { label: "Reports", icon: BarChart3 },
+                ].map((feature, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg px-3 py-3">
+                    <feature.icon className="w-4 h-4" />
+                    {feature.label}
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-2">
+                ))}
+              </div>
+            </div>
+            <div className="bg-gradient-to-l from-blue-500 from-40% to-white rounded-[40px] p-8 flex items-center justify-center h-[450px] relative overflow-hidden">
+              <div className="bg-white rounded-[16px] p-5 w-[85%] h-[75%] flex flex-col">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-base font-semibold text-gray-900">Revenue Overview</h3>
+                  <button className="text-xs text-blue-600">View All</button>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gray-500 mb-1">Q4 Revenue</div>
+                    <div className="text-xl font-bold text-gray-900">$2.4M</div>
+                    <div className="text-[10px] text-green-600 mt-1 flex items-center gap-1">
+                      <span>↑ 18.3%</span>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-3">
                     <div className="text-[10px] text-gray-500 mb-1">Expenses</div>
-                    <div className="text-base font-bold text-gray-900">$1.8M</div>
-                    <div className="text-[10px] text-gray-500 mt-1">75.0%</div>
+                    <div className="text-xl font-bold text-gray-900">$1.8M</div>
+                    <div className="text-[10px] text-gray-500 mt-1">75.0% of revenue</div>
                   </div>
                 </div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">Monthly Trends</h3>
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gray-500 mb-1">Net Profit</div>
+                    <div className="text-base font-bold text-gray-900">$600K</div>
+                    <div className="text-[10px] text-green-600 mt-1">↑ 22.5%</div>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gray-500 mb-1">Cash Flow</div>
+                    <div className="text-base font-bold text-gray-900">$890K</div>
+                    <div className="text-[10px] text-green-600 mt-1">Positive</div>
+                  </div>
+                </div>
+                <h3 className="text-xs font-semibold text-gray-700 mb-2">Monthly Trends</h3>
                 <div className="flex-1 bg-gradient-to-br from-blue-50 to-white rounded-lg flex items-end justify-around p-2">
                   {[55, 70, 48, 85, 65, 92].map((height, i) => (
                     <div key={i} className="w-5 bg-blue-500 rounded-t" style={{ height: `${height}%` }} />
@@ -820,9 +1003,10 @@ export default function PryroPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-12 items-start">
             <div className="group cursor-pointer">
+              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">INVENTORY MANAGEMENT</div>
               <div className="flex items-start justify-between mb-4">
-                <h2 className="text-[28px] md:text-[36px] font-normal leading-tight text-gray-900 flex-1">
-                  Inventory Management
+                <h2 className="text-[28px] md:text-[36px] font-bold leading-tight text-gray-900 flex-1">
+                  Real-time stock control
                 </h2>
                 <div className="transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 mt-1">
                   <svg className="w-5 h-5 -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -831,31 +1015,73 @@ export default function PryroPage() {
                   </svg>
                 </div>
               </div>
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+              <p className="text-gray-600 text-sm md:text-base mb-8 leading-relaxed">
                 Track stock levels, manage suppliers, and optimize supply chain across multiple locations with real-time updates.
               </p>
+              <div className="mb-8">
+                <a href="https://login.pryro.com">
+                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
+                    Get Started
+                  </Button>
+                </a>
+              </div>
+              <div className="grid grid-cols-2 gap-3 max-w-md">
+                {[
+                  { label: "Stock tracking", icon: ListTodo },
+                  { label: "Suppliers", icon: Wallet },
+                  { label: "Warehouses", icon: Receipt },
+                  { label: "Analytics", icon: BarChart3 },
+                ].map((feature, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg px-3 py-3">
+                    <feature.icon className="w-4 h-4" />
+                    {feature.label}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="bg-gradient-to-br from-blue-600 to-blue-400 rounded-[48px] p-8 flex items-center justify-center h-[420px] relative overflow-hidden">
-              <div className="bg-white rounded-[32px] p-5 w-[85%] h-[70%] flex flex-col">
+            <div className="bg-gradient-to-l from-blue-500 from-40% to-white rounded-[40px] p-8 flex items-center justify-center h-[450px] relative overflow-hidden">
+              <div className="bg-white rounded-[16px] p-5 w-[85%] h-[75%] flex flex-col">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-base font-semibold">Stock Levels</h3>
-                  <button className="text-xs text-blue-600">Details</button>
+                  <button className="text-xs text-blue-600">View All</button>
                 </div>
-                <div className="flex-1 space-y-2 overflow-auto">
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gray-500 mb-1">Total Items</div>
+                    <div className="text-xl font-bold text-gray-900">11,290</div>
+                    <div className="text-[10px] text-green-600 mt-1">↑ 8.2%</div>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gray-500 mb-1">Total Value</div>
+                    <div className="text-xl font-bold text-gray-900">$4.2M</div>
+                    <div className="text-[10px] text-gray-500 mt-1">In stock</div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gray-500 mb-1">Low Stock</div>
+                    <div className="text-base font-bold text-gray-900">24</div>
+                    <div className="text-[10px] text-red-600 mt-1">Critical</div>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gray-500 mb-1">Suppliers</div>
+                    <div className="text-base font-bold text-gray-900">48</div>
+                    <div className="text-[10px] text-gray-500 mt-1">Active</div>
+                  </div>
+                </div>
+                <h3 className="text-xs font-semibold text-gray-700 mb-2">Top Categories</h3>
+                <div className="flex-1 space-y-1 overflow-auto">
                   {[
-                    { name: "Raw Materials", stock: 3420, status: "Optimal", color: "green" },
-                    { name: "Finished Goods", stock: 1890, status: "Reorder Soon", color: "yellow" },
-                    { name: "Components", stock: 5200, status: "Optimal", color: "green" },
-                    { name: "Packaging", stock: 780, status: "Critical", color: "red" },
+                    { name: "Components", stock: 5200, color: "green" },
+                    { name: "Packaging", stock: 780, color: "red" },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between py-1.5 border-b border-gray-100 last:border-0">
+                    <div key={i} className="flex items-center justify-between py-1 border-b border-gray-100 last:border-0">
                       <div className="flex-1">
                         <div className="text-xs font-medium text-gray-900">{item.name}</div>
-                        <div className="text-[10px] text-gray-500 mt-0.5">{item.status}</div>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-medium text-gray-700">{item.stock}</span>
-                        <div className={`w-1.5 h-1.5 rounded-full ${item.color === 'green' ? 'bg-green-500' : item.color === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'}`} />
+                        <div className={`w-1.5 h-1.5 rounded-full ${item.color === 'green' ? 'bg-green-500' : 'bg-red-500'}`} />
                       </div>
                     </div>
                   ))}
@@ -864,11 +1090,12 @@ export default function PryroPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-12 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-1 items-start">
             <div className="group cursor-pointer">
+              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">HR & PAYROLL SYSTEM</div>
               <div className="flex items-start justify-between mb-4">
-                <h2 className="text-[28px] md:text-[36px] font-normal leading-tight text-gray-900 flex-1">
-                  HR & Payroll System
+                <h2 className="text-[28px] md:text-[36px] font-bold leading-tight text-gray-900 flex-1">
+                  Workforce management simplified
                 </h2>
                 <div className="transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 mt-1">
                   <svg className="w-5 h-5 -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -877,22 +1104,45 @@ export default function PryroPage() {
                   </svg>
                 </div>
               </div>
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+              <p className="text-gray-600 text-sm md:text-base mb-8 leading-relaxed">
                 Manage employees, attendance, payroll processing, and benefits administration all in one unified platform.
               </p>
+              <div className="mb-8">
+                <a href="https://login.pryro.com">
+                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
+                    Get Started
+                  </Button>
+                </a>
+              </div>
+              <div className="grid grid-cols-2 gap-3 max-w-md">
+                {[
+                  { label: "Attendance", icon: Clock },
+                  { label: "Payroll", icon: Wallet },
+                  { label: "Benefits", icon: Receipt },
+                  { label: "Reports", icon: BarChart3 },
+                ].map((feature, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg px-3 py-3">
+                    <feature.icon className="w-4 h-4" />
+                    {feature.label}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="bg-gradient-to-br from-blue-600 to-blue-400 rounded-[48px] p-8 flex items-center justify-center h-[420px] relative overflow-hidden">
-              <div className="bg-white rounded-[32px] p-5 w-[85%] h-[70%] flex flex-col overflow-hidden">
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">Workforce Analytics</h3>
-                <div className="grid grid-cols-2 gap-2 mb-2">
-                  <div className="bg-gray-50 rounded-lg p-2">
+            <div className="bg-gradient-to-l from-blue-500 from-40% to-white rounded-[40px] p-8 flex items-center justify-center h-[450px] relative overflow-hidden">
+              <div className="bg-white rounded-[16px] p-5 w-[85%] h-[75%] flex flex-col overflow-hidden">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-base font-semibold text-gray-900">Workforce Analytics</h3>
+                  <button className="text-xs text-blue-600">View All</button>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-gray-50 rounded-lg p-3">
                     <div className="text-[10px] text-gray-500 mb-1">Active Staff</div>
-                    <div className="text-base font-bold text-gray-900">342</div>
+                    <div className="text-xl font-bold text-gray-900">342</div>
                     <div className="text-[10px] text-green-600 mt-1">↑ 12.4%</div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-2">
+                  <div className="bg-gray-50 rounded-lg p-3">
                     <div className="text-[10px] text-gray-500 mb-1">Total Cost</div>
-                    <div className="text-base font-bold text-gray-900">$685K</div>
+                    <div className="text-xl font-bold text-gray-900">$685K</div>
                     <div className="text-[10px] text-gray-500 mt-1">Per Month</div>
                   </div>
                 </div>
@@ -914,12 +1164,13 @@ export default function PryroPage() {
           </div>
         </div>
       </section>
-
+     
+  
       <section id="faq" className="relative py-20 md:py-32 px-4 animate-on-scroll">
         <div className="max-w-[800px] w-full mx-auto">
           <div className="text-center mb-12 md:mb-16">
             <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-6 flex items-center justify-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
               FREQUENTLY ASKED QUESTIONS
             </div>
             <h2 className="font-serif text-[32px] leading-[1.15] md:text-[48px] md:leading-[1.1] font-medium mb-6 text-balance">
@@ -927,7 +1178,7 @@ export default function PryroPage() {
               <span
                 className="inline-block"
                 style={{
-                  background: "linear-gradient(135deg, #d9a7c7 0%, #fffcdc 100%)",
+                  background: "linear-gradient(135deg, #0077ff 0%, #ffffff 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -967,7 +1218,7 @@ export default function PryroPage() {
               {
                 question: "What is the implementation timeline?",
                 answer:
-                  "Implementation typically takes 4-12 weeks depending on company size and complexity. This includes data migration, system configuration, staff training, and testing. We provide dedicated project managers to ensure smooth deployment.",
+                  "Implementation typically takes 1-2 weeks depending on company size and complexity. This includes data migration, system configuration, staff training, and testing. We provide dedicated project managers to ensure smooth deployment.",
               },
               {
                 question: "What kind of support and training do you provide?",
@@ -1003,7 +1254,7 @@ export default function PryroPage() {
         </div>
       </section>
 
-      <section id="pricing" className="relative py-20 md:py-32 px-4 animate-on-scroll bg-gray-50">
+      <section id="pricing" className="relative py-20 md:py-32 px-4 animate-on-scroll bg-white">
         <div className="max-w-[1120px] w-full mx-auto">
           <div className="text-center mb-12">
             <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">PRICING</div>
@@ -1014,54 +1265,61 @@ export default function PryroPage() {
 
           <div className="flex justify-center mb-8">
             <div className="inline-flex bg-white rounded-full p-1 border border-gray-200">
-              <button onClick={() => setPricingToggle("annually")} className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${pricingToggle === "annually" ? "bg-gray-900 text-white" : "text-gray-600 hover:text-gray-900"}`}>Annually</button>
-              <button onClick={() => setPricingToggle("monthly")} className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${pricingToggle === "monthly" ? "bg-gray-900 text-white" : "text-gray-600 hover:text-gray-900"}`}>Monthly</button>
+              <button onClick={() => setPricingToggle("annually")} className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${pricingToggle === "annually" ? "bg-blue-600 text-white" : "text-gray-600 hover:text-gray-900"}`}>Annually</button>
+              <button onClick={() => setPricingToggle("monthly")} className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${pricingToggle === "monthly" ? "bg-blue-600 text-white" : "text-gray-600 hover:text-gray-900"}`}>Monthly</button>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="bg-white rounded-3xl p-8 border border-gray-200">
               <div className="mb-6">
-                <div className="text-sm text-gray-600 mb-2">Dreelio Basic</div>
+                <div className="text-sm text-gray-600 mb-2">pryro Basic</div>
                 <div className="text-4xl font-bold mb-2">Free</div>
                 <div className="text-sm text-gray-600">For solo use with light needs.</div>
               </div>
               <div className="space-y-3 mb-8">
-                {['Unlimited projects', 'Unlimited users', 'Time tracking', 'CRM', 'iOS & Android app'].map((feature, i) => (
+                {['Unlimited projects', '2 limited users', 'Time tracking', 'CRM', '100 limited invoice'].map((feature, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm">
                     <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
                     {feature}
                   </div>
                 ))}
               </div>
-              <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Try Freelio free</button>
+              <a href="https://login.pryro.com">
+                <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Try Freelio free</button>
+              </a>
             </div>
 
             <div className="bg-white rounded-3xl p-8 border border-gray-200 relative">
               {pricingToggle === "annually" && <div className="absolute top-4 right-4 bg-green-400 text-xs font-medium px-3 py-1 rounded-full">Save 20%</div>}
               <div className="mb-6">
-                <div className="text-sm text-gray-600 mb-2">Dreelio Premium</div>
-                <div className="text-4xl font-bold mb-2 h-12 flex items-center">
-                  <span key={pricingToggle} className="inline-block animate-[flip_0.5s_ease-in-out]">
-                    {pricingToggle === "annually" ? "$189/mo" : "$229/mo"}
+                <div className="text-sm text-gray-600 mb-2">pryro Premium</div>
+                <div className="text-4xl font-bold mb-2 h-12 flex items-center overflow-hidden relative">
+                  <span 
+                    key={pricingToggle} 
+                    className="inline-block animate-[slideUp_0.4s_ease-out]"
+                  >
+                    {pricingToggle === "annually" ? "$29/mo" : "$50/mo"}
                   </span>
                 </div>
                 <div className="text-sm text-gray-600">For pro use with light needs.</div>
               </div>
               <div className="space-y-3 mb-8">
-                {['Everything in Basic', 'Invoices & payments', 'Expense tracking', 'Income tracking', 'Scheduling'].map((feature, i) => (
+                {['Everything in Basic', 'Invoices & payments', 'Expense tracking', ' HR, CRM and POS','AI report',' Envoice Link','Income tracking', 'Scheduling','VIP Support'].map((feature, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm">
                     <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
                     {feature}
                   </div>
                 ))}
               </div>
-              <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Get started</button>
+              <a href="https://login.pryro.com">
+                <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Get started</button>
+              </a>
             </div>
 
             <div className="bg-white rounded-3xl p-8 border border-gray-200">
               <div className="mb-6">
-                <div className="text-sm text-gray-600 mb-2">Dreelio Enterprise</div>
+                <div className="text-sm text-gray-600 mb-2">pryro Enterprise</div>
                 <div className="text-4xl font-bold mb-2">Flexible</div>
                 <div className="text-sm text-gray-600">For team use with light needs.</div>
               </div>
@@ -1073,22 +1331,22 @@ export default function PryroPage() {
                   </div>
                 ))}
               </div>
-              <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Contact sales</button>
+              <a href="/contact">
+                <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Contact sales</button>
+              </a>
             </div>
           </div>
 
-          <div className="text-center mt-8 text-sm text-gray-600">Trusted by 7,000+ top startups, freelancers and studios</div>
+          <div className="text-center mt-8 text-sm text-gray-600">Trusted by 64,000+ top Busiiness, startups, Ngo, and studios</div>
         </div>
       </section>
 
-      <section className="relative py-20 md:py-32 px-4 animate-on-scroll overflow-hidden bg-gray-50">
+      <section className="relative py-20 md:py-32 px-4 animate-on-scroll overflow-hidden bg-white">
         <div className="max-w-[1120px] w-full mx-auto text-center">
           <h2 className="text-[32px] md:text-[48px] font-bold mb-12 leading-tight text-gray-900">
             "This ERP platform transformed<br />how we run our business"
           </h2>
-          <div className="flex justify-center mb-4">
-            <img src="/placeholder-user.jpg" alt="Featured" className="w-16 h-16 rounded-full object-cover" />
-          </div>
+
           <div className="text-base font-medium mb-1">Sarah Mitchell</div>
           <div className="text-sm text-gray-600 mb-16">CEO, TechCorp Industries</div>
 
@@ -1154,7 +1412,7 @@ export default function PryroPage() {
 
       <section
         id="cta"
-        className="relative py-24 md:py-40 px-4 animate-on-scroll overflow-hidden pt-0"
+        className="relative py-20 md:py-40 px-4 animate-on-scroll overflow-hidden pt-0"
         style={{
           backgroundImage: `url('/earth-cta.png')`,
           backgroundSize: "cover",
@@ -1164,8 +1422,8 @@ export default function PryroPage() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-white via-white/60 to-transparent pointer-events-none" />
         <div className="max-w-[800px] w-full mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 glass-pill px-4 py-2 rounded-full mb-8 text-xs md:text-sm text-[#4a5568]">
-            <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 glass-pill px-4 py-2 rounded-full mb-8 text-xs md:text-xs text-[#4a5568]">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
             Transform your business
           </div>
 
@@ -1176,24 +1434,28 @@ export default function PryroPage() {
             Together, we're building smarter enterprises. Start optimizing your operations today.
           </p>
 
-          <Button className="glass-button text-base rounded-full bg-black/5 border border-black/20 hover:bg-black/15 hover:border-black/30 transition-all duration-300 text-gray-900 px-8 py-6 md:text-base">
-            Get Started Today
-          </Button>
+          <a href="https://login.pryro.com">
+            <Button className="text-base rounded-full bg-blue-600 border border-blue-600 hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 text-white px-8 py-6 md:text-base">
+              Get Started Today
+            </Button>
+          </a>
         </div>
       </section>
 
-      <footer className="relative px-4 py-8 pt-48" style={{ background: "linear-gradient(to bottom, #FFFFFF 0%, #DBEAFE 15%, #93C5FD 30%, #60A5FA 45%, #3B82F6 60%, #2563EB 80%, #1E40AF 100%)" }}>
+      <footer className="relative px-4 py-8 pt-59" style={{ background: "linear-gradient(to bottom, #FFFFFF 0%, #DBEAFE 15%, #6aaffd 30%, #3b8ff7 45%, #3B82F6 60%, #2563EB 80%, #1E40AF 100%)" }}>
         <div className="max-w-[1120px] w-full mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-8 mb-12">
             {/* Brand Column */}
             <div className="flex flex-col gap-4">
-              <div className="text-lg font-semibold font-mono text-white">Pryro</div>
+              <div className="w-fit">
+                <img src="/pryro logo.png" alt="Pryro" className="h-8 w-auto" />
+              </div>
               <p className="text-xs text-white/80 leading-relaxed">
                 Empowering businesses worldwide with intelligent ERP solutions and automation.
               </p>
               <div className="flex items-center gap-4 mt-2">
                 <a
-                  href="https://twitter.com"
+                  href="https://twitter.com/pryro.co"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white/80 hover:text-white transition-colors"
@@ -1204,7 +1466,7 @@ export default function PryroPage() {
                   </svg>
                 </a>
                 <a
-                  href="https://youtube.com"
+                  href="https://youtube.com/pryroo"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white/80 hover:text-white transition-colors"
@@ -1213,7 +1475,7 @@ export default function PryroPage() {
                   <Youtube className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://instagram.com/pryro.co"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white/80 hover:text-white transition-colors"
@@ -1224,20 +1486,41 @@ export default function PryroPage() {
               </div>
             </div>
 
+            {/* Solutions Menu */}
+            <div className="flex flex-col gap-4">
+              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Solutions</div>
+              <div className="flex flex-col gap-3">
+                <a href="/small-business" className="text-sm text-white/80 hover:text-white transition-colors">Small Business</a>
+                <a href="/accountants-bookkeepers" className="text-sm text-white/80 hover:text-white transition-colors">Accountants & Bookkeepers</a>
+                <a href="/project" className="text-sm text-white/80 hover:text-white transition-colors">Project</a>
+                <a href="/human-resource" className="text-sm text-white/80 hover:text-white transition-colors">Human Resource</a>
+                <a href="/stock-management" className="text-sm text-white/80 hover:text-white transition-colors">Stock Management</a>
+                <a href="/customer-relation" className="text-sm text-white/80 hover:text-white transition-colors">Customer Relation</a>
+                <a href="/self-employed" className="text-sm text-white/80 hover:text-white transition-colors">Self-employed</a>
+                <a href="/non-profit" className="text-sm text-white/80 hover:text-white transition-colors">Non-profit</a>
+                <a href="/hospitality" className="text-sm text-white/80 hover:text-white transition-colors">Hospitality</a>
+                <a href="/construction" className="text-sm text-white/80 hover:text-white transition-colors">Construction</a>
+                <a href="/logistic" className="text-sm text-white/80 hover:text-white transition-colors">Logistic</a>
+                <a href="/marketing-mail" className="text-sm text-white/80 hover:text-white transition-colors">Marketing (Mail)</a>
+                <a href="/marketing-call" className="text-sm text-white/80 hover:text-white transition-colors">Marketing (Call)</a>
+                <a href="/ai-enterprise" className="text-sm text-white/80 hover:text-white transition-colors">AI for Enterprise</a>
+              </div>
+            </div>
+
             {/* Product Menu */}
             <div className="flex flex-col gap-4">
               <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Product</div>
               <div className="flex flex-col gap-3">
-                <a href="#" className="text-sm text-white/80 hover:text-white transition-colors">
+                <a href="/features" className="text-sm text-white/80 hover:text-white transition-colors">
                   Features
                 </a>
-                <a href="#" className="text-sm text-white/80 hover:text-white transition-colors">
+                <a href="/pricing" className="text-sm text-white/80 hover:text-white transition-colors">
                   Pricing
                 </a>
-                <a href="#" className="text-sm text-white/80 hover:text-white transition-colors">
+                <a href="/documentation" className="text-sm text-white/80 hover:text-white transition-colors">
                   Documentation
                 </a>
-                <a href="#" className="text-sm text-white/80 hover:text-white transition-colors">
+                <a href="/api" className="text-sm text-white/80 hover:text-white transition-colors">
                   API
                 </a>
               </div>
@@ -1247,33 +1530,37 @@ export default function PryroPage() {
             <div className="flex flex-col gap-4">
               <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Company</div>
               <div className="flex flex-col gap-3">
-                <a href="#" className="text-sm text-white/80 hover:text-white transition-colors">
+                <a href="/about" className="text-sm text-white/80 hover:text-white transition-colors">
                   About
                 </a>
-                <a href="#" className="text-sm text-white/80 hover:text-white transition-colors">
-                  Blog
-                </a>
-                <a href="#" className="text-sm text-white/80 hover:text-white transition-colors">
+                <a href="/careers" className="text-sm text-white/80 hover:text-white transition-colors">
                   Careers
                 </a>
-                <a href="#" className="text-sm text-white/80 hover:text-white transition-colors">
+                <a href="/contact" className="text-sm text-white/80 hover:text-white transition-colors">
                   Contact
                 </a>
               </div>
             </div>
 
-            {/* Newsletter Subscription */}
+            {/* WhatsApp Contact */}
             <div className="flex flex-col gap-4">
-              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Newsletter</div>
-              <p className="text-xs text-white/80 mb-3">Get updates on business optimization insights.</p>
+              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Contact Us</div>
+              <p className="text-xs text-white/80 mb-3">Send us a direct message on WhatsApp.</p>
               <div className="flex flex-col gap-2">
                 <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-xs text-white placeholder-white/60 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/30 transition-all"
+                  type="text"
+                  placeholder="Type your message"
+                  id="whatsapp-message"
+                  className="px-4 py-1.5 bg-white/20 border border-white/30 rounded-lg text-xs text-white placeholder-white/60 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/30 transition-all"
                 />
-                <button className="px-4 py-2 border rounded-lg text-xs font-medium hover:bg-white/90 transition-all bg-white border-white text-blue-600">
-                  Subscribe
+                <button 
+                  onClick={() => {
+                    const message = (document.getElementById('whatsapp-message') as HTMLInputElement)?.value || '';
+                    window.open(`https://wa.me/250788715075?text=${encodeURIComponent(message)}`, '_blank');
+                  }}
+                  className="px-4 py-1.5 border rounded-lg text-xs font-medium hover:bg-white/90 transition-all bg-white border-white text-blue-600"
+                >
+                  Send WhatsApp
                 </button>
               </div>
             </div>
@@ -1281,15 +1568,15 @@ export default function PryroPage() {
 
           {/* Footer Bottom */}
           <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/80">
-            <div>© 2025 Pryro. All rights reserved.</div>
+            <div>© 2026 Pryro. All rights reserved.</div>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">
+              <a href="/privacy" className="hover:text-white transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="hover:text-white transition-colors">
+              <a href="/terms" className="hover:text-white transition-colors">
                 Terms of Service
               </a>
-              <a href="#" className="hover:text-white transition-colors">
+              <a href="/cookies" className="hover:text-white transition-colors">
                 Cookie Settings
               </a>
             </div>
@@ -1299,3 +1586,15 @@ export default function PryroPage() {
     </div>
   )
 }
+const IntegrationCard = ({ children, className, borderClassName }: { children: React.ReactNode; className?: string; borderClassName?: string }) => {
+  return (
+    <div className={`relative flex size-20 rounded-xl bg-white ${className || ''}`}>
+      <div
+        role="presentation"
+        className={`absolute inset-0 rounded-xl border border-black/20 ${borderClassName || ''}`}
+      />
+      <div className="relative z-20 m-auto size-fit text-gray-700">{children}</div>
+    </div>
+  )
+}
+

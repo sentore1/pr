@@ -8,7 +8,7 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "LUMERA — AI Support That Actually Works",
+  title: "Pryro — Acounting and AI Support That Actually Works",
   description:
     "Deflect 98% of support tickets with AI that understands your customers. Built for scale, designed for simplicity.",
   generator: "v0.app",

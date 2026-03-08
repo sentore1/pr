@@ -28,7 +28,7 @@ export const experiences: Experience[] = [
     },
     startDate: "2020-01-15",
     endDate: "2024-12-27",
-    color: "green",
+    color: "blue",
   },
   {
     id: "2",
@@ -43,7 +43,7 @@ export const experiences: Experience[] = [
     },
     startDate: "2020-06-20",
     endDate: "2024-12-27",
-    color: "green",
+    color: "blue",
   },
   {
     id: "3",
@@ -73,7 +73,7 @@ export const experiences: Experience[] = [
     },
     startDate: "2021-09-05",
     endDate: "2024-12-27",
-    color: "pink",
+    color: "blue",
   },
   {
     id: "5",
@@ -88,6 +88,6 @@ export const experiences: Experience[] = [
     },
     startDate: "2022-02-18",
     endDate: "2024-12-27",
-    color: "yellow",
+    color: "blue",
   },
 ]
