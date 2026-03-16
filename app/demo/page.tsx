@@ -1,8 +1,26 @@
 "use client"
 
+import { useState } from "react"
 import { Footer } from "@/components/footer"
 
 export default function DemoPage() {
+  const [form, setForm] = useState({
+    firstName: "", lastName: "", email: "", company: "",
+    companySize: "1-10 employees", tool: ""
+  })
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus("loading")
+    const res = await fetch("/api/demo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    })
+    setStatus(res.ok ? "success" : "error")
+  }
+
   return (
     <div className="min-h-screen bg-white text-[#0f1117] overflow-x-hidden">
       <header className="fixed top-6 left-6 md:w-auto md:right-auto right-6 z-40 border border-black/10 backdrop-blur-md bg-white/80 rounded-[20px]">
@@ -72,28 +90,39 @@ export default function DemoPage() {
 
             <div className="bg-white rounded-3xl p-8 border border-gray-200">
               <h2 className="text-2xl font-normal mb-6 text-gray-900">Request Your Demo</h2>
-              <form className="space-y-5">
+              {status === "success" ? (
+                <div className="text-center py-12">
+                  <p className="text-2xl font-semibold text-gray-900 mb-2">Request Received!</p>
+                  <p className="text-gray-600">Our team will reach out to schedule your demo.</p>
+                </div>
+              ) : (
+              <form className="space-y-5" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-2 text-gray-700">First Name</label>
-                    <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors" placeholder="John" />
+                    <input type="text" required className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors text-gray-900" placeholder="John"
+                      value={form.firstName} onChange={e => setForm({ ...form, firstName: e.target.value })} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2 text-gray-700">Last Name</label>
-                    <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors" placeholder="Doe" />
+                    <input type="text" required className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors text-gray-900" placeholder="Doe"
+                      value={form.lastName} onChange={e => setForm({ ...form, lastName: e.target.value })} />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">Work Email</label>
-                  <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors" placeholder="john@company.com" />
+                  <input type="email" required className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors text-gray-900" placeholder="john@company.com"
+                    value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">Company</label>
-                  <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors" placeholder="Company Name" />
+                  <input type="text" required className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors text-gray-900" placeholder="Company Name"
+                    value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">Company Size</label>
-                  <select className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors text-gray-700">
+                  <select className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors text-gray-700"
+                    value={form.companySize} onChange={e => setForm({ ...form, companySize: e.target.value })}>
                     <option>1-10 employees</option>
                     <option>11-50 employees</option>
                     <option>51-200 employees</option>
@@ -103,7 +132,8 @@ export default function DemoPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">Which tool do you need?</label>
-                  <select className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors text-gray-700">
+                  <select className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors text-gray-700"
+                    value={form.tool} onChange={e => setForm({ ...form, tool: e.target.value })}>
                     <option value="">Select a tool</option>
                     <option>ERP System</option>
                     <option>HRM Tools</option>
@@ -121,13 +151,15 @@ export default function DemoPage() {
                     <option>Warehouse Management</option>
                   </select>
                 </div>
-                <button type="submit" className="w-full bg-gray-900 text-white rounded-full py-3 hover:bg-gray-800 transition-colors text-sm font-medium">
-                  Schedule Demo
+                {status === "error" && <p className="text-red-500 text-sm">Something went wrong. Please try again.</p>}
+                <button type="submit" disabled={status === "loading"} className="w-full bg-gray-900 text-white rounded-full py-3 hover:bg-gray-800 transition-colors text-sm font-medium disabled:opacity-60">
+                  {status === "loading" ? "Sending..." : "Schedule Demo"}
                 </button>
                 <p className="text-xs text-gray-500 text-center">
                   By submitting, you agree to our <a href="/terms" className="underline">Terms</a> and <a href="/privacy" className="underline">Privacy Policy</a>.
                 </p>
               </form>
+              )}
             </div>
           </div>
         </div>

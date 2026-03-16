@@ -1,11 +1,26 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Mail, Phone, MapPin } from "lucide-react"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 
 export default function ContactPage() {
+  const [form, setForm] = useState({ name: "", email: "", company: "", message: "" })
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus("loading")
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    })
+    setStatus(res.ok ? "success" : "error")
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -62,39 +77,58 @@ export default function ContactPage() {
             </div>
 
             <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
-              <form className="space-y-5">
+              {status === "success" ? (
+                <div className="text-center py-12">
+                  <p className="text-2xl font-semibold text-gray-900 mb-2">Message Sent!</p>
+                  <p className="text-gray-600">We'll get back to you as soon as possible.</p>
+                </div>
+              ) : (
+              <form className="space-y-5" onSubmit={handleSubmit}>
                 <div>
-                  <input 
-                    type="text" 
-                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white" 
-                    placeholder="Your Name" 
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white text-gray-900"
+                    placeholder="Your Name"
+                    value={form.name}
+                    onChange={e => setForm({ ...form, name: e.target.value })}
                   />
                 </div>
                 <div>
-                  <input 
-                    type="email" 
-                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white" 
-                    placeholder="Email Address" 
+                  <input
+                    type="email"
+                    required
+                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white text-gray-900"
+                    placeholder="Email Address"
+                    value={form.email}
+                    onChange={e => setForm({ ...form, email: e.target.value })}
                   />
                 </div>
                 <div>
-                  <input 
-                    type="text" 
-                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white" 
-                    placeholder="Company (Optional)" 
+                  <input
+                    type="text"
+                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white text-gray-900"
+                    placeholder="Company (Optional)"
+                    value={form.company}
+                    onChange={e => setForm({ ...form, company: e.target.value })}
                   />
                 </div>
                 <div>
-                  <textarea 
-                    rows={5} 
-                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white resize-none" 
+                  <textarea
+                    rows={5}
+                    required
+                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white resize-none text-gray-900"
                     placeholder="Your Message"
-                  ></textarea>
+                    value={form.message}
+                    onChange={e => setForm({ ...form, message: e.target.value })}
+                  />
                 </div>
-                <Button className="w-full bg-blue-600 text-white rounded-xl py-3.5 hover:bg-blue-700 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300">
-                  Send Message
+                {status === "error" && <p className="text-red-500 text-sm">Something went wrong. Please try again.</p>}
+                <Button disabled={status === "loading"} className="w-full bg-blue-600 text-white rounded-xl py-3.5 hover:bg-blue-700 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+                  {status === "loading" ? "Sending..." : "Send Message"}
                 </Button>
               </form>
+              )}
             </div>
           </div>
         </div>
