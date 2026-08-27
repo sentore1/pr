@@ -10,14 +10,14 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-6 left-6 md:w-auto md:right-auto right-6 z-40 border border-black/10 backdrop-blur-md bg-white/80 rounded-[20px]">
+      <header className="fixed top-6 left-6 md:w-auto md:right-auto right-6 z-40 border border-black/10 backdrop-blur-md bg-white/80 rounded-[16px]">
         <div className="w-full mx-auto px-6">
           <div className="flex items-center gap-6 md:h-14 h-14">
             <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-300">
               <img src="/pryro logo.png" alt="Pryro" className="h-8 w-auto" />
             </a>
 
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center gap-2">
               <div 
                 className="relative"
                 onMouseEnter={() => setShowProductsMenu(true)}
@@ -28,7 +28,7 @@ export function Header() {
                 </a>
                 {showProductsMenu && (
                   <div className="absolute top-full left-0 pt-2">
-                    <div className="bg-white border border-black/10 rounded-2xl shadow-xl p-6 w-[600px] backdrop-blur-md">
+                    <div className="bg-white border border-black/10 rounded-[16px] shadow-xl p-6 w-[600px] backdrop-blur-md">
                       <div className="grid grid-cols-2 gap-4">
                         <a href="/features" className="flex items-start gap-3 p-3 rounded-md hover:bg-blue-600 hover:text-white transition-colors group">
                           <Zap className="w-5 h-5 text-blue-500 group-hover:text-white mt-0.5" />
@@ -81,7 +81,7 @@ export function Header() {
                 </button>
                 {showSolutionsMenu && (
                   <div className="absolute top-full left-0 pt-2">
-                    <div className="bg-white border border-black/10 rounded-2xl shadow-xl p-6 w-[700px] backdrop-blur-md">
+                    <div className="bg-white border border-black/10 rounded-[16px] shadow-xl p-6 w-[700px] backdrop-blur-md">
                       <div className="grid grid-cols-3 gap-3">
                         <a href="/small-business" className="flex items-start gap-2 p-2.5 rounded-md hover:bg-blue-600 transition-colors group">
                           <Building2 className="w-4 h-4 text-blue-500 group-hover:text-white mt-0.5 flex-shrink-0" />

@@ -380,3 +380,124 @@ html {
     transform: translateY(0) scale(1);
   }
 }
+
+/* Industry Carousel Animation */
+@keyframes industry-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes industry-scroll-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.industry-carousel {
+  overflow: hidden;
+  position: relative;
+}
+
+.industry-carousel::before,
+.industry-carousel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.industry-carousel::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
+}
+
+.industry-carousel::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
+}
+
+/* Full width carousel without fade edges */
+.industry-carousel-full {
+  overflow: hidden;
+  position: relative;
+}
+
+.industry-carousel-track {
+  animation: industry-scroll 50s linear infinite;
+  will-change: transform;
+}
+
+.industry-carousel-track-reverse {
+  animation: industry-scroll-reverse 50s linear infinite;
+  will-change: transform;
+}
+
+.industry-carousel:hover .industry-carousel-track,
+.industry-carousel-full:hover .industry-carousel-track,
+.industry-carousel-full:hover .industry-carousel-track-reverse {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .industry-carousel-track,
+  .industry-carousel-track-reverse {
+    animation-play-state: paused;
+  }
+}
+
+/* ── Card section animations ─────────────────────────────────── */
+
+/* Fade + slide up for card blocks */
+@keyframes card-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-fade-up {
+  opacity: 0;
+  animation: card-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Table row stagger fade */
+@keyframes card-row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.card-row-fade {
+  opacity: 0;
+  animation: card-row-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Progress bar fill animation */
+@keyframes card-bar-expand {
+  from { width: 0%; }
+  to   { width: var(--bar-target); }
+}
+
+.card-bar-fill {
+  width: 0%;
+  animation: card-bar-expand 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}

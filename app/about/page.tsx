@@ -64,7 +64,7 @@ export default function AboutPage() {
               { year: "2020", title: "Foundation", desc: "Pryro was founded with a vision to unify business management tools" },
               { year: "2021", title: "First 1,000 Customers", desc: "Reached our first major milestone and expanded to 3 countries" },
               { year: "2022", title: "Series A Funding", desc: "Raised Disclosed funding to accelerate product development and global expansion" },
-              { year: "2023", title: "AI Integration", desc: "Launched AI-powered features for predictive analytics and automation" },
+              { year: "2027", title: "AI Integration", desc: "Launched AI-powered features for predictive analytics and automation" },
               { year: "2024", title: "Global Leader", desc: "Serving 64,000+ businesses with 50+ team members worldwide" }
             ].map((milestone, i) => (
               <div key={i} className="flex gap-6">

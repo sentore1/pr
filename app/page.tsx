@@ -1,14 +1,283 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { PawPrint, Zap, Package, ShoppingCart, DollarSign, Calendar, Users, Trees, Satellite, Menu, X, Youtube, Instagram, ChevronDown, ListTodo, Clock, FileText, BarChart3, Receipt, Wallet, TrendingUp, Plug, Building2, Briefcase, UserCircle, Boxes, HeartHandshake, Hammer, Truck, Mail, Phone, Bot } from "lucide-react"
+import { PawPrint, Zap, Package, ShoppingCart, DollarSign, Calendar, Users, Trees, Satellite, Menu, X, Youtube, Instagram, ChevronDown, ListTodo, Clock, FileText, BarChart3, Receipt, Wallet, TrendingUp, Plug, Building2, Briefcase, UserCircle, Boxes, HeartHandshake, Hammer, Truck, Mail, Phone, Bot, Check, Minus, ArrowRight } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AnimatedText } from "@/components/animated-text"
 import { CustomDroneIcon } from "@/components/drone-icon"
 import { WorldMap } from "@/components/world-map"
 import { experiences } from "@/lib/experience-data"
 import type { Experience } from "@/lib/experience-data"
+
+function CardCounter({ target, prefix = "", suffix = "", className = "" }: { target: number; prefix?: string; suffix?: string; className?: string }) {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLSpanElement>(null)
+  const started = useRef(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true
+          const duration = 1200
+          const steps = 60
+          const increment = target / steps
+          let current = 0
+          const interval = setInterval(() => {
+            current += increment
+            if (current >= target) {
+              setCount(target)
+              clearInterval(interval)
+            } else {
+              setCount(Math.floor(current))
+            }
+          }, duration / steps)
+        }
+      },
+      { threshold: 0.4 },
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [target])
+
+  return (
+    <span ref={ref} className={className}>
+      {prefix}{count.toLocaleString()}{suffix}
+    </span>
+  )
+}
+
+/* Ticks up by 1–2 every second, indefinitely — feels like a live counter */
+function LiveCounter({ start, step = 1, intervalMs = 1000, prefix = "", suffix = "" }: {
+  start: number
+  step?: number
+  intervalMs?: number
+  prefix?: string
+  suffix?: string
+}) {
+  const [count, setCount] = useState(start)
+  const ref = useRef<HTMLSpanElement>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !timerRef.current) {
+          timerRef.current = setInterval(() => {
+            setCount(prev => prev + step)
+          }, intervalMs)
+        }
+      },
+      { threshold: 0.4 },
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => {
+      observer.disconnect()
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [step, intervalMs])
+
+  return (
+    <span ref={ref}>
+      {prefix}{count.toLocaleString()}{suffix}
+    </span>
+  )
+}
+
+/* Randomly increases or decreases by ±range every intervalMs */
+function FluctuatingCounter({ start, range = 5, intervalMs = 3000, prefix = "", suffix = "", min = 0, max = Infinity, decimals = 0 }: {
+  start: number
+  range?: number
+  intervalMs?: number
+  prefix?: string
+  suffix?: string
+  min?: number
+  max?: number
+  decimals?: number
+}) {
+  const [count, setCount] = useState(start)
+  const ref = useRef<HTMLSpanElement>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !timerRef.current) {
+          timerRef.current = setInterval(() => {
+            const change = (Math.random() * (range * 2) - range) // -range to +range
+            setCount(prev => {
+              const newVal = prev + change
+              return Math.min(max, Math.max(min, decimals > 0 ? parseFloat(newVal.toFixed(decimals)) : Math.floor(newVal)))
+            })
+          }, intervalMs)
+        }
+      },
+      { threshold: 0.4 },
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => {
+      observer.disconnect()
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [range, intervalMs, min, max, decimals])
+
+  const displayValue = decimals > 0 ? count.toFixed(decimals) : count.toLocaleString()
+
+  return (
+    <span ref={ref}>
+      {prefix}{displayValue}{suffix}
+    </span>
+  )
+}
+
+/* Live category breakdown with fluctuating bars and amounts */
+function LiveCategoryBreakdown() {
+  const [categories, setCategories] = useState([
+    { label: "Operations",  amount: 9200,  pct: 42 },
+    { label: "Marketing",   amount: 5800,  pct: 26 },
+    { label: "Engineering", amount: 4100,  pct: 19 },
+    { label: "HR & Admin",  amount: 2900,  pct: 13 },
+  ])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCategories(prev => prev.map(cat => ({
+        ...cat,
+        amount: Math.max(cat.amount - 500, Math.min(cat.amount + 500, cat.amount + (Math.random() * 400 - 200))),
+        pct: Math.max(10, Math.min(50, cat.pct + (Math.random() * 6 - 3)))
+      })))
+    }, 7000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <>
+      {categories.map((cat, i) => (
+        <div key={i} className="flex items-center gap-2">
+          <span className="text-[10px] text-gray-500 w-20 shrink-0">{cat.label}</span>
+          <div className="flex-1 bg-gray-100 rounded-full h-1.5">
+            <div 
+              className="bg-blue-500 h-1.5 rounded-full transition-all duration-1000 ease-in-out" 
+              style={{ width: `${Math.floor(cat.pct)}%` }}
+            />
+          </div>
+          <span className="text-[10px] text-gray-600 font-medium w-12 text-right shrink-0">${Math.floor(cat.amount).toLocaleString()}</span>
+        </div>
+      ))}
+    </>
+  )
+}
+
+/* Animates only last 2 digits of a price like $43.99 */
+function FluctuatingPrice({ basePrice }: { basePrice: string }) {
+  const parts = basePrice.match(/\$(\d+)\.(\d{2})/)
+  if (!parts) return <span>{basePrice}</span>
+  
+  const dollars = parts[1]
+  const centsStart = parseInt(parts[2], 10)
+  
+  const [cents, setCents] = useState(centsStart)
+  const ref = useRef<HTMLSpanElement>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !timerRef.current) {
+          timerRef.current = setInterval(() => {
+            const change = Math.floor(Math.random() * 21) - 10 // -10 to +10
+            setCents(prev => Math.min(99, Math.max(0, prev + change)))
+          }, 3000) // every 3s
+        }
+      },
+      { threshold: 0.4 },
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => {
+      observer.disconnect()
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [])
+
+  return (
+    <span ref={ref}>
+      ${dollars}.{cents.toString().padStart(2, '0')}
+    </span>
+  )
+}
+
+/* Live customer table that adds new entries */
+function LiveCustomerTable() {
+  const newCustomers = [
+    { customer: "Sarah Chen",     initials: "SC", status: "Paid" as const },
+    { customer: "James Wilson",   initials: "JW", status: "Ref" as const },
+    { customer: "Maya Patel",     initials: "MP", status: "Paid" as const },
+    { customer: "Alex Rodriguez", initials: "AR", status: "Paid" as const },
+    { customer: "Emma Johnson",   initials: "EJ", status: "Ref" as const },
+    { customer: "David Kim",      initials: "DK", status: "Paid" as const },
+  ]
+
+  const [rows, setRows] = useState([
+    { date: "10/31/2027", status: "Paid" as const,      customer: "Bernard Ng",    initials: "BN", revenue: "$43.79" },
+    { date: "10/21/2027", status: "Ref" as const,       customer: "Méschac Irung", initials: "MI", revenue: "$19.99" },
+    { date: "10/15/2027", status: "Paid" as const,      customer: "Glodie Ng",     initials: "GN", revenue: "$99.99" },
+    { date: "10/12/2027", status: "Cancelled" as const, customer: "Theo Ng",       initials: "TN", revenue: "$19.72" },
+    { date: "10/08/2027", status: "Paid" as const,      customer: "Amara Diop",    initials: "AD", revenue: "$74.73" },
+    { date: "10/05/2027", status: "Ref" as const,       customer: "Kofi Mensah",   initials: "KM", revenue: "$54.18" },
+  ])
+
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const customerIndexRef = useRef(0)
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      const newCustomer = newCustomers[customerIndexRef.current % newCustomers.length]
+      const newRow = {
+        date: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '/'),
+        status: newCustomer.status,
+        customer: newCustomer.customer,
+        initials: newCustomer.initials,
+        revenue: `$${Math.floor(Math.random() * 80 + 20)}.${Math.floor(Math.random() * 100).toString().padStart(2, '0')}`
+      }
+      setRows(prev => [newRow, ...prev.slice(0, 5)]) // Keep max 6 rows
+      customerIndexRef.current++
+    }, 12000) // Add new row every 12 seconds
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [])
+
+  return (
+    <>
+      {rows.map((row, i) => {
+        const statusStyle =
+          row.status === "Paid"      ? "bg-gray-100 text-gray-700 border-gray-200" :
+          row.status === "Cancelled" ? "bg-gray-100 text-gray-400 border-gray-200 line-through" :
+                                       "bg-gray-100 text-gray-500 border-gray-200"
+        return (
+          <div
+            key={`${row.customer}-${row.date}`}
+            className="grid grid-cols-[24px_80px_64px_1fr_56px] gap-x-2 px-3 py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/60 transition-colors card-row-fade"
+            style={{ animationDelay: i === 0 ? "0ms" : `${400 + i * 60}ms` }}
+          >
+            <span className="text-[11px] text-gray-400 self-center">{i + 1}</span>
+            <span className="text-[11px] text-gray-500 self-center">{row.date}</span>
+            <span className={`self-center text-[10px] font-medium border rounded px-1.5 py-0.5 w-fit ${statusStyle}`}>{row.status}</span>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+                <span className="text-[8px] font-semibold text-gray-600">{row.initials}</span>
+              </div>
+              <span className="text-[11px] text-gray-800 font-medium truncate">{row.customer}</span>
+            </div>
+            <span className="text-[11px] text-gray-800 font-semibold text-right self-center"><FluctuatingPrice basePrice={row.revenue} /></span>
+          </div>
+        )
+      })}
+    </>
+  )
+}
 
 function AnimatedCounter({ value, suffix = "" }: { value: string; suffix?: string }) {
   const [displayValue, setDisplayValue] = useState("0")
@@ -180,9 +449,9 @@ export default function PryroPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-[#0f1117] overflow-x-hidden">
-      <header className="fixed top-6 left-6 md:w-auto md:right-auto right-6 z-40 border border-black/10 backdrop-blur-md bg-white/80 rounded-[20px]">
-        <div className="w-full mx-auto px-6">
-          <div className="flex items-center gap-6 md:h-14 h-14">
+      <header className="fixed top-6 left-6 md:w-auto md:right-auto right-6 z-40 border border-black/10 backdrop-blur-md bg-white/80 rounded-[6px]">
+        <div className="w-full mx-auto px-2">
+          <div className="flex items-center gap-6 md:h-12 h-12">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-300"
@@ -190,7 +459,7 @@ export default function PryroPage() {
               <img src="/pryro logo.png" alt="Pryro" className="h-8 w-auto" />
             </button>
 
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center gap-4">
               <div 
                 className="relative"
                 onMouseEnter={() => setShowProductsMenu(true)}
@@ -354,7 +623,22 @@ export default function PryroPage() {
               </div>
               
               <a href="/about" className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300">About</a>
-              <a href="/contact" className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300">Contact</a>
+
+              {/* Nav CTA group */}
+              <div className="flex items-center gap-1 bg-black/5 rounded-[9px] p-1 ml-2">
+                <a
+                  href="/contact"
+                  className="text-sm text-[#0f1117] font-medium px-3 py-1.5 rounded-[6px] hover:bg-white/80 transition-all duration-200"
+                >
+                  Contact
+                </a>
+                <a
+                  href="https://login.pryro.com"
+                  className="text-sm font-medium px-3 py-1.5 rounded-[6px] bg-white text-[#0f1117] hover:bg-white/80 transition-all duration-200"
+                >
+                  Log in
+                </a>
+              </div>
             </nav>
 
             <button
@@ -383,7 +667,7 @@ export default function PryroPage() {
         ref={heroRef}
         className={`relative min-h-[120vh] flex flex-col items-center justify-center px-4 pt-24 pb-16 md:pt-32 md:pb-24 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isLoaded ? "scale-100 opacity-100" : "scale-[1.03] opacity-0"}`}
         style={{
-          background: "linear-gradient(to bottom, #1E40AF 0%, #2563EB 10%, #3B82F6 25%, #60A5FA 40%, #93C5FD 55%, #DBEAFE 75%, #FFFFFF 100%)",
+          background: "linear-gradient(to bottom, #0072FD 0%, #0274FD 11%, #0376FC 22%, #097AFC 33%, #0E7EFC 44%, #1986FC 55%, #3393FC 66%, #4CA0FC 77%, #7FBAFC 88%, #E5EDFC 100%)",
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-transparent pointer-events-none" />
@@ -414,19 +698,26 @@ export default function PryroPage() {
             >
               Complete ERP solution with AI-powered insights. Manage finance, inventory, HR, and operations in one unified platform.
             </p>
-            <div className="stagger-reveal" style={{ animationDelay: "270ms" }}>
-              <a href="https://login.pryro.com">
-                <Button className="glass-button px-8 py-6 text-base rounded-full bg-white border border-white hover:bg-white/90 hover:border-white/90 transition-all duration-300 text-gray-900">
-                  Start Free Trial
-                </Button>
-              </a>
+            <div className="stagger-reveal flex justify-center" style={{ animationDelay: "270ms" }}>
+              <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm rounded-[6px] p-1">
+                <a href="https://login.pryro.com">
+                  <Button className="px-6 py-2.5 h-auto text-sm font-medium rounded-[4px] bg-white border-0 hover:bg-white/90 transition-all duration-300 text-gray-900">
+                    Start Free Trial
+                  </Button>
+                </a>
+                <a href="/demo">
+                  <Button className="px-6 py-2.5 h-auto text-sm font-medium rounded-[4px] bg-white/25 border-0 hover:bg-white/35 transition-all duration-300 text-gray-900">
+                    Book a Demo
+                  </Button>
+                </a>
+              </div>
             </div>
           </div>
 
           <div className="mt-12 md:mt-20 stagger-reveal" style={{ animationDelay: "360ms" }} ref={dashboardRef}>
             <div style={{ perspective: "1200px" }}>
               <div
-                className="relative aspect-[16/10] md:aspect-[16/9] rounded-[24px] overflow-hidden"
+                className="relative aspect-[16/10] md:aspect-[16/9] rounded-[10px] overflow-hidden"
                 style={{
                   transform: `rotateX(${dashboardScrollOffset}deg)`,
                   transformStyle: "preserve-3d",
@@ -546,14 +837,15 @@ export default function PryroPage() {
               Work from anywhere,<br />stay in sync
             </h2>
           </div>
-          
+
+
           <div className="relative overflow-hidden">
-            <div className="rounded-[32px] overflow-hidden relative">
-              <div className="relative w-full">
+            <div className="rounded-[5px] overflow-hidden relative min-h-[600px] md:min-h-[700px]">
+              <div className="relative w-full h-full">
                 <img
                   src="/image switch 1.png"
                   alt="Mobile App"
-                  className={`w-full h-auto object-cover transition-transform duration-500 ease-in-out ${
+                  className={`w-full h-full object-cover rounded-[8px] transition-transform duration-500 ease-in-out ${
                     selectedDevice === 0 ? "translate-x-0" : "-translate-x-full"
                   }`}
                   style={{ position: selectedDevice === 0 ? "relative" : "absolute", top: 0, left: 0 }}
@@ -561,16 +853,126 @@ export default function PryroPage() {
                 <img
                   src="/image switch 2.png"
                   alt="Web App"
-                  className={`w-full h-auto object-cover transition-transform duration-500 ease-in-out ${
+                  className={`w-full h-full object-cover rounded-[8px] transition-transform duration-500 ease-in-out ${
                     selectedDevice === 1 ? "translate-x-0" : "translate-x-full"
                   }`}
                   style={{ position: selectedDevice === 1 ? "relative" : "absolute", top: 0, left: 0 }}
                 />
               </div>
-              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 bg-transparent backdrop-blur-sm rounded-full p-2">
+
+              {/* Industry Icons Carousel - Two rows at top of image */}
+              <div className="absolute top-8 left-0 right-0 z-20 space-y-3">
+                {/* First Row - Scrolling Left to Right */}
+                <div className="industry-carousel-full overflow-hidden">
+                  <div className="industry-carousel-track flex gap-2">
+                    {[
+                      { name: "Accounting", icon: "/icon/accounting icon.png" },
+                      { name: "AI Business Review", icon: "/icon/ai business review icon.png" },
+                      { name: "AI Email", icon: "/icon/ai email icon.png" },
+                      { name: "AI Enterprise", icon: "/icon/ai interprise icon.png" },
+                      { name: "Budget", icon: "/icon/budget icon.png" },
+                      { name: "Business Coach", icon: "/icon/business coach icon.png" },
+                      { name: "Business Review", icon: "/icon/business review icon2.png" },
+                      { name: "Cold Call", icon: "/icon/cold call icon.png" },
+                      { name: "COO", icon: "/icon/COO icon.png" },
+                      { name: "CRM", icon: "/icon/CRM icon.png" },
+                      { name: "Dashboard", icon: "/icon/dashboard icon.png" },
+                      { name: "Discussion", icon: "/icon/disccuss icon.png" },
+                      { name: "Document", icon: "/icon/document icon.png" },
+                      { name: "E-commerce", icon: "/icon/ecommerce icon.png" },
+                      { name: "Help Desk", icon: "/icon/help desk icon.png" },
+                      { name: "HR", icon: "/icon/HR icon.png" },
+                      { name: "Inventory", icon: "/icon/Inventory icon.png" },
+                    ].concat([
+                      { name: "Accounting", icon: "/icon/accounting icon.png" },
+                      { name: "AI Business Review", icon: "/icon/ai business review icon.png" },
+                      { name: "AI Email", icon: "/icon/ai email icon.png" },
+                      { name: "AI Enterprise", icon: "/icon/ai interprise icon.png" },
+                      { name: "Budget", icon: "/icon/budget icon.png" },
+                      { name: "Business Coach", icon: "/icon/business coach icon.png" },
+                      { name: "Business Review", icon: "/icon/business review icon2.png" },
+                      { name: "Cold Call", icon: "/icon/cold call icon.png" },
+                      { name: "COO", icon: "/icon/COO icon.png" },
+                      { name: "CRM", icon: "/icon/CRM icon.png" },
+                      { name: "Dashboard", icon: "/icon/dashboard icon.png" },
+                      { name: "Discussion", icon: "/icon/disccuss icon.png" },
+                      { name: "Document", icon: "/icon/document icon.png" },
+                      { name: "E-commerce", icon: "/icon/ecommerce icon.png" },
+                      { name: "Help Desk", icon: "/icon/help desk icon.png" },
+                      { name: "HR", icon: "/icon/HR icon.png" },
+                      { name: "Inventory", icon: "/icon/Inventory icon.png" },
+                    ]).map((industry, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-[10px] bg-white border border-gray-200/50 p-2.5 shadow-lg"
+                      >
+                        <img
+                          src={industry.icon}
+                          alt={industry.name}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Second Row - Scrolling Right to Left */}
+                <div className="industry-carousel-full overflow-hidden">
+                  <div className="industry-carousel-track-reverse flex gap-2" style={{ animationDirection: 'reverse' }}>
+                    {[
+                      { name: "Knowledge", icon: "/icon/knowledge icon.png" },
+                      { name: "Lawyer", icon: "/icon/lawyer icon.png" },
+                      { name: "Logistics", icon: "/icon/logistic icon.png" },
+                      { name: "Manufacturers", icon: "/icon/manufacturers icon.png" },
+                      { name: "Pharmacy", icon: "/icon/pharmacy icon.png" },
+                      { name: "POS", icon: "/icon/pos icon.png" },
+                      { name: "Project", icon: "/icon/project icon.png" },
+                      { name: "Purchase", icon: "/icon/purchase icon.png" },
+                      { name: "Research System", icon: "/icon/research system icon.png" },
+                      { name: "Sales", icon: "/icon/sales icon.png" },
+                      { name: "Signature", icon: "/icon/signuture icon.png" },
+                      { name: "SOP", icon: "/icon/SOP icon.png" },
+                      { name: "Subscription", icon: "/icon/subscription icon.png" },
+                      { name: "Tender", icon: "/icon/Tender icon.png" },
+                      { name: "Code", icon: "/icon/0code icon.png" },
+                      { name: "Coder", icon: "/icon/0coder icon.png" },
+                    ].concat([
+                      { name: "Knowledge", icon: "/icon/knowledge icon.png" },
+                      { name: "Lawyer", icon: "/icon/lawyer icon.png" },
+                      { name: "Logistics", icon: "/icon/logistic icon.png" },
+                      { name: "Manufacturers", icon: "/icon/manufacturers icon.png" },
+                      { name: "Pharmacy", icon: "/icon/pharmacy icon.png" },
+                      { name: "POS", icon: "/icon/pos icon.png" },
+                      { name: "Project", icon: "/icon/project icon.png" },
+                      { name: "Purchase", icon: "/icon/purchase icon.png" },
+                      { name: "Research System", icon: "/icon/research system icon.png" },
+                      { name: "Sales", icon: "/icon/sales icon.png" },
+                      { name: "Signature", icon: "/icon/signuture icon.png" },
+                      { name: "SOP", icon: "/icon/SOP icon.png" },
+                      { name: "Subscription", icon: "/icon/subscription icon.png" },
+                      { name: "Tender", icon: "/icon/Tender icon.png" },
+                      { name: "Code", icon: "/icon/0code icon.png" },
+                      { name: "Coder", icon: "/icon/0coder icon.png" },
+                    ]).map((industry, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-[10px] bg-white border border-gray-200/50 p-2.5 shadow-lg"
+                      >
+                        <img
+                          src={industry.icon}
+                          alt={industry.name}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-1 bg-white/20 backdrop-blur-sm rounded-[5px] p-1">
                 <button
                   onClick={() => setSelectedDevice(0)}
-                  className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
+                  className={`px-6 py-2.5 rounded-[5px] text-sm font-medium transition-all ${
                     selectedDevice === 0
                       ? "bg-white text-gray-900"
                       : "text-white hover:bg-white/10"
@@ -580,7 +982,7 @@ export default function PryroPage() {
                 </button>
                 <button
                   onClick={() => setSelectedDevice(1)}
-                  className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
+                  className={`px-6 py-2.5 rounded-[5px] text-sm font-medium transition-all ${
                     selectedDevice === 1
                       ? "bg-white text-gray-900"
                       : "text-white hover:bg-white/10"
@@ -598,55 +1000,89 @@ export default function PryroPage() {
         <div className="max-w-[1120px] w-full mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16 items-stretch">
             {/* Left - Card */}
-            <div className="rounded-[32px] p-8 md:p-12 flex items-center justify-center min-h-[450px]" style={{ background: "linear-gradient(to bottom, #2563EB 0%, #2563EB 40%, #FFFFFF 100%)" }}>
-              <div className="bg-white rounded-[24px] p-6 shadow-lg w-full max-w-md">
-                <div className="flex items-center justify-between mb-5">
+            <div className="rounded-[5px] p-8 md:p-12 flex items-center justify-center min-h-[450px]" style={{ background: "linear-gradient(to bottom, #0072FD 0%, #0274FD 11%, #0376FC 22%, #097AFC 33%, #0E7EFC 44%, #1986FC 55%, #3393FC 66%, #4CA0FC 77%, #7FBAFC 88%, #E5EDFC 100%)" }}>
+              <div className="bg-white rounded-[5px] p-6 shadow-lg w-full max-w-md overflow-hidden">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-5 card-fade-up" style={{ animationDelay: "0ms" }}>
                   <h3 className="text-lg font-semibold">Projects</h3>
-                  <button className="text-sm text-blue-600">View All</button>
+                  <button className="text-[11px] text-gray-500 bg-gray-100 hover:bg-gray-200 transition-colors border border-gray-200 rounded-[5px] px-3 py-1 font-medium">View All</button>
                 </div>
-                <div className="grid grid-cols-3 gap-2 mb-4">
-                  <div className="bg-gray-50 rounded p-2.5">
-                    <div className="text-[10px] text-gray-500 mb-0.5">In Progress</div>
-                    <div className="text-xl font-bold text-gray-900">8</div>
+
+                {/* Stats row */}
+                <div className="grid grid-cols-4 gap-2 mb-4 card-fade-up" style={{ animationDelay: "80ms" }}>
+                  <div className="bg-gray-50 rounded p-2.5 relative overflow-hidden">
+                    <div className="text-[10px] text-gray-500 mb-0.5 relative z-10">In Progress</div>
+                    <div className="text-xl font-bold text-gray-900 relative z-10"><LiveCounter start={8} step={1} intervalMs={1000} /></div>
+                    <Clock className="w-8 h-8 text-gray-200 absolute bottom-1 right-1" />
                   </div>
-                  <div className="bg-gray-50 rounded p-2.5">
-                    <div className="text-[10px] text-gray-500 mb-0.5">Completed</div>
-                    <div className="text-xl font-bold text-gray-900">32</div>
+                  <div className="bg-gray-50 rounded p-2.5 relative overflow-hidden">
+                    <div className="text-[10px] text-gray-500 mb-0.5 relative z-10">Completed</div>
+                    <div className="text-xl font-bold text-gray-900 relative z-10"><CardCounter target={32} /></div>
+                    <Check className="w-8 h-8 text-gray-200 absolute bottom-1 right-1" />
                   </div>
-                  <div className="bg-gray-50 rounded p-2.5">
-                    <div className="text-[10px] text-gray-500 mb-0.5">Members</div>
-                    <div className="text-xl font-bold text-gray-900">18</div>
+                  <div className="bg-gray-50 rounded p-2.5 relative overflow-hidden">
+                    <div className="text-[10px] text-gray-500 mb-0.5 relative z-10">Members</div>
+                    <div className="text-xl font-bold text-gray-900 relative z-10"><FluctuatingCounter start={18} range={5} intervalMs={3000} min={10} max={30} /></div>
+                    <Users className="w-8 h-8 text-gray-200 absolute bottom-1 right-1" />
+                  </div>
+                  <div className="bg-gray-50 rounded p-2.5 relative overflow-hidden">
+                    <div className="text-[10px] text-gray-500 mb-0.5 relative z-10">On Time</div>
+                    <div className="text-xl font-bold text-gray-900 relative z-10"><FluctuatingCounter start={94} range={2} intervalMs={4000} min={88} max={100} suffix="%" /></div>
+                    <Calendar className="w-8 h-8 text-gray-200 absolute bottom-1 right-1" />
                   </div>
                 </div>
-                <div className="mb-4">
-                  <h4 className="text-xs font-semibold text-gray-700 mb-2">Completion Trend</h4>
-                  <div className="h-20 bg-gradient-to-br from-blue-50 to-white rounded p-2 relative">
-                    <svg className="w-full h-full" viewBox="0 0 300 60" preserveAspectRatio="none">
-                      <polyline points="0,45 50,35 100,38 150,22 200,26 250,12 300,15" fill="none" stroke="#3B82F6" strokeWidth="2" />
-                      <polyline points="0,45 50,35 100,38 150,22 200,26 250,12 300,15 300,60 0,60" fill="url(#grad)" opacity="0.3" />
-                      <defs><linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stopColor="#3B82F6" stopOpacity="0.4" /><stop offset="100%" stopColor="#3B82F6" stopOpacity="0" /></linearGradient></defs>
-                    </svg>
+
+                {/* Overall progress */}
+                <div className="mb-4 bg-gray-50 rounded p-3 card-fade-up" style={{ animationDelay: "160ms" }}>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] font-semibold text-gray-600 uppercase tracking-wide">Overall Progress</span>
+                    <span className="text-[10px] font-bold text-gray-700"><FluctuatingCounter start={72} range={3} intervalMs={5000} min={65} max={85} suffix="%" /></span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-1.5">
+                    <div className="bg-blue-500 h-1.5 rounded-full card-bar-fill" style={{ "--bar-target": "72%" } as React.CSSProperties} />
+                  </div>
+                  <div className="flex justify-between mt-1.5">
+                    <span className="text-[9px] text-gray-400">32 of 40 tasks done</span>
+                    <span className="text-[9px] text-blue-500 font-medium">↑ 12% this week</span>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  {[
-                    { name: "Strategy Redesign", status: "Active", progress: 78 },
-                    { name: "New Product Launch", status: "Active", progress: 65 },
-                    { name: "Marketing Campaign", status: "Review", progress: 92 },
-                  ].map((project, i) => (
-                    <div key={i} className="py-2 border-b border-gray-100 last:border-0">
-                      <div className="flex items-center justify-between mb-1.5">
-                        <div className="flex-1">
-                          <div className="text-sm font-medium text-gray-900">{project.name}</div>
-                          <div className="text-xs text-gray-500 mt-0.5">{project.status}</div>
-                        </div>
-                        <span className="text-sm font-semibold text-gray-700">{project.progress}%</span>
-                      </div>
-                      <div className="w-full bg-gray-100 rounded-full h-1">
-                        <div className="bg-blue-500 h-1 rounded-full" style={{ width: `${project.progress}%` }} />
-                      </div>
+
+                {/* Footer summary */}
+                <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between card-fade-up" style={{ animationDelay: "240ms" }}>
+                  <div className="flex items-center gap-1.5">
+                    <div className="flex -space-x-1.5">
+                      {["#93C5FD","#60A5FA","#3B82F6","#1D4ED8"].map((c, i) => (
+                        <div key={i} className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: c }} />
+                      ))}
                     </div>
-                  ))}
+                    <span className="text-[10px] text-gray-500">+<FluctuatingCounter start={14} range={3} intervalMs={6000} min={10} max={25} /> members</span>
+                  </div>
+                  <span className="text-[10px] text-blue-600 font-medium cursor-pointer hover:underline">View Dashboard →</span>
+                </div>
+
+                {/* Customers table */}
+                <div className="mt-4 pt-4 border-t border-gray-100 card-fade-up" style={{ animationDelay: "320ms" }}>
+                  <div className="flex items-center justify-between mb-1">
+                    <div>
+                      <h4 className="text-sm font-semibold text-gray-900">Customers</h4>
+                      <p className="text-[10px] text-gray-400 mt-0.5">New users by primary channel group</p>
+                    </div>
+                    <button className="text-[11px] text-gray-500 border border-gray-200 rounded px-2 py-0.5 hover:bg-gray-50 transition-colors">Export</button>
+                  </div>
+
+                  <div className="mt-3 overflow-hidden rounded border border-gray-100">
+                    {/* Table head */}
+                    <div className="grid grid-cols-[24px_80px_64px_1fr_56px] gap-x-2 px-3 py-1.5 bg-gray-50 border-b border-gray-100">
+                      <span className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">#</span>
+                      <span className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">Date</span>
+                      <span className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">Status</span>
+                      <span className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">Customer</span>
+                      <span className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide text-right">Revenue</span>
+                    </div>
+
+                    {/* Table rows */}
+                    <LiveCustomerTable />
+                  </div>
                 </div>
               </div>
             </div>
@@ -662,7 +1098,7 @@ export default function PryroPage() {
               </p>
               <div className="mb-8">
                 <a href="https://login.pryro.com">
-                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
+                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-[5px] text-base hover:bg-gray-800 transition-all">
                     Get Started
                   </Button>
                 </a>
@@ -674,7 +1110,7 @@ export default function PryroPage() {
                   { label: "Timesheets", icon: FileText },
                   { label: "Reports", icon: BarChart3 },
                 ].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg px-3 py-3">
+                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-[5px] px-3 py-3">
                     <feature.icon className="w-4 h-4" />
                     {feature.label}
                   </div>
@@ -695,7 +1131,7 @@ export default function PryroPage() {
               </p>
               <div className="mb-8">
                 <a href="https://login.pryro.com">
-                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
+                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-[5px] text-base hover:bg-gray-800 transition-all">
                     Get Started
                   </Button>
                 </a>
@@ -707,7 +1143,7 @@ export default function PryroPage() {
                   { label: "Forecasting", icon: TrendingUp },
                   { label: "Integrations", icon: Plug },
                 ].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg px-3 py-3">
+                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-[5px] px-3 py-3">
                     <feature.icon className="w-4 h-4" />
                     {feature.label}
                   </div>
@@ -716,59 +1152,451 @@ export default function PryroPage() {
             </div>
 
             {/* Right - Card */}
-            <div className="rounded-[32px] p-8 md:p-12 flex items-center justify-center min-h-[600px]" style={{ background: "linear-gradient(to bottom, #2563EB 0%, #2563EB 40%, #FFFFFF 100%)" }}>
-              <div className="bg-white rounded-[24px] p-8 shadow-lg w-full max-w-md">
-                <div className="mb-8">
-                  <h3 className="text-base font-semibold text-gray-700 mb-6">Project budget</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-50 rounded-lg p-5">
-                      <div className="text-xs text-gray-500 mb-2">Total Budget</div>
-                      <div className="text-2xl font-bold text-gray-900">$78,000</div>
-                      <div className="text-xs text-green-600 mt-2">↑ 12.5%</div>
+            <div className="rounded-[5px] p-8 md:p-12 flex items-center justify-center min-h-[600px]" style={{ background: "linear-gradient(to bottom, #0072FD 0%, #0274FD 11%, #0376FC 22%, #097AFC 33%, #0E7EFC 44%, #1986FC 55%, #3393FC 66%, #4CA0FC 77%, #7FBAFC 88%, #E5EDFC 100%)" }}>
+              <div className="bg-white rounded-[4px] p-5 shadow-lg w-full max-w-md overflow-hidden">
+
+                {/* Header */}
+                <div className="flex items-center justify-between mb-4 card-fade-up" style={{ animationDelay: "0ms" }}>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-gray-900">Budget</h3>
+                  </div>
+                  <span className="text-[10px] text-gray-400 border border-gray-200 rounded px-2 py-0.5">FY 2024</span>
+                </div>
+
+                {/* Budget stat tiles */}
+                <div className="grid grid-cols-2 gap-2 mb-3 card-fade-up" style={{ animationDelay: "80ms" }}>
+                  <div className="bg-gray-50 rounded-[3px] p-3">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <DollarSign className="w-3 h-3 text-gray-400" />
+                      <span className="text-[10px] text-gray-500">Total Budget</span>
                     </div>
-                    <div className="bg-gray-50 rounded-lg p-5">
-                      <div className="text-xs text-gray-500 mb-2">Spent</div>
-                      <div className="text-2xl font-bold text-gray-900">$22,000</div>
-                      <div className="text-xs text-gray-500 mt-2">28.2%</div>
+                    <div className="text-2xl font-bold text-gray-900 leading-none"><span className="text-sm align-super mr-0.5">$</span><LiveCounter start={78000} step={100} intervalMs={3000} /></div>
+                    <div className="text-[10px] text-blue-500 mt-1.5 font-medium">↑ <FluctuatingCounter start={12.5} range={1.5} intervalMs={8000} min={10} max={16} decimals={1} suffix="%" /> vs last year</div>
+                  </div>
+                  <div className="bg-gray-50 rounded-[3px] p-3">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <Receipt className="w-3 h-3 text-gray-400" />
+                      <span className="text-[10px] text-gray-500">Spent</span>
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 leading-none"><span className="text-sm align-super mr-0.5">$</span><LiveCounter start={22000} step={50} intervalMs={2000} /></div>
+                    <div className="text-[10px] text-gray-400 mt-1.5">28.2% of total</div>
+                  </div>
+                  <div className="bg-gray-50 rounded-[3px] p-3">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <TrendingUp className="w-3 h-3 text-gray-400" />
+                      <span className="text-[10px] text-gray-500">Remaining</span>
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 leading-none"><span className="text-sm align-super mr-0.5">$</span><FluctuatingCounter start={56000} range={500} intervalMs={4000} min={50000} max={65000} /></div>
+                    <div className="text-[10px] text-gray-400 mt-1.5">71.8% available</div>
+                  </div>
+                  <div className="bg-gray-50 rounded-[3px] p-3">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <BarChart3 className="w-3 h-3 text-gray-400" />
+                      <span className="text-[10px] text-gray-500">Forecast</span>
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 leading-none"><span className="text-sm align-super mr-0.5">$</span><FluctuatingCounter start={31400} range={300} intervalMs={5000} min={28000} max={35000} /></div>
+                    <div className="text-[10px] text-blue-500 mt-1.5 font-medium">↓ 5.2% projected</div>
+                  </div>
+                </div>
+
+                {/* Budget utilisation bar */}
+                <div className="mb-3 bg-gray-50 rounded-[3px] p-3 card-fade-up" style={{ animationDelay: "160ms" }}>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] font-medium text-gray-600">Budget Utilisation</span>
+                    <span className="text-[10px] font-bold text-gray-700"><FluctuatingCounter start={28} range={2} intervalMs={6000} min={25} max={35} suffix="%" /></span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-1.5">
+                    <div className="bg-blue-500 h-1.5 rounded-full card-bar-fill" style={{ "--bar-target": "28.2%" } as React.CSSProperties} />
+                  </div>
+                  <div className="flex justify-between mt-1.5">
+                    <span className="text-[9px] text-gray-400">$22k spent of $78k</span>
+                    <span className="text-[9px] text-gray-400">On track</span>
+                  </div>
+                </div>
+
+                {/* Category breakdown */}
+                <div className="mb-3 card-fade-up" style={{ animationDelay: "240ms" }}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-medium text-gray-600">Category Breakdown</span>
+                    <span className="text-[9px] text-gray-400">Q3 2024</span>
+                  </div>
+                  <div className="space-y-1.5">
+                    <LiveCategoryBreakdown />
+                  </div>
+                </div>
+
+                {/* Analytics bar chart */}
+                <div className="card-fade-up" style={{ animationDelay: "400ms" }}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-1.5">
+                      <BarChart3 className="w-3 h-3 text-gray-400" />
+                      <span className="text-[10px] font-medium text-gray-600">Monthly Analytics</span>
+                    </div>
+                    <span className="text-[9px] text-gray-400">Jan – Dec 2024</span>
+                  </div>
+                  <div className="bg-gray-50 rounded-[3px] px-2 pt-2 pb-1">
+                    {/* Bar area: more bars, thinner, shorter */}
+                    <div className="flex items-end justify-around gap-[2px]" style={{ height: 100 }}>
+                      {[18,30,24,40,28,48,34,55,22,44,36,58,26,50,32,54,42,64,30,56,44,68,36,62,20,46,38,60,28,52,40,66,24,50,34,58,30,56,46,70,22,48,40,64,32,60,44,72,26,54].map((h, i) => (
+                        <div
+                          key={i}
+                          className="bg-blue-500 rounded-t-[1px]"
+                          style={{ height: `${h}px`, width: 4, flexShrink: 0, opacity: 0.4 + i * 0.012 }}
+                        />
+                      ))}
+                    </div>
+                    {/* Month labels — show every other */}
+                    <div className="flex justify-around mt-1 gap-[2px]">
+                      {Array.from({ length: 50 }, (_, i) => {
+                        const months = ["J","F","M","A","M","J","J","A","S","O","N","D"]
+                        return i % 4 === 0 ? months[Math.floor(i / 4) % 12] : ""
+                      }).map((m, i) => (
+                        <span key={i} style={{ width: 4, flexShrink: 0 }} className="text-center text-[6px] text-gray-400">{m}</span>
+                      ))}
                     </div>
                   </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-semibold text-gray-700 mb-6">Analytics</h3>
-                  <div className="h-40 bg-gradient-to-br from-blue-50 to-white rounded-lg flex items-end justify-around p-1">
-                    {[20, 65, 45,45, 80, 60, 90, 90,45, 80, 45, 80, 60, 60, 90,75,].map((height, i) => (
-                      <div key={i} className="w-3 bg-blue-500 rounded-t" style={{ height: `${height}%` }} />
-                    ))}
-                  </div>
-                </div>
+
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="map" className="relative py-20 md:py-32 animate-on-scroll">
-        <div className="text-center mb-12 md:mb-16 px-4">
-          <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-6 flex items-center justify-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-            GLOBAL REACH
-          </div>
-          <h2 className="font-serif text-[32px] leading-[1.15] md:text-[48px] md:leading-[1.1] font-medium mb-6 text-balance">
-            Serving Businesses Worldwide
-          </h2>
-          <p className="text-[#4a5568] text-sm md:text-base max-w-[600px] mx-auto leading-relaxed">
-            Empowering enterprises across five continents with intelligent ERP solutions
-          </p>
-        </div>
+      {/* AI Agent showcase section */}
+      <section className="relative py-20 md:py-28 px-4 animate-on-scroll overflow-hidden bg-gray-50">
+        <div className="relative z-10 max-w-[1120px] w-full mx-auto">
 
-        <WorldMap
-          experiences={experiences}
-          selectedExperience={selectedExperience}
-          onSelectExperience={setSelectedExperience}
-        />
+          {/* ── OUTER BLUE CARD ── */}
+          <div
+            className="p-12 md:p-20 max-w-[1160px] mx-auto"
+            style={{
+              borderRadius: "5px",
+              background: "linear-gradient(to bottom, #0072FD 0%, #0274FD 11%, #0376FC 22%, #097AFC 33%, #0E7EFC 44%, #1986FC 55%, #3393FC 66%, #4CA0FC 77%, #7FBAFC 88%, #E5EDFC 100%)",
+            }}
+          >
+            {/* Headline inside blue card */}
+            <div className="text-center mb-8 md:mb-10">
+              <h2 className="font-serif text-[32px] md:text-[52px] leading-[1.1] font-medium text-white mb-3" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.15)" }}>
+                Meet Pryro, business<br />management, finally simple.
+              </h2>
+            </div>
+
+            {/* ── INNER WHITE CARD ── */}
+            <div className="bg-white overflow-hidden shadow-xl" style={{ borderRadius: "8px" }}>
+
+              {/* Top content area */}
+              <div className="px-8 md:px-16 pt-10 pb-8 text-center border-b border-black/6">
+                <p className="text-[12px] md:text-[13px] font-semibold text-gray-800 mb-1">
+                  From idea to complete business strategy — in one prompt
+                </p>
+                <p className="text-[11px] text-gray-500 max-w-[380px] mx-auto leading-relaxed">
+                  Give Pryro a goal and it builds a complete plan in seconds — finance, HR, inventory, and operations.
+                </p>
+
+                {/* Tab strip */}
+                <div className="flex justify-center gap-6 mt-5 mb-4">
+                  {["Run payroll", "Generate report", "Reorder stock"].map((t, i) => (
+                    <span
+                      key={i}
+                      className={`text-[11px] pb-1.5 cursor-default transition-colors ${
+                        i === 2
+                          ? "text-gray-900 font-semibold border-b-2 border-gray-900"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Prompt bar */}
+                <div className="flex items-center gap-3 bg-gray-50 border border-black/10 rounded-lg px-4 py-2.5 max-w-[460px] mx-auto">
+                  <span className="flex-1 text-[11px] text-gray-500 text-left">
+                    Reorder stock that falls below minimum threshold
+                  </span>
+                  <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+                    <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M2 6h8M6 2l4 4-4 4"/>
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Agent reply */}
+                <div className="mt-5 text-left max-w-[460px] mx-auto space-y-3">
+                  <p className="text-[11px] text-gray-600 leading-relaxed">
+                    Your business insights are ready.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative bg-white border-t border-gray-100">
+          {/* ── ACCOUNT DASHBOARD SECTION ── */}
+          <div className="p-8 md:p-10 bg-white">
+                <div className="mb-6">
+                  <h2 className="text-xl font-bold text-gray-900">Account Dashboard</h2>
+                  <p className="text-xs text-gray-500 mt-1">Overview of clients, vendors, and payment analytics</p>
+                </div>
+
+                {/* Stats Cards Row */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  {/* Total Clients */}
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-[5px] p-5 relative overflow-hidden">
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-600 font-medium">Total Clients</span>
+                        <Users className="w-10 h-10 text-gray-300" />
+                      </div>
+                      <div className="text-3xl font-bold text-gray-900 mb-1">
+                        <FluctuatingCounter start={15} range={2} intervalMs={8000} min={12} max={20} />
+                      </div>
+                      <span className="text-[10px] text-gray-500">Active clients</span>
+                    </div>
+                  </div>
+
+                  {/* Total Vendors */}
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-[5px] p-5 relative overflow-hidden">
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-600 font-medium">Total Vendors</span>
+                        <Building2 className="w-10 h-10 text-gray-300" />
+                      </div>
+                      <div className="text-3xl font-bold text-gray-900 mb-1">
+                        <FluctuatingCounter start={15} range={1} intervalMs={9000} min={12} max={18} />
+                      </div>
+                      <span className="text-[10px] text-gray-500">Active vendors</span>
+                    </div>
+                  </div>
+
+                  {/* Total Customer Payment */}
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-[5px] p-5 relative overflow-hidden">
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-600 font-medium">Total Customer Payment</span>
+                        <TrendingUp className="w-10 h-10 text-gray-300" />
+                      </div>
+                      <div className="text-2xl font-bold text-gray-900 mb-1">
+                        <span className="text-lg align-super mr-0.5">$</span>
+                        <LiveCounter start={21998} step={50} intervalMs={4000} />
+                      </div>
+                      <span className="text-[10px] text-gray-500">Received payments</span>
+                    </div>
+                  </div>
+
+                  {/* Total Vendor Payment */}
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-[5px] p-5 relative overflow-hidden">
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-600 font-medium">Total Vendor Payment</span>
+                        <Receipt className="w-10 h-10 text-gray-300" />
+                      </div>
+                      <div className="text-2xl font-bold text-gray-900 mb-1">
+                        <span className="text-lg align-super mr-0.5">$</span>
+                        <LiveCounter start={14349} step={30} intervalMs={5000} />
+                      </div>
+                      <span className="text-[10px] text-gray-500">Paid to vendors</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Charts Row */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Monthly Customer Payments Chart */}
+                  <div className="bg-white border border-gray-200 rounded-[5px] p-5 shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-4">Monthly Customer Payments</h3>
+                    <div className="relative h-64">
+                      {/* Y-axis labels */}
+                      <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-[10px] text-gray-400">
+                        <span>60000</span>
+                        <span>45000</span>
+                        <span>30000</span>
+                        <span>15000</span>
+                        <span>0</span>
+                      </div>
+                      
+                      {/* Chart area */}
+                      <div className="absolute left-12 right-0 top-0 bottom-8">
+                        {/* Grid lines */}
+                        <div className="absolute inset-0 flex flex-col justify-between">
+                          {[0, 1, 2, 3, 4].map((i) => (
+                            <div key={i} className="border-t border-gray-100" />
+                          ))}
+                        </div>
+                        
+                        {/* SVG Line Chart */}
+                        <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+                          <defs>
+                            <linearGradient id="customerGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stopColor="#10b981" stopOpacity="0.2" />
+                              <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                            </linearGradient>
+                          </defs>
+                          <path
+                            d="M 0,75 Q 8,70 16,65 T 32,58 T 48,55 T 64,52 T 80,45 T 96,38 T 112,40"
+                            fill="url(#customerGradient)"
+                            stroke="#10b981"
+                            strokeWidth="2"
+                            vectorEffect="non-scaling-stroke"
+                          />
+                        </svg>
+                      </div>
+                      
+                      {/* X-axis labels */}
+                      <div className="absolute left-12 right-0 bottom-0 flex justify-between text-[10px] text-gray-400">
+                        {["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"].map((month, i) => (
+                          <span key={i}>{month}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Monthly Vendor Payments Chart */}
+                  <div className="bg-white border border-gray-200 rounded-[5px] p-5 shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-4">Monthly Vendor Payments</h3>
+                    <div className="relative h-64">
+                      {/* Y-axis labels */}
+                      <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-[10px] text-gray-400">
+                        <span>24000</span>
+                        <span>18000</span>
+                        <span>12000</span>
+                        <span>6000</span>
+                        <span>0</span>
+                      </div>
+                      
+                      {/* Chart area */}
+                      <div className="absolute left-12 right-0 top-0 bottom-8">
+                        {/* Grid lines */}
+                        <div className="absolute inset-0 flex flex-col justify-between">
+                          {[0, 1, 2, 3, 4].map((i) => (
+                            <div key={i} className="border-t border-gray-100" />
+                          ))}
+                        </div>
+                        
+                        {/* SVG Line Chart */}
+                        <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+                          <defs>
+                            <linearGradient id="vendorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.2" />
+                              <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
+                            </linearGradient>
+                          </defs>
+                          <path
+                            d="M 0,20 L 16,12 L 32,80 L 48,70 L 64,25 L 80,28 L 96,50 L 112,85"
+                            fill="url(#vendorGradient)"
+                            stroke="#ef4444"
+                            strokeWidth="2"
+                            vectorEffect="non-scaling-stroke"
+                          />
+                        </svg>
+                      </div>
+                      
+                      {/* X-axis labels */}
+                      <div className="absolute left-12 right-0 bottom-0 flex justify-between text-[10px] text-gray-400">
+                        {["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"].map((month, i) => (
+                          <span key={i}>{month}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="relative bg-gray-50/60">
+            {/* ── TWO NESTED CARDS at the bottom ── */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 md:p-10">
+
+                {/* Nested card 1 */}
+                <div className="bg-white rounded-lg border border-black/8 shadow-sm p-5">
+                  <h3 className="text-[12px] font-semibold text-gray-800 mb-1 leading-snug">
+                    Know exactly what to reorder and when
+                  </h3>
+                  <p className="text-[10px] text-gray-500 leading-relaxed mb-3">
+                    Pryro tracks every SKU in real time, flags low stock, and drafts purchase orders automatically.
+                  </p>
+                  <div className="rounded-md border border-black/8 overflow-hidden text-[10px]">
+                    <div className="flex items-center justify-between px-3 py-2 bg-gray-50 border-b border-black/6">
+                      <span className="font-medium text-gray-700">Reorder List</span>
+                      <div className="flex gap-1">
+                        {["All", "Low", "Critical"].map((f, i) => (
+                          <span key={i} className={`px-1.5 py-0.5 rounded-full text-[8px] ${i === 2 ? "bg-red-100 text-red-600 font-semibold" : "text-gray-400"}`}>{f}</span>
+                        ))}
+                      </div>
+                    </div>
+                    {[
+                      { name: "A4 Paper (500-sheet)", stock: "12", min: "50", s: "critical" },
+                      { name: "USB-C Cables ×10", stock: "3", min: "20", s: "critical" },
+                      { name: "Bubble Wrap Roll", stock: "28", min: "40", s: "low" },
+                    ].map((row, i) => (
+                      <div key={i} className="flex items-center gap-2 px-3 py-2 border-b border-black/5 last:border-0 bg-white">
+                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${row.s === "critical" ? "bg-red-400" : "bg-amber-400"}`} />
+                        <span className="flex-1 text-gray-700 truncate">{row.name}</span>
+                        <span className={`text-[9px] font-medium shrink-0 ${row.s === "critical" ? "text-red-500" : "text-amber-500"}`}>{row.stock}/{row.min}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Nested card 2 */}
+                <div className="bg-white rounded-lg border border-black/8 shadow-sm p-5">
+                  <h3 className="text-[12px] font-semibold text-gray-800 mb-1 leading-snug">
+                    Automate outreach while staying in control
+                  </h3>
+                  <p className="text-[10px] text-gray-500 leading-relaxed mb-3">
+                    Pryro drafts purchase orders per supplier. Review, approve, and it sends — you stay focused on decisions.
+                  </p>
+                  <div className="rounded-md border border-black/8 overflow-hidden text-[10px]">
+                    <div className="flex" style={{ minHeight: 120 }}>
+                      <div className="w-[38%] bg-gray-50 border-r border-black/6 p-2 space-y-1 shrink-0">
+                        {[
+                          { name: "Grainger", tag: "PO Draft", active: true },
+                          { name: "Uline", tag: "PO Draft" },
+                          { name: "Amazon Biz", tag: "Pending" },
+                        ].map((s, i) => (
+                          <div key={i} className={`rounded-md px-2 py-1.5 ${s.active ? "bg-white border border-black/8 shadow-sm" : ""}`}>
+                            <div className={`font-medium truncate text-[9px] ${s.active ? "text-gray-900" : "text-gray-500"}`}>{s.name}</div>
+                            <div className="text-[8px] text-gray-400">{s.tag}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex-1 p-3 flex flex-col gap-1 bg-white">
+                        <div className="font-semibold text-gray-800 text-[10px]">Grainger Supply Co.</div>
+                        <div className="text-[9px] text-gray-400">orders@grainger.com</div>
+                        <div className="text-[9px] text-gray-600 leading-relaxed mt-1">
+                          Hi team, we'd like to place a PO for the following items. Review the{" "}
+                          <span className="text-blue-500 underline cursor-default">order details</span> and confirm.
+                        </div>
+                        <div className="mt-1 space-y-0.5 text-[9px] text-gray-500">
+                          <div>✓ A4 Paper ×10 cases</div>
+                          <div>✓ USB-C Cable pack ×5</div>
+                        </div>
+                        <div className="mt-1 font-semibold text-gray-800 text-[9px]">Total $1,280</div>
+                      </div>
+                    </div>
+                    <div className="px-3 py-2 bg-gray-50 border-t border-black/6">
+                      <span className="text-[9px] text-gray-300">+ Add a follow-up…</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Bottom line */}
+              <div className="text-center py-3 border-t border-black/6 bg-white">
+                <p className="text-[10px] text-gray-400 tracking-wide">Available across all major platforms</p>
+              </div>
+
+            </div>{/* end inner white card */}
+          </div>{/* end outer blue card */}
+
+        </div>
       </section>
 
-      <section id="narrative" className="relative py-20 md:py-32 px-4 animate-on-scroll">
+      <section id="narrative" className="relative py-20 md:py-32 px-4 animate-on-scroll bg-gray-50">
         <div className="max-w-[1120px] w-full mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-stretch">
             <div className="max-w-[720px]">
@@ -795,7 +1623,7 @@ export default function PryroPage() {
               </p>
 
               <div className="md:hidden mb-8">
-                <div className="rounded-[24px] p-1 w-full aspect-square overflow-hidden">
+                <div className="rounded-[5px] p-1 w-full aspect-square overflow-hidden">
                   <img
                     src={
                       [
@@ -806,7 +1634,7 @@ export default function PryroPage() {
                       ][selectedFeature] || "/placeholder.svg"
                     }
                     alt="Feature preview"
-                    className={`w-full h-full object-cover rounded-[20px] transition-opacity duration-300 ${
+                    className={`w-full h-full object-cover rounded-[5px] transition-opacity duration-300 ${
                       imageFade ? "opacity-100" : "opacity-0"
                     }`}
                   />
@@ -855,17 +1683,15 @@ export default function PryroPage() {
                     }`}
                   >
                     <feature.icon
-                      className={`w-5 h-5 flex-shrink-0 mt-1 transition-colors ${
-                        selectedFeature === i ? "text-blue-500" : "text-blue-400"
-                      }`}
+                      className="w-5 h-5 flex-shrink-0 mt-1 text-black"
                     />
                     <div className="flex-1">
                       <h3 className="text-base md:text-lg font-medium mb-1">{feature.title}</h3>
                       <p className="text-sm md:text-base text-[#4a5568]">{feature.desc}</p>
                     </div>
                     {selectedFeature === i && (
-                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-100">
-                        <div className="h-full bg-blue-500 progress-bar" />
+                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gray-200">
+                        <div className="h-full bg-gray-500 progress-bar" />
                       </div>
                     )}
                   </button>
@@ -909,7 +1735,7 @@ export default function PryroPage() {
                       <img
                         src={feature.image || "/placeholder.svg"}
                         alt={feature.title}
-                        className="w-full h-full object-cover rounded-[20px]"
+                        className="w-full h-full object-cover rounded-[5px]"
                       />
                     </div>
                   )
@@ -920,446 +1746,442 @@ export default function PryroPage() {
         </div>
       </section>
 
-      <section className="relative py-20 md:py-32 px-4 animate-on-scroll bg-white">
-        <div className="max-w-[1200px] w-full mx-auto space-y-16">
-          <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-12 items-start">
-            <div className="group cursor-pointer">
-              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">FINANCIAL MANAGEMENT SUITE</div>
-              <div className="flex items-start justify-between mb-4">
-                <h2 className="text-[28px] md:text-[36px] font-bold leading-tight text-gray-900 flex-1">
-                  Complete financial insight
-                </h2>
-                <div className="transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 mt-1">
-                  <svg className="w-5 h-5 -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm md:text-base mb-8 leading-relaxed">
-               Complete accounting, proposal , quotation, invoicing, and financial reporting system. Track revenue, expenses, and cash flow in real-time.              </p>
-              <div className="mb-8">
-                <a href="https://login.pryro.com">
-                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
-                    Get Started
-                  </Button>
-                </a>
-              </div>
-              <div className="grid grid-cols-2 gap-3 max-w-md">
-                {[
-                  { label: "quotation", icon: Receipt },
-                  { label: "Budgets", icon: Wallet },
-                  { label: "Forecasting", icon: TrendingUp },
-                  { label: "Reports", icon: BarChart3 },
-                ].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg px-3 py-3">
-                    <feature.icon className="w-4 h-4" />
-                    {feature.label}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-gradient-to-l from-blue-500 from-40% to-white rounded-[40px] p-8 flex items-center justify-center h-[450px] relative overflow-hidden">
-              <div className="bg-white rounded-[16px] p-5 w-[85%] h-[75%] flex flex-col">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-base font-semibold text-gray-900">Revenue Overview</h3>
-                  <button className="text-xs text-blue-600">View All</button>
-                </div>
-                <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Q4 Revenue</div>
-                    <div className="text-xl font-bold text-gray-900">$2.4M</div>
-                    <div className="text-[10px] text-green-600 mt-1 flex items-center gap-1">
-                      <span>↑ 18.3%</span>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Expenses</div>
-                    <div className="text-xl font-bold text-gray-900">$1.8M</div>
-                    <div className="text-[10px] text-gray-500 mt-1">75.0% of revenue</div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Net Profit</div>
-                    <div className="text-base font-bold text-gray-900">$600K</div>
-                    <div className="text-[10px] text-green-600 mt-1">↑ 22.5%</div>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Cash Flow</div>
-                    <div className="text-base font-bold text-gray-900">$890K</div>
-                    <div className="text-[10px] text-green-600 mt-1">Positive</div>
-                  </div>
-                </div>
-                <h3 className="text-xs font-semibold text-gray-700 mb-2">Monthly Trends</h3>
-                <div className="flex-1 bg-gradient-to-br from-blue-50 to-white rounded-lg flex items-end justify-around p-2">
-                  {[55, 70, 48, 85, 65, 92].map((height, i) => (
-                    <div key={i} className="w-5 bg-blue-500 rounded-t" style={{ height: `${height}%` }} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+      <section className="relative py-16 md:py-20 px-4 animate-on-scroll bg-gray-50">
+        <div className="max-w-[1200px] w-full mx-auto">
 
-          <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-12 items-start">
-            <div className="group cursor-pointer">
-              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">INVENTORY MANAGEMENT</div>
-              <div className="flex items-start justify-between mb-4">
-                <h2 className="text-[28px] md:text-[36px] font-bold leading-tight text-gray-900 flex-1">
-                  Real-time stock control
-                </h2>
-                <div className="transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 mt-1">
-                  <svg className="w-5 h-5 -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm md:text-base mb-8 leading-relaxed">
-                Track stock levels, manage suppliers, and optimize supply chain across multiple locations with real-time updates.
-              </p>
-              <div className="mb-8">
-                <a href="https://login.pryro.com">
-                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
-                    Get Started
-                  </Button>
-                </a>
-              </div>
-              <div className="grid grid-cols-2 gap-3 max-w-md">
-                {[
-                  { label: "Stock tracking", icon: ListTodo },
-                  { label: "Suppliers", icon: Wallet },
-                  { label: "Warehouses", icon: Receipt },
-                  { label: "Analytics", icon: BarChart3 },
-                ].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg px-3 py-3">
-                    <feature.icon className="w-4 h-4" />
-                    {feature.label}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-gradient-to-l from-blue-500 from-40% to-white rounded-[40px] p-8 flex items-center justify-center h-[450px] relative overflow-hidden">
-              <div className="bg-white rounded-[16px] p-5 w-[85%] h-[75%] flex flex-col">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-base font-semibold">Stock Levels</h3>
-                  <button className="text-xs text-blue-600">View All</button>
-                </div>
-                <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Total Items</div>
-                    <div className="text-xl font-bold text-gray-900">11,290</div>
-                    <div className="text-[10px] text-green-600 mt-1">↑ 8.2%</div>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Total Value</div>
-                    <div className="text-xl font-bold text-gray-900">$4.2M</div>
-                    <div className="text-[10px] text-gray-500 mt-1">In stock</div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Low Stock</div>
-                    <div className="text-base font-bold text-gray-900">24</div>
-                    <div className="text-[10px] text-red-600 mt-1">Critical</div>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Suppliers</div>
-                    <div className="text-base font-bold text-gray-900">48</div>
-                    <div className="text-[10px] text-gray-500 mt-1">Active</div>
-                  </div>
-                </div>
-                <h3 className="text-xs font-semibold text-gray-700 mb-2">Top Categories</h3>
-                <div className="flex-1 space-y-1 overflow-auto">
-                  {[
-                    { name: "Components", stock: 5200, color: "green" },
-                    { name: "Packaging", stock: 780, color: "red" },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between py-1 border-b border-gray-100 last:border-0">
-                      <div className="flex-1">
-                        <div className="text-xs font-medium text-gray-900">{item.name}</div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-gray-700">{item.stock}</span>
-                        <div className={`w-1.5 h-1.5 rounded-full ${item.color === 'green' ? 'bg-green-500' : 'bg-red-500'}`} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <h2 className="text-[18px] md:text-[22px] font-normal text-gray-900 mb-6">
+            Built for every part of your business
+          </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-[350px_1fr] gap-8 md:gap-1 items-start">
-            <div className="group cursor-pointer">
-              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">HR & PAYROLL SYSTEM</div>
-              <div className="flex items-start justify-between mb-4">
-                <h2 className="text-[28px] md:text-[36px] font-bold leading-tight text-gray-900 flex-1">
-                  Workforce management simplified
-                </h2>
-                <div className="transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2 mt-1">
-                  <svg className="w-5 h-5 -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm md:text-base mb-8 leading-relaxed">
-                Manage employees, attendance, payroll processing, and benefits administration all in one unified platform.
-              </p>
-              <div className="mb-8">
-                <a href="https://login.pryro.com">
-                  <Button className="bg-gray-900 text-white px-8 py-6 rounded-full text-base hover:bg-gray-800 transition-all">
-                    Get Started
-                  </Button>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-stretch">
+
+            {/* Card 1 — Financial Management */}
+            <div className="bg-gray-100 rounded-[2px] flex flex-col overflow-hidden" style={{ minHeight: 580 }}>
+              <div className="p-5 pb-3">
+                <p className="text-[13px] font-medium text-gray-900 mb-1">
+                  Financial Management
+                </p>
+                <p className="text-[13px] text-gray-500 leading-relaxed mb-3">
+                  Complete accounting, invoicing, and financial reporting. Track revenue, expenses, and cash flow in real-time.
+                </p>
+                <a href="https://login.pryro.com" className="inline-block mt-4 text-[13px] font-medium text-gray-900 hover:underline">
+                  Explore finance ↗
                 </a>
               </div>
-              <div className="grid grid-cols-2 gap-3 max-w-md">
-                {[
-                  { label: "Attendance", icon: Clock },
-                  { label: "Payroll", icon: Wallet },
-                  { label: "Benefits", icon: Receipt },
-                  { label: "Reports", icon: BarChart3 },
-                ].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-lg px-3 py-3">
-                    <feature.icon className="w-4 h-4" />
-                    {feature.label}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-gradient-to-l from-blue-500 from-40% to-white rounded-[40px] p-8 flex items-center justify-center h-[450px] relative overflow-hidden">
-              <div className="bg-white rounded-[16px] p-5 w-[85%] h-[75%] flex flex-col overflow-hidden">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-base font-semibold text-gray-900">Workforce Analytics</h3>
-                  <button className="text-xs text-blue-600">View All</button>
+              <div className="flex-1 mx-3 mb-3 rounded-[2px] overflow-hidden bg-white border border-gray-200 flex flex-col">
+                {/* Header */}
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+                  <span className="text-[11px] font-semibold text-gray-700">Revenue Overview</span>
+                  <span className="text-[10px] text-gray-400">Q4 2026</span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Active Staff</div>
-                    <div className="text-xl font-bold text-gray-900">342</div>
-                    <div className="text-[10px] text-green-600 mt-1">↑ 12.4%</div>
+                {/* KPI row */}
+                <div className="grid grid-cols-3 gap-px bg-gray-100 border-b border-gray-100">
+                  <div className="bg-white px-3 py-2.5">
+                    <div className="text-[9px] text-gray-400 mb-0.5">Revenue</div>
+                    <div className="text-sm font-bold text-gray-900">$2.4M</div>
+                    <div className="text-[9px] text-gray-700">↑ 18.3%</div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-[10px] text-gray-500 mb-1">Total Cost</div>
-                    <div className="text-xl font-bold text-gray-900">$685K</div>
-                    <div className="text-[10px] text-gray-500 mt-1">Per Month</div>
+                  <div className="bg-white px-3 py-2.5">
+                    <div className="text-[9px] text-gray-400 mb-0.5">Expenses</div>
+                    <div className="text-sm font-bold text-gray-900">$1.8M</div>
+                    <div className="text-[9px] text-gray-700">↑ 4.1%</div>
+                  </div>
+                  <div className="bg-white px-3 py-2.5">
+                    <div className="text-[9px] text-gray-400 mb-0.5">Net Profit</div>
+                    <div className="text-sm font-bold text-gray-900">$600K</div>
+                    <div className="text-[9px] text-gray-700">↑ 22.5%</div>
                   </div>
                 </div>
-                <div className="flex-1 space-y-1 overflow-auto">
+                {/* Bar chart */}
+                <div className="px-4 pt-3 pb-1">
+                  <div className="text-[9px] text-gray-400 mb-2">Monthly Revenue</div>
+                  <div className="flex items-end gap-1 h-16">
+                    {[42, 58, 35, 72, 55, 88, 65, 78, 50, 92, 70, 85].map((h, i) => (
+                      <div key={i} className="flex-1 bg-gray-200 rounded-sm" style={{ height: `${h}%` }} />
+                    ))}
+                  </div>
+                  <div className="flex justify-between text-[9px] text-gray-300 mt-1">
+                    <span>Jan</span><span>Apr</span><span>Jul</span><span>Oct</span><span>Dec</span>
+                  </div>
+                </div>
+                {/* Recent transactions */}
+                <div className="px-4 pt-2 pb-1">
+                  <div className="text-[9px] text-gray-400 mb-1.5">Recent Transactions</div>
+                </div>
+                <div className="flex-1 divide-y divide-gray-100 overflow-hidden">
                   {[
-                    { dept: "Technology", count: 128 },
-                    { dept: "Marketing", count: 74 },
-                    { dept: "Finance", count: 56 },
-                    { dept: "Operations", count: 84 },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between text-xs py-1 border-b border-gray-100 last:border-0">
-                      <span className="text-gray-600">{item.dept}</span>
-                      <span className="font-medium text-gray-900">{item.count}</span>
+                    { label: "Invoice #4821", client: "Acme Corp", amount: "+$12,400", color: "text-gray-900" },
+                    { label: "Invoice #4820", client: "TechWave Ltd", amount: "+$8,750", color: "text-gray-900" },
+                    { label: "Office Rent", client: "Expense", amount: "-$3,200", color: "text-gray-900" },
+                    { label: "Invoice #4819", client: "Delta Group", amount: "+$5,100", color: "text-gray-900" },
+                    { label: "Payroll Run", client: "Expense", amount: "-$48,000", color: "text-gray-900" },
+                  ].map((tx, i) => (
+                    <div key={i} className="flex items-center justify-between px-4 py-2">
+                      <div>
+                        <div className="text-[11px] font-medium text-gray-800">{tx.label}</div>
+                        <div className="text-[9px] text-gray-400">{tx.client}</div>
+                      </div>
+                      <span className={`text-[11px] font-semibold ${tx.color}`}>{tx.amount}</span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
+
+            {/* Card 2 — Inventory Management */}
+            <div className="bg-gray-100 rounded-[2px] flex flex-col overflow-hidden" style={{ minHeight: 580 }}>
+              <div className="p-5 pb-3">
+                <p className="text-[13px] font-medium text-gray-900 mb-1">
+                  Inventory Management
+                </p>
+                <p className="text-[13px] text-gray-500 leading-relaxed mb-3">
+                  Track stock levels, manage suppliers, and optimize your supply chain across multiple locations.
+                </p>
+                <a href="https://login.pryro.com" className="inline-block mt-4 text-[13px] font-medium text-gray-900 hover:underline">
+                  Explore inventory ↗
+                </a>
+              </div>
+              <div className="flex-1 mx-3 mb-3 rounded-[2px] overflow-hidden bg-white border border-gray-200 flex flex-col">
+                {/* Header */}
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+                  <span className="text-[11px] font-semibold text-gray-700">Stock Dashboard</span>
+                  <span className="text-[10px] text-gray-400">11,290 items</span>
+                </div>
+                {/* KPI row */}
+                <div className="grid grid-cols-3 gap-px bg-gray-100 border-b border-gray-100">
+                  <div className="bg-white px-3 py-2.5">
+                    <div className="text-[9px] text-gray-400 mb-0.5">Total Value</div>
+                    <div className="text-sm font-bold text-gray-900">$4.2M</div>
+                    <div className="text-[9px] text-gray-700">↑ 8.2%</div>
+                  </div>
+                  <div className="bg-white px-3 py-2.5">
+                    <div className="text-[9px] text-gray-400 mb-0.5">Suppliers</div>
+                    <div className="text-sm font-bold text-gray-900">48</div>
+                    <div className="text-[9px] text-gray-400">Active</div>
+                  </div>
+                  <div className="bg-white px-3 py-2.5">
+                    <div className="text-[9px] text-gray-400 mb-0.5">Low Stock</div>
+                    <div className="text-sm font-bold text-gray-900">24</div>
+                    <div className="text-[9px] text-gray-700">Critical</div>
+                  </div>
+                </div>
+                {/* Category bars */}
+                <div className="px-4 pt-3 pb-2">
+                  <div className="text-[9px] text-gray-400 mb-2">Stock by Category</div>
+                  {[
+                    { name: "Electronics", qty: "4,820", pct: 78 },
+                    { name: "Components", qty: "2,340", pct: 55 },
+                    { name: "Raw Material", qty: "2,110", pct: 64 },
+                    { name: "Packaging", qty: "890", pct: 32 },
+                    { name: "Finished Goods", qty: "1,130", pct: 47 },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 mb-1.5">
+                      <span className="text-[10px] text-gray-600 w-24 shrink-0">{item.name}</span>
+                      <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-gray-700 rounded-full" style={{ width: `${item.pct}%` }} />
+                      </div>
+                      <span className="text-[9px] text-gray-400 w-10 text-right">{item.qty}</span>
+                    </div>
+                  ))}
+                </div>
+                {/* Recent movements */}
+                <div className="px-4 pb-1">
+                  <div className="text-[9px] text-gray-400 mb-1.5">Recent Movements</div>
+                </div>
+                <div className="flex-1 divide-y divide-gray-100 overflow-hidden">
+                  {[
+                    { item: "MacBook Pro 14\"", action: "Restocked", qty: "+120", color: "text-gray-900" },
+                    { item: "USB-C Cables ×5", action: "Dispatched", qty: "-45", color: "text-gray-900" },
+                    { item: "Office Chairs", action: "Restocked", qty: "+30", color: "text-gray-900" },
+                    { item: "Laptop Stand", action: "Low Stock Alert", qty: "8 left", color: "text-gray-900" },
+                  ].map((mv, i) => (
+                    <div key={i} className="flex items-center justify-between px-4 py-2">
+                      <div>
+                        <div className="text-[11px] font-medium text-gray-800">{mv.item}</div>
+                        <div className="text-[9px] text-gray-400">{mv.action}</div>
+                      </div>
+                      <span className={`text-[11px] font-semibold ${mv.color}`}>{mv.qty}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 — HR & Payroll */}
+            <div className="bg-gray-100 rounded-[2px] flex flex-col overflow-hidden" style={{ minHeight: 580 }}>
+              <div className="p-5 pb-3">
+                <p className="text-[13px] font-medium text-gray-900 mb-1">
+                  HR & Payroll
+                </p>
+                <p className="text-[13px] text-gray-500 leading-relaxed mb-3">
+                  Manage employees, attendance, payroll processing, and benefits administration in one unified platform.
+                </p>
+                <a href="https://login.pryro.com" className="inline-block mt-4 text-[13px] font-medium text-gray-900 hover:underline">
+                  Explore HR →
+                </a>
+              </div>
+              <div className="flex-1 mx-3 mb-3 rounded-[2px] overflow-hidden bg-white border border-gray-200 flex flex-col">
+                {/* Header */}
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+                  <span className="text-[11px] font-semibold text-gray-700">Workforce Overview</span>
+                  <span className="text-[10px] text-gray-400">Aug 2026</span>
+                </div>
+                {/* KPI row */}
+                <div className="grid grid-cols-3 gap-px bg-gray-100 border-b border-gray-100">
+                  <div className="bg-white px-3 py-2.5">
+                    <div className="text-[9px] text-gray-400 mb-0.5">Total Staff</div>
+                    <div className="text-sm font-bold text-gray-900">342</div>
+                    <div className="text-[9px] text-gray-700">↑ 12.4%</div>
+                  </div>
+                  <div className="bg-white px-3 py-2.5">
+                    <div className="text-[9px] text-gray-400 mb-0.5">On Leave</div>
+                    <div className="text-sm font-bold text-gray-900">18</div>
+                    <div className="text-[9px] text-gray-400">Today</div>
+                  </div>
+                  <div className="bg-white px-3 py-2.5">
+                    <div className="text-[9px] text-gray-400 mb-0.5">Payroll</div>
+                    <div className="text-sm font-bold text-gray-900">$685K</div>
+                    <div className="text-[9px] text-gray-400">Monthly</div>
+                  </div>
+                </div>
+                {/* Department breakdown */}
+                {/* Area chart — Headcount trend */}
+                <div className="px-4 pt-3 pb-2">
+                  <div className="text-[9px] text-gray-400 mb-2">Headcount trend — last 8 months</div>
+                  <div className="relative h-24">
+                    <svg viewBox="0 0 300 80" preserveAspectRatio="none" className="w-full h-full">
+                      {/* grid lines */}
+                      <line x1="0" y1="20" x2="300" y2="20" stroke="#f3f4f6" strokeWidth="1"/>
+                      <line x1="0" y1="40" x2="300" y2="40" stroke="#f3f4f6" strokeWidth="1"/>
+                      <line x1="0" y1="60" x2="300" y2="60" stroke="#f3f4f6" strokeWidth="1"/>
+                      {/* area 1 — lighter */}
+                      <path d="M0,60 C15,55 25,45 40,48 C55,51 65,35 80,30 C95,25 105,40 120,35 C135,30 145,20 160,18 C175,16 185,28 200,24 C215,20 225,14 240,12 C255,10 265,18 280,16 C290,14 295,12 300,10 L300,80 L0,80 Z"
+                        fill="rgba(209,213,219,0.5)" stroke="none"/>
+                      <path d="M0,60 C15,55 25,45 40,48 C55,51 65,35 80,30 C95,25 105,40 120,35 C135,30 145,20 160,18 C175,16 185,28 200,24 C215,20 225,14 240,12 C255,10 265,18 280,16 C290,14 295,12 300,10"
+                        fill="none" stroke="rgba(156,163,175,0.9)" strokeWidth="1.5"/>
+                      {/* area 2 — darker */}
+                      <path d="M0,68 C15,64 25,56 40,60 C55,64 65,50 80,44 C95,38 105,52 120,47 C135,42 145,34 160,30 C175,26 185,40 200,36 C215,32 225,26 240,23 C255,20 265,30 280,27 C290,25 295,22 300,20 L300,80 L0,80 Z"
+                        fill="rgba(156,163,175,0.3)" stroke="none"/>
+                      <path d="M0,68 C15,64 25,56 40,60 C55,64 65,50 80,44 C95,38 105,52 120,47 C135,42 145,34 160,30 C175,26 185,40 200,36 C215,32 225,26 240,23 C255,20 265,30 280,27 C290,25 295,22 300,20"
+                        fill="none" stroke="rgba(107,114,128,0.8)" strokeWidth="1.5"/>
+                    </svg>
+                  </div>
+                  <div className="flex justify-between text-[9px] text-gray-300 mt-1">
+                    <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+                  </div>
+                  <div className="flex gap-4 mt-2">
+                    <div className="flex items-center gap-1"><div className="w-3 h-px bg-gray-300"/><span className="text-[9px] text-gray-400">Headcount</span></div>
+                    <div className="flex items-center gap-1"><div className="w-3 h-px bg-gray-500"/><span className="text-[9px] text-gray-400">Attendance</span></div>
+                  </div>
+                </div>
+                {/* Recent activity */}
+                <div className="px-4 pb-1">
+                  <div className="text-[9px] text-gray-400 mb-1.5">Recent Activity</div>
+                </div>
+                <div className="flex-1 divide-y divide-gray-100 overflow-hidden">
+                  {[
+                    { name: "Sarah Okonkwo", action: "Payslip generated", time: "2h ago" },
+                    { name: "James Mensah", action: "Leave approved", time: "4h ago" },
+                    { name: "Amara Diallo", action: "Onboarding complete", time: "Yesterday" },
+                    { name: "Tech Team ×12", action: "Payroll processed", time: "Yesterday" },
+                  ].map((act, i) => (
+                    <div key={i} className="flex items-center justify-between px-4 py-2">
+                      <div>
+                        <div className="text-[11px] font-medium text-gray-800">{act.name}</div>
+                        <div className="text-[9px] text-gray-400">{act.action}</div>
+                      </div>
+                      <span className="text-[9px] text-gray-400 shrink-0">{act.time}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
      
-  
-      <section id="faq" className="relative py-20 md:py-32 px-4 animate-on-scroll">
-        <div className="max-w-[800px] w-full mx-auto">
-          <div className="text-center mb-12 md:mb-16">
-            <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-6 flex items-center justify-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-              FREQUENTLY ASKED QUESTIONS
-            </div>
-            <h2 className="font-serif text-[32px] leading-[1.15] md:text-[48px] md:leading-[1.1] font-medium mb-6 text-balance">
-              Got{" "}
-              <span
-                className="inline-block"
-                style={{
-                  background: "linear-gradient(135deg, #0077ff 0%, #ffffff 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                questions
-              </span>
-              ?
-            </h2>
-            <p className="text-[#4a5568] text-sm md:text-base max-w-[600px] mx-auto leading-relaxed">
-              Everything you need to know about our ERP platform and enterprise solutions.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {[
-              {
-                question: "How does the ERP system integrate with existing tools?",
-                answer:
-                  "Our platform offers seamless integration with popular business tools through REST APIs and pre-built connectors. We support integration with accounting software, CRM systems, e-commerce platforms, and more. Our technical team provides full support during implementation.",
-              },
-              {
-                question: "What industries does the ERP solution support?",
-                answer:
-                  "Our ERP platform is designed for versatility across industries including manufacturing, retail, healthcare, logistics, professional services, and more. We offer industry-specific modules and can customize workflows to match your business processes.",
-              },
-              {
-                question: "How secure is our business data?",
-                answer:
-                  "We implement enterprise-grade security with 256-bit encryption, regular security audits, and compliance with SOC 2, GDPR, and ISO 27001 standards. Your data is backed up daily with 99.9% uptime guarantee and stored in secure data centers.",
-              },
-              {
-                question: "Can we customize the ERP to our specific needs?",
-                answer:
-                  "Yes, our platform is highly customizable. You can configure workflows, create custom fields, design reports, and build automation rules without coding. For advanced customization, our development team can create bespoke modules.",
-              },
-              {
-                question: "What is the implementation timeline?",
-                answer:
-                  "Implementation typically takes 1-2 weeks depending on company size and complexity. This includes data migration, system configuration, staff training, and testing. We provide dedicated project managers to ensure smooth deployment.",
-              },
-              {
-                question: "What kind of support and training do you provide?",
-                answer:
-                  "We offer 24/7 customer support via phone, email, and chat. All plans include comprehensive onboarding, video tutorials, documentation, and live training sessions. Enterprise customers get dedicated account managers and priority support.",
-              },
-            ].map((faq, i) => (
-              <div
-                key={i}
-                className="border border-black/10 rounded-xl overflow-hidden transition-all duration-300 hover:border-black/20"
-              >
-                <button
-                  onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
-                  className="w-full flex items-center justify-between p-6 text-left"
-                >
-                  <span className="text-base md:text-lg font-medium pr-4">{faq.question}</span>
-                  <ChevronDown
-                    className={`w-5 h-5 flex-shrink-0 text-[#4a5568] transition-transform duration-300 ${
-                      openFaqIndex === i ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <div
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    openFaqIndex === i ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <p className="px-6 pb-6 text-sm md:text-base text-[#4a5568] leading-relaxed">{faq.answer}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="pricing" className="relative py-20 md:py-32 px-4 animate-on-scroll bg-white">
-        <div className="max-w-[1120px] w-full mx-auto">
-          <div className="text-center mb-12">
+      <section id="pricing" className="relative py-20 md:py-32 px-4 animate-on-scroll bg-gray-50">
+        <div className="max-w-[1200px] w-full mx-auto">
+          <div className="text-center mb-10">
             <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">PRICING</div>
             <h2 className="text-[32px] md:text-[48px] font-bold mb-6 leading-tight text-gray-900">
               Simple plans<br />for serious work
             </h2>
           </div>
 
+          {/* Toggle */}
           <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-white rounded-full p-1 border border-gray-200">
-              <button onClick={() => setPricingToggle("annually")} className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${pricingToggle === "annually" ? "bg-blue-600 text-white" : "text-gray-600 hover:text-gray-900"}`}>Annually</button>
-              <button onClick={() => setPricingToggle("monthly")} className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${pricingToggle === "monthly" ? "bg-blue-600 text-white" : "text-gray-600 hover:text-gray-900"}`}>Monthly</button>
+            <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
+              <button
+                onClick={() => setPricingToggle("annually")}
+                className={`text-sm font-medium px-3 py-1.5 rounded-[6px] transition-all duration-200 ${pricingToggle === "annually" ? "bg-white text-[#0f1117]" : "text-[#4a5568] hover:bg-white/60"}`}
+              >
+                Annually
+              </button>
+              <button
+                onClick={() => setPricingToggle("monthly")}
+                className={`text-sm font-medium px-3 py-1.5 rounded-[6px] transition-all duration-200 ${pricingToggle === "monthly" ? "bg-white text-[#0f1117]" : "text-[#4a5568] hover:bg-white/60"}`}
+              >
+                Monthly
+              </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <div className="bg-white rounded-3xl p-8 border border-gray-200">
-              <div className="mb-6">
-                <div className="text-sm text-gray-600 mb-2">pryro Basic</div>
-                <div className="text-4xl font-bold mb-2">Free</div>
-                <div className="text-sm text-gray-600">For solo use with light needs.</div>
+          {/* Comparison table */}
+          <div className="rounded-[5px] border border-gray-200 bg-white">
+            {/* Header row */}
+            <div className="grid grid-cols-[1fr_140px_140px_140px_140px]">
+              <div className="p-5 flex flex-col justify-end">
+                <p className="text-sm font-semibold text-gray-900 mb-1">Compare plans</p>
+                <p className="text-xs text-gray-400 leading-relaxed">Pick the right plan for your team.</p>
               </div>
-              <div className="space-y-3 mb-8">
-                {['Unlimited projects', '2 limited users', 'Time tracking', 'CRM', '100 limited invoice'].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm">
-                    <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
-                    {feature}
-                  </div>
-                ))}
+              <div className="border-l border-gray-200 p-5 text-center">
+                <p className="font-medium text-gray-900 text-sm">Basic</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">$0</p>
+                <p className="text-xs text-gray-500 mt-0.5">Free forever</p>
               </div>
-              <a href="https://login.pryro.com">
-                <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Try Freelio free</button>
-              </a>
-            </div>
-
-            <div className="bg-white rounded-3xl p-8 border border-gray-200 relative">
-              {pricingToggle === "annually" && <div className="absolute top-4 right-4 bg-green-400 text-xs font-medium px-3 py-1 rounded-full">Save 20%</div>}
-              <div className="mb-6">
-                <div className="text-sm text-gray-600 mb-2">pryro Premium</div>
-                <div className="text-4xl font-bold mb-2 h-12 flex items-center overflow-hidden relative">
-                  <span 
-                    key={pricingToggle} 
-                    className="inline-block animate-[slideUp_0.4s_ease-out]"
-                  >
-                    {pricingToggle === "annually" ? "$29/mo" : "$50/mo"}
+              <div className="border-l border-gray-200 p-5 text-center bg-gray-100/60 relative overflow-visible">
+                {pricingToggle === "annually" && (
+                  <span className="absolute -top-1 right-3 bg-green-400 text-[10px] font-semibold px-2 py-0.5 rounded-full text-white">Save 20%</span>
+                )}
+                <p className="font-medium text-gray-900 text-sm">Premium</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1 flex items-baseline justify-center gap-0.5">
+                  <span className="flex items-center overflow-hidden h-8">
+                    {"$".split("").concat((pricingToggle === "annually" ? "29" : "50").split("")).map((char, i) => (
+                      <span
+                        key={`${pricingToggle}-${i}`}
+                        className="inline-block animate-[slideUp_0.3s_ease-out_both]"
+                        style={{ animationDelay: `${i * 60}ms` }}
+                      >
+                        {char}
+                      </span>
+                    ))}
                   </span>
-                </div>
-                <div className="text-sm text-gray-600">For pro use with light needs.</div>
+                  <span className="text-sm font-normal text-gray-500">/mo</span>
+                </p>
+                <p className="text-xs text-gray-500 mt-0.5">Per workspace</p>
               </div>
-              <div className="space-y-3 mb-8">
-                {['Everything in Basic', 'Invoices & payments', 'Expense tracking', ' HR, CRM and POS','AI report',' Envoice Link','Income tracking', 'Scheduling','VIP Support'].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm">
-                    <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
-                    {feature}
-                  </div>
-                ))}
+              <div className="border-l border-gray-200 p-5 text-center">
+                <p className="font-medium text-gray-900 text-sm">Business</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1 flex items-baseline justify-center gap-0.5">
+                  <span className="flex items-center overflow-hidden h-8">
+                    {"$".split("").concat((pricingToggle === "annually" ? "79" : "99").split("")).map((char, i) => (
+                      <span
+                        key={`${pricingToggle}-${i}`}
+                        className="inline-block animate-[slideUp_0.3s_ease-out_both]"
+                        style={{ animationDelay: `${i * 60}ms` }}
+                      >
+                        {char}
+                      </span>
+                    ))}
+                  </span>
+                  <span className="text-sm font-normal text-gray-500">/mo</span>
+                </p>
+                <p className="text-xs text-gray-500 mt-0.5">Up to 100 users</p>
               </div>
-              <a href="https://login.pryro.com">
-                <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Get started</button>
-              </a>
+              <div className="border-l border-gray-200 p-5 text-center">
+                <p className="font-medium text-gray-900 text-sm">Enterprise</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">Custom</p>
+                <p className="text-xs text-gray-500 mt-0.5">Contact sales</p>
+              </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-8 border border-gray-200">
-              <div className="mb-6">
-                <div className="text-sm text-gray-600 mb-2">pryro Enterprise</div>
-                <div className="text-4xl font-bold mb-2">Flexible</div>
-                <div className="text-sm text-gray-600">For team use with light needs.</div>
+            {/* Feature rows */}
+            {[
+              { name: 'Users',             desc: 'Team members with full access',         basic: '2',         premium: '20',       business: '100',        enterprise: 'Unlimited' },
+              { name: 'Projects',          desc: 'Active projects you can manage',        basic: 'Unlimited', premium: 'Unlimited', business: 'Unlimited',  enterprise: 'Unlimited' },
+              { name: 'Invoices',          desc: 'Professional invoices per month',       basic: '100/mo',    premium: 'Unlimited', business: 'Unlimited',  enterprise: 'Unlimited' },
+              { name: 'Time Tracking',     desc: 'Log hours and track billable time',     basic: true,        premium: true,        business: true,         enterprise: true },
+              { name: 'CRM',               desc: 'Manage clients and deal pipelines',     basic: true,        premium: true,        business: true,         enterprise: true },
+              { name: 'HR Management',     desc: 'Payroll, leaves, employee records',     basic: false,       premium: true,        business: true,         enterprise: true },
+              { name: 'POS',               desc: 'Point-of-sale for retail & hospitality',basic: false,       premium: true,        business: true,         enterprise: true },
+              { name: 'AI Reports',        desc: 'Smart insights generated automatically',basic: false,       premium: true,        business: true,         enterprise: true },
+              { name: 'Invoice Link',      desc: 'Share payment links with clients',      basic: false,       premium: true,        business: false,        enterprise: true },
+              { name: 'Custom Webhooks',   desc: 'Connect to external apps via webhooks', basic: false,       premium: false,       business: false,        enterprise: true },
+              { name: 'Advanced Security', desc: 'SSO, audit logs and access controls',   basic: false,       premium: false,       business: true,         enterprise: true },
+              { name: 'Support',           desc: 'How we help when you need us',          basic: 'Email',     premium: 'Priority',  business: 'Phone & Chat', enterprise: 'Dedicated' },
+            ].map((row) => (
+              <div key={row.name} className="grid grid-cols-[1fr_140px_140px_140px_140px] border-t border-gray-100">
+                <div className="p-4 flex items-center gap-3">
+                  <p className="text-sm font-medium text-gray-900">{row.name}</p>
+                  <p className="text-xs text-gray-400">{row.desc}</p>
+                </div>
+                <div className="border-l border-gray-100 p-4 flex items-center justify-center text-sm">
+                  {typeof row.basic === 'boolean'
+                    ? row.basic ? <Check className="w-4 h-4 text-gray-400" /> : <Minus className="w-4 h-4 text-gray-300" />
+                    : <span className="text-gray-900">{row.basic}</span>}
+                </div>
+                <div className="border-l border-gray-100 p-4 flex items-center justify-center text-sm bg-gray-100/60">
+                  {typeof row.premium === 'boolean'
+                    ? row.premium ? <Check className="w-4 h-4 text-gray-400" /> : <Minus className="w-4 h-4 text-gray-300" />
+                    : <span className="font-medium text-gray-900">{row.premium}</span>}
+                </div>
+                <div className="border-l border-gray-100 p-4 flex items-center justify-center text-sm">
+                  {typeof row.business === 'boolean'
+                    ? row.business ? <Check className="w-4 h-4 text-gray-400" /> : <Minus className="w-4 h-4 text-gray-300" />
+                    : <span className="text-gray-900">{row.business}</span>}
+                </div>
+                <div className="border-l border-gray-100 p-4 flex items-center justify-center text-sm">
+                  {typeof row.enterprise === 'boolean'
+                    ? row.enterprise ? <Check className="w-4 h-4 text-gray-400" /> : <Minus className="w-4 h-4 text-gray-300" />
+                    : <span className="text-gray-900">{row.enterprise}</span>}
+                </div>
               </div>
-              <div className="space-y-3 mb-8">
-                {['Everything in Premium', 'Custom data import', 'Advanced onboarding', 'Hubspot integration', 'Timesheets'].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm">
-                    <svg className="w-4 h-4 text-gray-900" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
-                    {feature}
-                  </div>
-                ))}
+            ))}
+
+            {/* CTA row */}
+            <div className="grid grid-cols-[1fr_140px_140px_140px_140px] border-t border-gray-100">
+              <div className="p-4">
+                <p className="text-sm font-medium text-gray-900">Ready to get started?</p>
+                <p className="text-xs text-gray-400 mt-0.5">No credit card required for Basic.</p>
               </div>
-              <a href="/contact">
-                <button className="w-full py-3 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Contact sales</button>
-              </a>
+              <div className="border-l border-gray-100 p-4">
+                <a href="https://login.pryro.com">
+                  <button className="w-full py-2 rounded-[5px] border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Get started</button>
+                </a>
+              </div>
+              <div className="border-l border-gray-100 p-4 bg-gray-100/60">
+                <a href="https://login.pryro.com">
+                  <button className="w-full py-2 rounded-[5px] bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all">Upgrade</button>
+                </a>
+              </div>
+              <div className="border-l border-gray-100 p-4">
+                <a href="https://login.pryro.com">
+                  <button className="w-full py-2 rounded-[5px] border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Get Business</button>
+                </a>
+              </div>
+              <div className="border-l border-gray-100 p-4">
+                <a href="/contact">
+                  <button className="w-full py-2 rounded-[5px] border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Contact sales</button>
+                </a>
+              </div>
             </div>
           </div>
 
-          <div className="text-center mt-8 text-sm text-gray-600">Trusted by 64,000+ top Busiiness, startups, Ngo, and studios</div>
+          <div className="text-center mt-8 text-sm text-gray-500">Trusted by 64,000+ businesses, startups, NGOs, and studios</div>
         </div>
       </section>
 
       <section className="relative py-20 md:py-32 px-4 animate-on-scroll overflow-hidden bg-white">
         <div className="max-w-[1120px] w-full mx-auto text-center">
           <h2 className="text-[32px] md:text-[48px] font-bold mb-12 leading-tight text-gray-900">
-            "This ERP platform transformed<br />how we run our business"
+            Finally, one platform that actually<br />runs our whole operation
           </h2>
 
-          <div className="text-base font-medium mb-1">Sarah Mitchell</div>
-          <div className="text-sm text-gray-600 mb-16">CEO, TechCorp Industries</div>
+          <div className="text-base font-medium mb-1">Kofi</div>
+          <div className="text-sm text-gray-600 mb-16">CEO, Accra Fresh Foods</div>
 
           <div className="relative max-w-6xl mx-auto">
             <div className="flex items-stretch justify-center gap-6">
               {[
-                { text: '"Duct-tape tools together. Contracts, time tracking, and invoices in one clean system. It\'s a small team needs to stay organized."', name: 'Kwame Osei', role: 'Founder, Google', avatar: 'https://i.pravatar.cc/150?img=12' },
-                { text: '"Managing projects used to mean spreadsheets, DMs, and missed invoices. This platform keeps our workflows tight and our clients impressed."', name: 'Sarah Johnson', role: 'Art Director, Instagram', avatar: 'https://i.pravatar.cc/150?img=47' },
-                { text: '"As a fast-moving design team, we needed a tool that matched our pace. From client onboarding to getting paid, this just works clean, fast, and beautifully built."', name: 'Amara Nwosu', role: 'Design Ops Lead, Teamwork', avatar: 'https://i.pravatar.cc/150?img=38' },
-                { text: '"The financial automation has saved us 20+ hours per week. Real-time reporting gives us insights we never had before."', name: 'Michael Chen', role: 'CFO, Global Manufacturing', avatar: 'https://i.pravatar.cc/150?img=33' },
-                { text: '"Inventory management across 15 warehouses is now seamless. We\'ve reduced stockouts by 75% and improved cash flow significantly."', name: 'Fatima Diallo', role: 'Operations Director, RetailCo', avatar: 'https://i.pravatar.cc/150?img=45' },
-                { text: '"We\'ve cut operational costs by 35% since implementing this ERP. The automation and analytics are game-changing for our business."', name: 'James Anderson', role: 'VP Operations, LogisticsPro', avatar: 'https://i.pravatar.cc/150?img=15' },
-                { text: '"From HR to finance to inventory, everything we need is in one platform. It\'s made our entire organization so much more efficient."', name: 'Chioma Okeke', role: 'COO, Enterprise Solutions', avatar: 'https://i.pravatar.cc/150?img=44' },
+                { text: 'We used to manage invoices in Excel and chase payments over WhatsApp. Pryro cleaned all that up in the first week. Our clients noticed the difference immediately.', name: 'Amara', role: 'Founder, Dakar Studio Co.', avatar: 'https://i.pravatar.cc/150?img=38' },
+                { text: 'Our accountant recommended we try Pryro and it was the best decision we made this year. Payroll, expenses, and reports all in one place.', name: 'Ngozi', role: 'MD, Eze Logistics Ltd.', avatar: 'https://i.pravatar.cc/150?img=45' },
+                { text: "I run a small construction firm and keeping track of projects, staff, and suppliers was a nightmare. Pryro made it manageable. I actually know what's going on now.", name: 'Kwame', role: 'Director, Asante Build Group', avatar: 'https://i.pravatar.cc/150?img=12' },
+                { text: "The invoicing and CRM features alone justified the switch. We've reduced unpaid invoices by over 60% since going live three months ago.", name: 'Fatou', role: 'Finance Lead, Camara Trading', avatar: 'https://i.pravatar.cc/150?img=47' },
+                { text: 'Setting it up took less than a day. The HR module handles leave requests and payroll automatically. My team stopped complaining about admin work.', name: 'James', role: 'COO, Okonkwo & Partners', avatar: 'https://i.pravatar.cc/150?img=33' },
+                { text: 'We manage stock across three branches and Pryro keeps everything in sync. Low stock alerts have basically eliminated stockouts for us.', name: 'Aissatou', role: 'Operations Manager, Bah Retail', avatar: 'https://i.pravatar.cc/150?img=44' },
+                { text: 'As a non-profit we needed something affordable that still did everything. Pryro fit perfectly - donor tracking, expense reports, and team management all covered.', name: 'Emmanuel', role: 'Executive Director, Hope Forward NGO', avatar: 'https://i.pravatar.cc/150?img=15' },
               ].map((testimonial, i) => {
                 const offset = (i - testimonialIndex + 7) % 7
                 const isCenter = offset === 0
@@ -1422,8 +2244,8 @@ export default function PryroPage() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-white via-white/60 to-transparent pointer-events-none" />
         <div className="max-w-[800px] w-full mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 glass-pill px-4 py-2 rounded-full mb-8 text-xs md:text-xs text-[#4a5568]">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+          <div className="inline-flex items-center gap-1.5 glass-pill px-3 py-1 rounded-[5px] mb-8 text-[10px] text-[#4a5568]">
+            <span className="w-1 h-1 rounded-full bg-blue-400 animate-pulse" />
             Transform your business
           </div>
 
@@ -1434,11 +2256,13 @@ export default function PryroPage() {
             Together, we're building smarter enterprises. Start optimizing your operations today.
           </p>
 
-          <a href="https://login.pryro.com">
-            <Button className="text-base rounded-full bg-blue-600 border border-blue-600 hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 text-white px-8 py-6 md:text-base">
-              Get Started Today
-            </Button>
-          </a>
+          <div className="flex justify-center">
+            <a href="https://login.pryro.com">
+              <Button className="text-base rounded-[5px] bg-blue-600 border border-blue-600 hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 text-white px-8 py-6 md:text-base flex items-center gap-2">
+                Get Started Today <ArrowRight className="w-4 h-4" />
+              </Button>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -1551,14 +2375,14 @@ export default function PryroPage() {
                   type="text"
                   placeholder="Type your message"
                   id="whatsapp-message"
-                  className="px-4 py-1.5 bg-white/20 border border-white/30 rounded-lg text-xs text-white placeholder-white/60 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/30 transition-all"
+                  className="px-4 py-1.5 bg-white/20 border border-white/30 rounded-[5px] text-xs text-white placeholder-white/60 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/30 transition-all"
                 />
                 <button 
                   onClick={() => {
                     const message = (document.getElementById('whatsapp-message') as HTMLInputElement)?.value || '';
                     window.open(`https://wa.me/250788715075?text=${encodeURIComponent(message)}`, '_blank');
                   }}
-                  className="px-4 py-1.5 border rounded-lg text-xs font-medium hover:bg-white/90 transition-all bg-white border-white text-blue-600"
+                  className="px-4 py-1.5 border rounded-[5px] text-xs font-medium hover:bg-white/90 transition-all bg-white border-white text-blue-600"
                 >
                   Send WhatsApp
                 </button>
