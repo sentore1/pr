@@ -11,7 +11,7 @@ export function Header() {
   return (
     <>
       <header className="fixed top-6 left-6 md:w-auto md:right-auto right-6 z-40 border border-black/10 backdrop-blur-md bg-white/80 rounded-[16px]">
-        <div className="w-full mx-auto px-6">
+        <div className="w-full mx-auto px-3">
           <div className="flex items-center gap-6 md:h-14 h-14">
             <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-300">
               <img src="/pryro logo.png" alt="Pryro" className="h-8 w-auto" />

@@ -4,9 +4,9 @@ import { Youtube, Instagram } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="relative px-4 py-16 pt-48" style={{ background: "linear-gradient(to bottom, #FFFFFF 0%, #DBEAFE 15%, #93C5FD 30%, #60A5FA 45%, #3B82F6 60%, #2563EB 80%, #1E40AF 100%)" }}>
+    <footer className="relative px-4 pb-24 pt-[280px] -mt-[200px]" style={{ background: "linear-gradient(to bottom, #F9FAFB 0%, #F3F4F6 20%, #DBEAFE 45%, #93C5FD 60%, #3B82F6 75%, #2563EB 88%, #1E40AF 100%)" }}>
       <div className="max-w-[1120px] w-full mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-8 mb-20">
           <div className="flex flex-col gap-4">
             <div className="w-fit">
               <img src="/pryro logo.png" alt="Pryro" className="h-8 w-auto" />

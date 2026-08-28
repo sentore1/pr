@@ -1375,12 +1375,12 @@ export default function PryroPage() {
                     ]).map((industry, i) => (
                       <div
                         key={i}
-                        className="flex flex-col items-center justify-center flex-shrink-0 w-16 md:w-20 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
+                        className="flex flex-col items-center justify-center flex-shrink-0 w-20 md:w-24 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
                       >
                         <img
                           src={industry.icon}
                           alt={industry.name}
-                          className="w-8 h-8 md:w-10 md:h-10 object-contain"
+                          className="w-12 h-12 md:w-14 md:h-14 object-contain"
                         />
                         <span className="text-[8px] text-gray-500 text-center leading-tight w-full truncate px-0.5">{industry.name}</span>
                       </div>
@@ -1428,12 +1428,12 @@ export default function PryroPage() {
                     ]).map((industry, i) => (
                       <div
                         key={i}
-                        className="flex flex-col items-center justify-center flex-shrink-0 w-16 md:w-20 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
+                        className="flex flex-col items-center justify-center flex-shrink-0 w-20 md:w-24 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
                       >
                         <img
                           src={industry.icon}
                           alt={industry.name}
-                          className="w-8 h-8 md:w-10 md:h-10 object-contain"
+                          className="w-12 h-12 md:w-14 md:h-14 object-contain"
                         />
                         <span className="text-[8px] text-gray-500 text-center leading-tight w-full truncate px-0.5">{industry.name}</span>
                       </div>
@@ -1926,7 +1926,7 @@ export default function PryroPage() {
             Built for every part of your business
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-1 items-stretch">
 
             {/* Card 1 — Financial Management */}
             <div className="bg-gray-100 rounded-[2px] flex flex-col overflow-hidden" style={{ minHeight: 580 }}>
@@ -2336,7 +2336,7 @@ export default function PryroPage() {
         </div>
       </section>
 
-      <section className="relative py-20 md:py-32 px-4 animate-on-scroll overflow-hidden bg-gray-50">
+      <section className="relative py-20 md:py-32 px-4 animate-on-scroll overflow-hidden bg-gray-50 rounded-none">
         <div className="max-w-[1120px] w-full mx-auto text-center">
           <h2 className="text-[32px] md:text-[48px] font-bold mb-12 leading-tight text-gray-900">
             Finally, one platform that actually<br />runs our whole operation
@@ -2375,7 +2375,7 @@ export default function PryroPage() {
                       transform: isCenter ? "scale(1)" : "scale(0.9)",
                     }}
                   >
-                    <div className="bg-white rounded-2xl p-6 text-left h-full flex flex-col">
+                    <div className="bg-white rounded-none p-6 text-left h-full flex flex-col">
                       <p className="text-sm text-gray-700 mb-6 leading-relaxed flex-grow">{testimonial.text}</p>
                       <div className="flex items-center gap-3">
                         <Avatar>
@@ -2405,17 +2405,11 @@ export default function PryroPage() {
         </div>
       </section>
 
+      <div style={{ background: "linear-gradient(to bottom, #F9FAFB 0%, #F3F4F6 15%, #E5E7EB 28%, #DBEAFE 48%, #93C5FD 62%, #3B82F6 76%, #2563EB 88%, #1E40AF 100%)" }}>
       <section
         id="cta"
-        className="relative py-20 md:py-40 px-4 animate-on-scroll overflow-hidden pt-0"
-        style={{
-          backgroundImage: `url('/earth-cta.png')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-        }}
+        className="relative py-20 md:py-40 px-4 animate-on-scroll pt-0 bg-transparent"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/60 to-transparent pointer-events-none" />
         <div className="max-w-[800px] w-full mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-1.5 glass-pill px-3 py-1 rounded-[5px] mb-8 text-[10px] text-[#4a5568]">
             <span className="w-1 h-1 rounded-full bg-blue-400 animate-pulse" />
@@ -2439,7 +2433,7 @@ export default function PryroPage() {
         </div>
       </section>
 
-      <footer className="relative px-4 py-8 pt-59" style={{ background: "linear-gradient(to bottom, #FFFFFF 0%, #DBEAFE 15%, #6aaffd 30%, #3b8ff7 45%, #3B82F6 60%, #2563EB 80%, #1E40AF 100%)" }}>
+      <footer className="relative px-4 py-8 pt-16 bg-transparent">
         <div className="max-w-[1120px] w-full mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-8 mb-12">
             {/* Brand Column */}
@@ -2580,6 +2574,7 @@ export default function PryroPage() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   )
 }
