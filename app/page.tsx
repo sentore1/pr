@@ -2316,7 +2316,7 @@ export default function PryroPage() {
               </div>
               <div className="border-l border-gray-100 p-4 bg-gray-100/60">
                 <a href="https://login.pryro.com">
-                  <button className="w-full py-2 rounded-[5px] bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all">Upgrade</button>
+                  <button className="w-full py-2 rounded-[5px] text-white text-sm font-medium transition-all" style={{ backgroundColor: '#0084FF' }} onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#006FD6')} onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#0084FF')}>Upgrade</button>
                 </a>
               </div>
               <div className="border-l border-gray-100 p-4">
