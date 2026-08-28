@@ -320,6 +320,477 @@ function AnimatedCounter({ value, suffix = "" }: { value: string; suffix?: strin
   )
 }
 
+/* ── MINI DASHBOARD COMPONENT ── */
+function MiniDashboard() {
+  const [clients, setClients] = useState(15)
+  const [vendors, setVendors] = useState(15)
+  const [custPayment, setCustPayment] = useState(21938.19)
+  const [vendPayment, setVendPayment] = useState(14349.30)
+  const [revenue, setRevenue] = useState(87412.50)
+  const [expenses, setExpenses] = useState(34820.00)
+  const [openInvoices, setOpenInvoices] = useState(24)
+  const [overdueInvoices, setOverdueInvoices] = useState(6)
+
+  // Many points for a rich wavy area chart (like the reference image)
+  const mkPts = (seed: number[]) => seed.map((y, i) => ({ x: i * (800 / (seed.length - 1)), y }))
+
+  const [layer1, setLayer1] = useState(mkPts([78,62,70,48,55,40,58,35,50,42,62,38,54,30,44,36,52,28,46,40,60,34,50,38,56,44,66,50,60,46,70]))
+
+  const [recentInvoices, setRecentInvoices] = useState([
+    { id: "INV-1042", client: "Atlas Corp",     amount: 4200.00, status: "Paid",    date: "Aug 21" },
+    { id: "INV-1041", client: "Nova Media",     amount: 1850.50, status: "Pending", date: "Aug 19" },
+    { id: "INV-1040", client: "Crest Ltd",      amount: 9300.00, status: "Paid",    date: "Aug 17" },
+    { id: "INV-1039", client: "Opal Finance",   amount: 560.00,  status: "Overdue", date: "Aug 12" },
+    { id: "INV-1038", client: "Blaze Ventures", amount: 3100.75, status: "Paid",    date: "Aug 10" },
+  ])
+
+  const [topClients, setTopClients] = useState([
+    { name: "Atlas Corp",     revenue: 42000, pct: 82 },
+    { name: "Nova Media",     revenue: 28500, pct: 56 },
+    { name: "Crest Ltd",      revenue: 21000, pct: 41 },
+    { name: "Opal Finance",   revenue: 14800, pct: 29 },
+    { name: "Blaze Ventures", revenue: 9200,  pct: 18 },
+  ])
+
+  const [barCols, setBarCols] = useState([
+    { label: "Mon", val: 64 }, { label: "Tue", val: 78 }, { label: "Wed", val: 52 },
+    { label: "Thu", val: 88 }, { label: "Fri", val: 72 }, { label: "Sat", val: 44 },
+    { label: "Sun", val: 36 },
+  ])
+
+  const [activity] = useState([
+    { time: "2m ago",  msg: "Invoice INV-1042 marked as paid",        icon: "check" },
+    { time: "11m ago", msg: "New vendor Iris Tech onboarded",          icon: "plus"  },
+    { time: "34m ago", msg: "Stock alert: Item #A204 below threshold", icon: "alert" },
+    { time: "1h ago",  msg: "Payroll run completed for 48 employees",  icon: "users" },
+    { time: "2h ago",  msg: "Report Q3 exported by Admin",             icon: "file"  },
+  ])
+
+  const [stockItems, setStockItems] = useState([
+    { name: "Product A204", stock: 12,  max: 200, status: "Low"    },
+    { name: "Product B311", stock: 140, max: 200, status: "Good"   },
+    { name: "Product C099", stock: 67,  max: 200, status: "Medium" },
+    { name: "Product D450", stock: 188, max: 200, status: "Good"   },
+    { name: "Product E712", stock: 5,   max: 200, status: "Low"    },
+  ])
+
+  const [employees] = useState([
+    { name: "Sara Chen",    dept: "Engineering", status: "Active",   salary: 5800 },
+    { name: "Kofi Mensah",  dept: "Marketing",   status: "Active",   salary: 4200 },
+    { name: "Lena Müller",  dept: "HR",          status: "On Leave", salary: 3900 },
+    { name: "James Okafor", dept: "Finance",     status: "Active",   salary: 5200 },
+    { name: "Priya Nair",   dept: "Operations",  status: "Active",   salary: 4600 },
+  ])
+
+  useEffect(() => {
+    const statsInterval = setInterval(() => {
+      setClients(v => Math.max(10, v + Math.floor(Math.random() * 3) - 1))
+      setVendors(v => Math.max(10, v + Math.floor(Math.random() * 3) - 1))
+      setCustPayment(v => parseFloat((Math.max(18000, v + (Math.random() * 600 - 300))).toFixed(2)))
+      setVendPayment(v => parseFloat((Math.max(10000, v + (Math.random() * 400 - 200))).toFixed(2)))
+      setRevenue(v => parseFloat((Math.max(75000, v + (Math.random() * 1200 - 600))).toFixed(2)))
+      setExpenses(v => parseFloat((Math.max(28000, v + (Math.random() * 800 - 400))).toFixed(2)))
+      setOpenInvoices(v => Math.max(15, v + Math.floor(Math.random() * 3) - 1))
+      setOverdueInvoices(v => Math.max(2, v + Math.floor(Math.random() * 3) - 1))
+    }, 2800)
+
+    const chartInterval = setInterval(() => {
+      const jitter = (pts: {x:number;y:number}[], min: number, max: number) =>
+        pts.map(p => ({ ...p, y: Math.min(max, Math.max(min, p.y + (Math.random() * 10 - 5))) }))
+      setLayer1(pts => jitter(pts, 20, 82))
+      setTopClients(prev => prev.map(c => ({
+        ...c,
+        revenue: Math.max(5000, c.revenue + Math.floor(Math.random() * 800 - 400)),
+        pct: Math.min(95, Math.max(10, c.pct + (Math.random() * 6 - 3))),
+      })))
+      setBarCols(prev => prev.map(b => ({
+        ...b, val: Math.min(98, Math.max(18, b.val + (Math.random() * 14 - 7)))
+      })))
+      setStockItems(prev => prev.map(s => ({
+        ...s, stock: Math.min(s.max, Math.max(0, s.stock + Math.floor(Math.random() * 10 - 5)))
+      })))
+    }, 1800)
+
+    const invoiceInterval = setInterval(() => {
+      const names = ["Spark Inc", "Peak Co", "Vivo Labs", "Dune Group", "Iris Tech"]
+      const statuses = ["Paid", "Pending", "Overdue"] as const
+      const newInv = {
+        id: `INV-${1043 + Math.floor(Math.random() * 100)}`,
+        client: names[Math.floor(Math.random() * names.length)],
+        amount: parseFloat((Math.random() * 8000 + 500).toFixed(2)),
+        status: statuses[Math.floor(Math.random() * 3)],
+        date: "Aug 28",
+      }
+      setRecentInvoices(prev => [newInv, ...prev.slice(0, 4)])
+    }, 7000)
+
+    return () => { clearInterval(statsInterval); clearInterval(chartInterval); clearInterval(invoiceInterval) }
+  }, [])
+
+  const toSmoothArea = (pts: { x: number; y: number }[], H: number) => {
+    if (pts.length < 2) return ""
+    // cubic bezier smooth path
+    let d = `M ${pts[0].x} ${pts[0].y}`
+    for (let i = 1; i < pts.length; i++) {
+      const prev = pts[i - 1]
+      const curr = pts[i]
+      const cp1x = prev.x + (curr.x - prev.x) * 0.5
+      const cp1y = prev.y
+      const cp2x = curr.x - (curr.x - prev.x) * 0.5
+      const cp2y = curr.y
+      d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${curr.x} ${curr.y}`
+    }
+    const last = pts[pts.length - 1]
+    const first = pts[0]
+    d += ` L ${last.x} ${H} L ${first.x} ${H} Z`
+    return d
+  }
+
+  const toSmoothLine = (pts: { x: number; y: number }[]) => {
+    if (pts.length < 2) return ""
+    let d = `M ${pts[0].x} ${pts[0].y}`
+    for (let i = 1; i < pts.length; i++) {
+      const prev = pts[i - 1]
+      const curr = pts[i]
+      const cp1x = prev.x + (curr.x - prev.x) * 0.5
+      const cp1y = prev.y
+      const cp2x = curr.x - (curr.x - prev.x) * 0.5
+      const cp2y = curr.y
+      d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${curr.x} ${curr.y}`
+    }
+    return d
+  }
+
+  const xLabels = ["Apr 2","Apr 7","Apr 12","Apr 17","Apr 23","Apr 29","May 4","May 9","May 15","May 21","May 27","Jun 1","Jun 6","Jun 11","Jun 17","Jun 23","Jun 30"]
+
+  return (
+    <div className="w-full bg-white" style={{ minHeight: 980 }}>
+      {/* Topbar */}
+      <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 bg-white">
+        <div className="flex items-center gap-2 text-[11px] text-gray-500">
+          <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span className="text-gray-300 select-none">|</span>
+          <span>Dashboard</span>
+          <svg className="w-2.5 h-2.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+          <span className="font-semibold text-gray-800">Account Dashboard</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-100 px-2.5 py-1 text-[10px] text-gray-500">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <span>Aug 2026</span>
+            <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div className="flex items-center gap-1 text-[10px] text-gray-500">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"/><path d="M2 12h20"/></svg>
+            <span>GB English</span>
+          </div>
+          <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center">
+            <span className="text-[9px] text-white font-bold">P</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Title row */}
+      <div className="flex items-center justify-between px-5 pt-4 pb-2">
+        <div>
+          <h3 className="text-[14px] font-semibold text-gray-800">Account Dashboard</h3>
+          <p className="text-[10px] text-gray-400 mt-0.5">Live overview · updates every few seconds</p>
+        </div>
+        <div className="flex gap-2">
+          {["Overview","Finance","HR","Stock"].map((t, i) => (
+            <button key={t} className={`text-[10px] px-2.5 py-1 border transition-colors ${i === 0 ? "border-gray-300 text-gray-700 bg-gray-50" : "border-gray-100 text-gray-400 hover:bg-gray-50"}`}>
+              {t}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── ROW 1: 6 stat cards — no color ── */}
+      <div className="grid grid-cols-3 md:grid-cols-6 border-t border-gray-100">
+        {[
+          { label: "Total Clients",  value: String(clients),  sub: "active",           icon: "users"    },
+          { label: "Total Vendors",  value: String(vendors),  sub: "active",           icon: "building" },
+          { label: "Revenue",        value: `$${Math.round(revenue).toLocaleString()}`,  sub: "this month", icon: "trending" },
+          { label: "Expenses",       value: `$${Math.round(expenses).toLocaleString()}`, sub: "this month", icon: "wallet"   },
+          { label: "Open Invoices",  value: String(openInvoices),    sub: "awaiting payment", icon: "file"     },
+          { label: "Overdue",        value: String(overdueInvoices), sub: "need attention",   icon: "alert"    },
+        ].map((card, i) => (
+          <div key={i} className="border-r border-b border-gray-100 last:border-r-0 px-4 py-3 flex flex-col gap-1.5 bg-white">
+            <div className="flex items-center justify-between">
+              <span className="text-[9.5px] text-gray-400 font-medium uppercase tracking-wide">{card.label}</span>
+              <div className="w-5 h-5 bg-gray-50 flex items-center justify-center">
+                {card.icon === "users"    && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>}
+                {card.icon === "building" && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>}
+                {card.icon === "trending" && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>}
+                {card.icon === "wallet"   && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/></svg>}
+                {card.icon === "file"     && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>}
+                {card.icon === "alert"    && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>}
+              </div>
+            </div>
+            <span className="text-[18px] font-bold text-gray-800 transition-all duration-700">{card.value}</span>
+            <span className="text-[9px] text-gray-400">{card.sub}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* ── BIG LAYERED AREA CHART (full width) ── */}
+      <div className="border-t border-gray-100 px-5 pt-4 pb-2">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <span className="text-[11px] font-semibold text-gray-800">Revenue Overview</span>
+            <span className="ml-2 text-[9px] text-gray-400">Apr – Jun 2026</span>
+          </div>
+          <div className="flex gap-3 text-[9px] text-gray-400">
+            <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-1.5 border-t" style={{backgroundColor:"#0072FD",opacity:0.3,borderColor:"#0072FD"}}/>Sessions</span>
+            <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-1.5 border-t" style={{backgroundColor:"#0072FD",opacity:0.7,borderColor:"#0072FD"}}/>Revenue</span>
+          </div>
+        </div>
+
+        {/* SVG area chart */}
+        <div className="relative w-full" style={{ height: 160 }}>
+          <svg
+            viewBox="0 0 800 130"
+            className="w-full"
+            style={{ height: 140 }}
+            preserveAspectRatio="none"
+          >
+            {/* grid lines — painted first so areas cover them */}
+            {[0, 32, 65, 97, 130].map(y => (
+              <line key={y} x1="0" y1={y} x2="800" y2={y} stroke="#f1f5f9" strokeWidth="0.8"/>
+            ))}
+
+            <defs>
+              <linearGradient id="lg2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#0072FD" stopOpacity="0.25"/>
+                <stop offset="100%" stopColor="#0072FD" stopOpacity="0.04"/>
+              </linearGradient>
+              <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#0072FD" stopOpacity="0.55"/>
+                <stop offset="100%" stopColor="#0072FD" stopOpacity="0.08"/>
+              </linearGradient>
+            </defs>
+
+            {/* Outer (lighter) layer — layer1 shifted up by ~38px, follows same shape */}
+            <path d={toSmoothArea(layer1.map(p => ({ ...p, y: Math.max(4, p.y - 38) })), 130)} fill="url(#lg2)" style={{ transition: "d 1.4s ease-in-out" }}/>
+            <path d={toSmoothLine(layer1.map(p => ({ ...p, y: Math.max(4, p.y - 38) })))} fill="none" stroke="#0072FD" strokeWidth="1.2" strokeOpacity="0.45" style={{ transition: "d 1.4s ease-in-out" }}/>
+
+            {/* Inner (darker) layer — base layer1 */}
+            <path d={toSmoothArea(layer1, 130)} fill="url(#lg1)" style={{ transition: "d 1.4s ease-in-out" }}/>
+            <path d={toSmoothLine(layer1)} fill="none" stroke="#0072FD" strokeWidth="1.7" style={{ transition: "d 1.4s ease-in-out" }}/>
+          </svg>
+
+          {/* X-axis labels */}
+          <div className="flex justify-between px-0 mt-1">
+            {xLabels.map(l => (
+              <span key={l} className="text-[8px] text-gray-400">{l}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── ROW 3: Financial Snapshot + Top Clients ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
+        {/* Financial snapshot */}
+        <div className="border-r border-gray-100 p-4 flex flex-col gap-0">
+          <span className="text-[11px] font-semibold text-gray-800 mb-2">Financial Snapshot</span>
+          {[
+            { label: "Gross Profit",  value: `$${Math.round(revenue - expenses).toLocaleString()}`, change: "+8.2%",  up: true  },
+            { label: "Net Margin",    value: `${((revenue - expenses) / revenue * 100).toFixed(1)}%`, change: "+1.4%", up: true  },
+            { label: "Avg Invoice",   value: `$${Math.round(custPayment / openInvoices)}`,            change: "-2.1%", up: false },
+            { label: "Cust. Payment", value: `$${Math.round(custPayment).toLocaleString()}`,          change: "+5.7%", up: true  },
+            { label: "Vendor Cost",   value: `$${Math.round(vendPayment).toLocaleString()}`,          change: "+3.1%", up: false },
+          ].map((row, i) => (
+            <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+              <span className="text-[10px] text-gray-500">{row.label}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold text-gray-800">{row.value}</span>
+                <span className={`text-[9px] font-medium px-1 py-0.5 ${row.up ? "bg-gray-50 text-gray-500" : "bg-gray-50 text-gray-400"}`}>
+                  {row.change}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Top clients */}
+        <div className="p-4 flex flex-col">
+          <span className="text-[11px] font-semibold text-gray-800 mb-3">Top Clients by Revenue</span>
+          <div className="flex flex-col gap-2.5">
+            {topClients.map((c, i) => (
+              <div key={i} className="flex flex-col gap-1">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-4 h-4 bg-gray-100 flex items-center justify-center">
+                      <span className="text-[7px] font-bold text-gray-500">{c.name[0]}</span>
+                    </div>
+                    <span className="text-[10px] text-gray-700">{c.name}</span>
+                  </div>
+                  <span className="text-[10px] font-semibold text-gray-700">${c.revenue.toLocaleString()}</span>
+                </div>
+                <div className="w-full bg-gray-100 h-1">
+                  <div className="bg-blue-300 h-1 transition-all duration-1000" style={{ width: `${Math.floor(c.pct)}%` }}/>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── ROW 5: Weekly bar chart + Activity feed ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
+
+        {/* Weekly spend bar chart */}
+        <div className="border-r border-gray-100 p-4 flex flex-col">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[11px] font-semibold text-gray-800">Weekly Spend</span>
+            <span className="text-[9px] text-gray-400">Aug 22 – 28, 2026</span>
+          </div>
+          <div className="flex items-end gap-2 flex-1" style={{ minHeight: 90 }}>
+            {barCols.map((b, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                <div className="w-full flex flex-col justify-end" style={{ height: 80 }}>
+                  <div
+                    className="w-full"
+                    style={{
+                      height: `${b.val}%`,
+                      background: `rgba(0,114,253,${0.25 + (b.val / 98) * 0.55})`,
+                      transition: "height 1s ease-in-out",
+                    }}
+                  />
+                </div>
+                <span className="text-[8px] text-gray-400">{b.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Activity feed */}
+        <div className="p-4 flex flex-col">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[11px] font-semibold text-gray-800">Activity Feed</span>
+            <span className="text-[9px] text-gray-400 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0072FD] animate-pulse inline-block"/>Live
+            </span>
+          </div>
+          <div className="flex flex-col divide-y divide-gray-50">
+            {activity.map((a, i) => (
+              <div key={i} className="flex items-start gap-2.5 py-2">
+                <div className="w-5 h-5 bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
+                  {a.icon === "check" && <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>}
+                  {a.icon === "plus"  && <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>}
+                  {a.icon === "alert" && <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>}
+                  {a.icon === "users" && <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>}
+                  {a.icon === "file"  && <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] text-gray-700 leading-snug">{a.msg}</p>
+                  <span className="text-[8.5px] text-gray-400">{a.time}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── ROW 6: HR employees + Stock levels ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
+
+        {/* HR / Employees */}
+        <div className="border-r border-gray-100 p-4">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[11px] font-semibold text-gray-800">HRM — Employees</span>
+            <span className="text-[9px] text-gray-400">5 of 48 shown</span>
+          </div>
+          <div className="border border-gray-100">
+            <div className="grid grid-cols-[1fr_80px_70px_56px] gap-x-2 px-3 py-1.5 bg-gray-50 border-b border-gray-100">
+              {["Name","Department","Status","Salary"].map(h => (
+                <span key={h} className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">{h}</span>
+              ))}
+            </div>
+            {employees.map((e, i) => (
+              <div key={i} className="grid grid-cols-[1fr_80px_70px_56px] gap-x-2 px-3 py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/60 transition-colors">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <div className="w-4 h-4 bg-gray-100 flex items-center justify-center shrink-0">
+                    <span className="text-[7px] font-bold text-gray-500">{e.name[0]}</span>
+                  </div>
+                  <span className="text-[10px] text-gray-700 truncate">{e.name}</span>
+                </div>
+                <span className="text-[9.5px] text-gray-500 self-center truncate">{e.dept}</span>
+                <span className={`text-[9px] self-center font-medium px-1.5 py-0.5 w-fit border border-gray-200 ${e.status === "Active" ? "text-gray-600 bg-gray-50" : "text-gray-400 bg-gray-100"}`}>{e.status}</span>
+                <span className="text-[10px] font-semibold text-gray-700 self-center">${e.salary.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Stock levels */}
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[11px] font-semibold text-gray-800">Stock Levels</span>
+            <span className="text-[9px] text-gray-400">Live inventory</span>
+          </div>
+          <div className="flex flex-col gap-3">
+            {stockItems.map((s, i) => {
+              const pct = Math.round((s.stock / s.max) * 100)
+              const barColor = s.status === "Low" ? "rgba(0,114,253,0.35)" : s.status === "Medium" ? "rgba(0,114,253,0.55)" : "rgba(0,114,253,0.8)"
+              return (
+                <div key={i} className="flex flex-col gap-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-gray-700">{s.name}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[9px] text-gray-400">{s.stock}/{s.max}</span>
+                      <span className={`text-[8.5px] px-1.5 py-0.5 border border-gray-200 ${s.status === "Low" ? "text-gray-500 bg-gray-100" : "text-gray-500 bg-gray-50"}`}>{s.status}</span>
+                    </div>
+                  </div>
+                  <div className="w-full bg-gray-100 h-1.5">
+                    <div
+                      className="h-1.5 transition-all duration-1000"
+                      style={{ width: `${pct}%`, backgroundColor: barColor }}
+                    />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* ── ROW 4: Recent invoices ── */}
+      <div className="border-t border-gray-100 p-4">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-[11px] font-semibold text-gray-800">Recent Invoices</span>
+          <div className="flex items-center gap-2">
+            <span className="text-[9px] text-gray-400">{openInvoices} open · {overdueInvoices} overdue</span>
+            <button className="text-[9px] text-gray-500 border border-gray-200 px-2 py-0.5 hover:bg-gray-50 transition-colors">View all</button>
+          </div>
+        </div>
+        <div className="border border-gray-100">
+          <div className="grid grid-cols-[60px_1fr_1fr_80px_64px] gap-x-3 px-3 py-1.5 bg-gray-50 border-b border-gray-100">
+            {["ID","Client","Date","Amount","Status"].map(h => (
+              <span key={h} className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">{h}</span>
+            ))}
+          </div>
+          {recentInvoices.map((inv, i) => {
+            const statusStyle =
+              inv.status === "Paid"    ? "text-gray-600 bg-gray-50 border border-gray-200" :
+              inv.status === "Overdue" ? "text-gray-500 bg-gray-100 border border-gray-200" :
+                                         "text-gray-400 bg-gray-50 border border-gray-200"
+            return (
+              <div key={i} className="grid grid-cols-[60px_1fr_1fr_80px_64px] gap-x-3 px-3 py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/60 transition-colors">
+                <span className="text-[10px] text-gray-600 font-medium">{inv.id}</span>
+                <span className="text-[10px] text-gray-700 truncate">{inv.client}</span>
+                <span className="text-[10px] text-gray-400">{inv.date}</span>
+                <span className="text-[10px] font-semibold text-gray-800">${inv.amount.toLocaleString("en-US",{minimumFractionDigits:2})}</span>
+                <span className={`text-[9px] font-medium px-1.5 py-0.5 self-center w-fit ${statusStyle}`}>{inv.status}</span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function PryroPage() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -665,7 +1136,7 @@ export default function PryroPage() {
 
       <section
         ref={heroRef}
-        className={`relative min-h-[120vh] flex flex-col items-center justify-center px-4 pt-24 pb-16 md:pt-32 md:pb-24 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isLoaded ? "scale-100 opacity-100" : "scale-[1.03] opacity-0"}`}
+        className={`relative min-h-[120vh] flex flex-col items-center justify-center px-4 pt-20 pb-16 md:pt-24 md:pb-24 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isLoaded ? "scale-100 opacity-100" : "scale-[1.03] opacity-0"}`}
         style={{
           background: "linear-gradient(to bottom, #0072FD 0%, #0274FD 11%, #0376FC 22%, #097AFC 33%, #0E7EFC 44%, #1986FC 55%, #3393FC 66%, #4CA0FC 77%, #7FBAFC 88%, #E5EDFC 100%)",
         }}
@@ -861,10 +1332,10 @@ export default function PryroPage() {
               </div>
 
               {/* Industry Icons Carousel - Two rows at top of image */}
-              <div className="absolute top-8 left-0 right-0 z-20 space-y-3">
+              <div className="absolute top-8 left-0 right-0 z-20 space-y-0.5">
                 {/* First Row - Scrolling Left to Right */}
                 <div className="industry-carousel-full overflow-hidden">
-                  <div className="industry-carousel-track flex gap-2">
+                  <div className="industry-carousel-track flex gap-0.5">
                     {[
                       { name: "Accounting", icon: "/icon/accounting icon.png" },
                       { name: "AI Business Review", icon: "/icon/ai business review icon.png" },
@@ -904,13 +1375,14 @@ export default function PryroPage() {
                     ]).map((industry, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-[10px] bg-white border border-gray-200/50 p-2.5 shadow-lg"
+                        className="flex flex-col items-center justify-center flex-shrink-0 w-16 md:w-20 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
                       >
                         <img
                           src={industry.icon}
                           alt={industry.name}
-                          className="w-full h-full object-contain"
+                          className="w-8 h-8 md:w-10 md:h-10 object-contain"
                         />
+                        <span className="text-[8px] text-gray-500 text-center leading-tight w-full truncate px-0.5">{industry.name}</span>
                       </div>
                     ))}
                   </div>
@@ -918,7 +1390,7 @@ export default function PryroPage() {
 
                 {/* Second Row - Scrolling Right to Left */}
                 <div className="industry-carousel-full overflow-hidden">
-                  <div className="industry-carousel-track-reverse flex gap-2" style={{ animationDirection: 'reverse' }}>
+                  <div className="industry-carousel-track-reverse flex gap-0.5" style={{ animationDirection: 'reverse' }}>
                     {[
                       { name: "Knowledge", icon: "/icon/knowledge icon.png" },
                       { name: "Lawyer", icon: "/icon/lawyer icon.png" },
@@ -956,13 +1428,14 @@ export default function PryroPage() {
                     ]).map((industry, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-center flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-[10px] bg-white border border-gray-200/50 p-2.5 shadow-lg"
+                        className="flex flex-col items-center justify-center flex-shrink-0 w-16 md:w-20 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
                       >
                         <img
                           src={industry.icon}
                           alt={industry.name}
-                          className="w-full h-full object-contain"
+                          className="w-8 h-8 md:w-10 md:h-10 object-contain"
                         />
+                        <span className="text-[8px] text-gray-500 text-center leading-tight w-full truncate px-0.5">{industry.name}</span>
                       </div>
                     ))}
                   </div>
@@ -1285,316 +1758,16 @@ export default function PryroPage() {
             {/* ── INNER WHITE CARD ── */}
             <div className="bg-white overflow-hidden shadow-xl" style={{ borderRadius: "8px" }}>
 
-              {/* Top content area */}
-              <div className="px-8 md:px-16 pt-10 pb-8 text-center border-b border-black/6">
-                <p className="text-[12px] md:text-[13px] font-semibold text-gray-800 mb-1">
-                  From idea to complete business strategy — in one prompt
-                </p>
-                <p className="text-[11px] text-gray-500 max-w-[380px] mx-auto leading-relaxed">
-                  Give Pryro a goal and it builds a complete plan in seconds — finance, HR, inventory, and operations.
-                </p>
-
-                {/* Tab strip */}
-                <div className="flex justify-center gap-6 mt-5 mb-4">
-                  {["Run payroll", "Generate report", "Reorder stock"].map((t, i) => (
-                    <span
-                      key={i}
-                      className={`text-[11px] pb-1.5 cursor-default transition-colors ${
-                        i === 2
-                          ? "text-gray-900 font-semibold border-b-2 border-gray-900"
-                          : "text-gray-400"
-                      }`}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Prompt bar */}
-                <div className="flex items-center gap-3 bg-gray-50 border border-black/10 rounded-lg px-4 py-2.5 max-w-[460px] mx-auto">
-                  <span className="flex-1 text-[11px] text-gray-500 text-left">
-                    Reorder stock that falls below minimum threshold
-                  </span>
-                  <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
-                    <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M2 6h8M6 2l4 4-4 4"/>
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Agent reply */}
-                <div className="mt-5 text-left max-w-[460px] mx-auto space-y-3">
-                  <p className="text-[11px] text-gray-600 leading-relaxed">
-                    Your business insights are ready.
-                  </p>
-                </div>
+              {/* Animated Dashboard UI */}
+              <div className="border-b border-black/6 overflow-hidden">
+                <MiniDashboard />
               </div>
             </div>
           </div>
-        </section>
-
-        <section className="relative bg-white border-t border-gray-100">
-          {/* ── ACCOUNT DASHBOARD SECTION ── */}
-          <div className="p-8 md:p-10 bg-white">
-                <div className="mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Account Dashboard</h2>
-                  <p className="text-xs text-gray-500 mt-1">Overview of clients, vendors, and payment analytics</p>
-                </div>
-
-                {/* Stats Cards Row */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                  {/* Total Clients */}
-                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-[5px] p-5 relative overflow-hidden">
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-gray-600 font-medium">Total Clients</span>
-                        <Users className="w-10 h-10 text-gray-300" />
-                      </div>
-                      <div className="text-3xl font-bold text-gray-900 mb-1">
-                        <FluctuatingCounter start={15} range={2} intervalMs={8000} min={12} max={20} />
-                      </div>
-                      <span className="text-[10px] text-gray-500">Active clients</span>
-                    </div>
-                  </div>
-
-                  {/* Total Vendors */}
-                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-[5px] p-5 relative overflow-hidden">
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-gray-600 font-medium">Total Vendors</span>
-                        <Building2 className="w-10 h-10 text-gray-300" />
-                      </div>
-                      <div className="text-3xl font-bold text-gray-900 mb-1">
-                        <FluctuatingCounter start={15} range={1} intervalMs={9000} min={12} max={18} />
-                      </div>
-                      <span className="text-[10px] text-gray-500">Active vendors</span>
-                    </div>
-                  </div>
-
-                  {/* Total Customer Payment */}
-                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-[5px] p-5 relative overflow-hidden">
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-gray-600 font-medium">Total Customer Payment</span>
-                        <TrendingUp className="w-10 h-10 text-gray-300" />
-                      </div>
-                      <div className="text-2xl font-bold text-gray-900 mb-1">
-                        <span className="text-lg align-super mr-0.5">$</span>
-                        <LiveCounter start={21998} step={50} intervalMs={4000} />
-                      </div>
-                      <span className="text-[10px] text-gray-500">Received payments</span>
-                    </div>
-                  </div>
-
-                  {/* Total Vendor Payment */}
-                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-[5px] p-5 relative overflow-hidden">
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-gray-600 font-medium">Total Vendor Payment</span>
-                        <Receipt className="w-10 h-10 text-gray-300" />
-                      </div>
-                      <div className="text-2xl font-bold text-gray-900 mb-1">
-                        <span className="text-lg align-super mr-0.5">$</span>
-                        <LiveCounter start={14349} step={30} intervalMs={5000} />
-                      </div>
-                      <span className="text-[10px] text-gray-500">Paid to vendors</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Charts Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Monthly Customer Payments Chart */}
-                  <div className="bg-white border border-gray-200 rounded-[5px] p-5 shadow-sm">
-                    <h3 className="text-sm font-semibold text-gray-900 mb-4">Monthly Customer Payments</h3>
-                    <div className="relative h-64">
-                      {/* Y-axis labels */}
-                      <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-[10px] text-gray-400">
-                        <span>60000</span>
-                        <span>45000</span>
-                        <span>30000</span>
-                        <span>15000</span>
-                        <span>0</span>
-                      </div>
-                      
-                      {/* Chart area */}
-                      <div className="absolute left-12 right-0 top-0 bottom-8">
-                        {/* Grid lines */}
-                        <div className="absolute inset-0 flex flex-col justify-between">
-                          {[0, 1, 2, 3, 4].map((i) => (
-                            <div key={i} className="border-t border-gray-100" />
-                          ))}
-                        </div>
-                        
-                        {/* SVG Line Chart */}
-                        <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-                          <defs>
-                            <linearGradient id="customerGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stopColor="#10b981" stopOpacity="0.2" />
-                              <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
-                            </linearGradient>
-                          </defs>
-                          <path
-                            d="M 0,75 Q 8,70 16,65 T 32,58 T 48,55 T 64,52 T 80,45 T 96,38 T 112,40"
-                            fill="url(#customerGradient)"
-                            stroke="#10b981"
-                            strokeWidth="2"
-                            vectorEffect="non-scaling-stroke"
-                          />
-                        </svg>
-                      </div>
-                      
-                      {/* X-axis labels */}
-                      <div className="absolute left-12 right-0 bottom-0 flex justify-between text-[10px] text-gray-400">
-                        {["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"].map((month, i) => (
-                          <span key={i}>{month}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Monthly Vendor Payments Chart */}
-                  <div className="bg-white border border-gray-200 rounded-[5px] p-5 shadow-sm">
-                    <h3 className="text-sm font-semibold text-gray-900 mb-4">Monthly Vendor Payments</h3>
-                    <div className="relative h-64">
-                      {/* Y-axis labels */}
-                      <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-[10px] text-gray-400">
-                        <span>24000</span>
-                        <span>18000</span>
-                        <span>12000</span>
-                        <span>6000</span>
-                        <span>0</span>
-                      </div>
-                      
-                      {/* Chart area */}
-                      <div className="absolute left-12 right-0 top-0 bottom-8">
-                        {/* Grid lines */}
-                        <div className="absolute inset-0 flex flex-col justify-between">
-                          {[0, 1, 2, 3, 4].map((i) => (
-                            <div key={i} className="border-t border-gray-100" />
-                          ))}
-                        </div>
-                        
-                        {/* SVG Line Chart */}
-                        <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-                          <defs>
-                            <linearGradient id="vendorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.2" />
-                              <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
-                            </linearGradient>
-                          </defs>
-                          <path
-                            d="M 0,20 L 16,12 L 32,80 L 48,70 L 64,25 L 80,28 L 96,50 L 112,85"
-                            fill="url(#vendorGradient)"
-                            stroke="#ef4444"
-                            strokeWidth="2"
-                            vectorEffect="non-scaling-stroke"
-                          />
-                        </svg>
-                      </div>
-                      
-                      {/* X-axis labels */}
-                      <div className="absolute left-12 right-0 bottom-0 flex justify-between text-[10px] text-gray-400">
-                        {["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"].map((month, i) => (
-                          <span key={i}>{month}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="relative bg-gray-50/60">
-            {/* ── TWO NESTED CARDS at the bottom ── */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 md:p-10">
-
-                {/* Nested card 1 */}
-                <div className="bg-white rounded-lg border border-black/8 shadow-sm p-5">
-                  <h3 className="text-[12px] font-semibold text-gray-800 mb-1 leading-snug">
-                    Know exactly what to reorder and when
-                  </h3>
-                  <p className="text-[10px] text-gray-500 leading-relaxed mb-3">
-                    Pryro tracks every SKU in real time, flags low stock, and drafts purchase orders automatically.
-                  </p>
-                  <div className="rounded-md border border-black/8 overflow-hidden text-[10px]">
-                    <div className="flex items-center justify-between px-3 py-2 bg-gray-50 border-b border-black/6">
-                      <span className="font-medium text-gray-700">Reorder List</span>
-                      <div className="flex gap-1">
-                        {["All", "Low", "Critical"].map((f, i) => (
-                          <span key={i} className={`px-1.5 py-0.5 rounded-full text-[8px] ${i === 2 ? "bg-red-100 text-red-600 font-semibold" : "text-gray-400"}`}>{f}</span>
-                        ))}
-                      </div>
-                    </div>
-                    {[
-                      { name: "A4 Paper (500-sheet)", stock: "12", min: "50", s: "critical" },
-                      { name: "USB-C Cables ×10", stock: "3", min: "20", s: "critical" },
-                      { name: "Bubble Wrap Roll", stock: "28", min: "40", s: "low" },
-                    ].map((row, i) => (
-                      <div key={i} className="flex items-center gap-2 px-3 py-2 border-b border-black/5 last:border-0 bg-white">
-                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${row.s === "critical" ? "bg-red-400" : "bg-amber-400"}`} />
-                        <span className="flex-1 text-gray-700 truncate">{row.name}</span>
-                        <span className={`text-[9px] font-medium shrink-0 ${row.s === "critical" ? "text-red-500" : "text-amber-500"}`}>{row.stock}/{row.min}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Nested card 2 */}
-                <div className="bg-white rounded-lg border border-black/8 shadow-sm p-5">
-                  <h3 className="text-[12px] font-semibold text-gray-800 mb-1 leading-snug">
-                    Automate outreach while staying in control
-                  </h3>
-                  <p className="text-[10px] text-gray-500 leading-relaxed mb-3">
-                    Pryro drafts purchase orders per supplier. Review, approve, and it sends — you stay focused on decisions.
-                  </p>
-                  <div className="rounded-md border border-black/8 overflow-hidden text-[10px]">
-                    <div className="flex" style={{ minHeight: 120 }}>
-                      <div className="w-[38%] bg-gray-50 border-r border-black/6 p-2 space-y-1 shrink-0">
-                        {[
-                          { name: "Grainger", tag: "PO Draft", active: true },
-                          { name: "Uline", tag: "PO Draft" },
-                          { name: "Amazon Biz", tag: "Pending" },
-                        ].map((s, i) => (
-                          <div key={i} className={`rounded-md px-2 py-1.5 ${s.active ? "bg-white border border-black/8 shadow-sm" : ""}`}>
-                            <div className={`font-medium truncate text-[9px] ${s.active ? "text-gray-900" : "text-gray-500"}`}>{s.name}</div>
-                            <div className="text-[8px] text-gray-400">{s.tag}</div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="flex-1 p-3 flex flex-col gap-1 bg-white">
-                        <div className="font-semibold text-gray-800 text-[10px]">Grainger Supply Co.</div>
-                        <div className="text-[9px] text-gray-400">orders@grainger.com</div>
-                        <div className="text-[9px] text-gray-600 leading-relaxed mt-1">
-                          Hi team, we'd like to place a PO for the following items. Review the{" "}
-                          <span className="text-blue-500 underline cursor-default">order details</span> and confirm.
-                        </div>
-                        <div className="mt-1 space-y-0.5 text-[9px] text-gray-500">
-                          <div>✓ A4 Paper ×10 cases</div>
-                          <div>✓ USB-C Cable pack ×5</div>
-                        </div>
-                        <div className="mt-1 font-semibold text-gray-800 text-[9px]">Total $1,280</div>
-                      </div>
-                    </div>
-                    <div className="px-3 py-2 bg-gray-50 border-t border-black/6">
-                      <span className="text-[9px] text-gray-300">+ Add a follow-up…</span>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Bottom line */}
-              <div className="text-center py-3 border-t border-black/6 bg-white">
-                <p className="text-[10px] text-gray-400 tracking-wide">Available across all major platforms</p>
-              </div>
-
-            </div>{/* end inner white card */}
-          </div>{/* end outer blue card */}
-
         </div>
       </section>
+
+
 
       <section id="narrative" className="relative py-20 md:py-32 px-4 animate-on-scroll bg-gray-50">
         <div className="max-w-[1120px] w-full mx-auto">
@@ -2163,7 +2336,7 @@ export default function PryroPage() {
         </div>
       </section>
 
-      <section className="relative py-20 md:py-32 px-4 animate-on-scroll overflow-hidden bg-white">
+      <section className="relative py-20 md:py-32 px-4 animate-on-scroll overflow-hidden bg-gray-50">
         <div className="max-w-[1120px] w-full mx-auto text-center">
           <h2 className="text-[32px] md:text-[48px] font-bold mb-12 leading-tight text-gray-900">
             Finally, one platform that actually<br />runs our whole operation
