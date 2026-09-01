@@ -18,11 +18,11 @@ export default function HumanResourcePage() {
           <p className="text-xl text-gray-600 max-w-3xl leading-relaxed mb-8">
             Streamline HR operations from recruitment to retirement. Manage employees, payroll, attendance, and performance all in one place.
           </p>
-          <div className="flex gap-4">
-            <Button asChild size="lg">
+          <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
+            <Button asChild size="lg" className="rounded-[4px] bg-black text-white hover:bg-black/90">
               <Link href="/demo">Get Started</Link>
             </Button>
-            <Button asChild variant="outline" size="lg">
+            <Button asChild size="lg" className="rounded-[4px] bg-white text-black hover:bg-white/80">
               <Link href="/contact">Contact Sales</Link>
             </Button>
           </div>

@@ -146,19 +146,18 @@ export default function ProjectPage() {
               <p className="text-gray-700">
                 Built for teams. <span className="font-semibold">Everything you need in one place</span> — plan projects, assign tasks, track progress, and collaborate seamlessly. Simple, powerful, and designed for modern project teams.
               </p>
-              <div className="flex gap-3 pt-4">
+              <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
                 <Button
                   asChild
                   size="sm"
-                  className="gap-1">
+                  className="rounded-[4px] bg-black text-white hover:bg-black/90">
                   <Link href="https://login.pryro.com"> <span>Get Started Free</span>
                   </Link>
                 </Button>
                 <Button
                   asChild
-                  variant="outline"
                   size="sm"
-                  className="gap-1">
+                  className="rounded-[4px] bg-white text-black hover:bg-white/80">
                   <Link href="/demo">
                     <span>Learn More</span>
                     <ChevronRight className="size-3" />

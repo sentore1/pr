@@ -107,13 +107,13 @@ export function Header() {
               <div className="flex items-center gap-1 bg-black/5 rounded-[9px] p-1 ml-2">
                 <a
                   href="/contact"
-                  className="text-sm text-[#0f1117] font-medium px-3 py-1.5 rounded-[6px] hover:bg-white/80 transition-all duration-200"
+                  className="text-sm text-[#0f1117] font-medium px-3 py-1.5 rounded-[4px] hover:bg-white/80 transition-all duration-200"
                 >
                   Contact
                 </a>
                 <a
                   href="https://login.pryro.com"
-                  className="text-sm font-medium px-3 py-1.5 rounded-[6px] bg-white text-[#0f1117] hover:bg-white/80 transition-all duration-200"
+                  className="text-sm font-medium px-3 py-1.5 rounded-[4px] bg-white text-[#0f1117] hover:bg-white/80 transition-all duration-200"
                 >
                   Log in
                 </a>

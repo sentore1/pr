@@ -15,11 +15,11 @@ export default function CustomerRelationPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-medium mb-6 text-gray-900">Explore Everything Pryro Can Do</h1>
           <p className="text-gray-600 max-w-2xl mx-auto mb-8">From lead management to customer insights, Pryro gives sales teams complete control over relationships, pipelines, and revenue growth.</p>
-          <div className="flex gap-4 justify-center">
-            <Button asChild size="lg">
+          <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
+            <Button asChild size="lg" className="rounded-[4px] bg-black text-white hover:bg-black/90">
               <Link href="/demo">Get Started</Link>
             </Button>
-            <Button asChild variant="outline" size="lg">
+            <Button asChild size="lg" className="rounded-[4px] bg-white text-black hover:bg-white/80">
               <Link href="/contact">Contact Sales</Link>
             </Button>
           </div>

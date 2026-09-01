@@ -320,6 +320,369 @@ function AnimatedCounter({ value, suffix = "" }: { value: string; suffix?: strin
   )
 }
 
+/* ── BUSINESS CARDS WITH LIVE DATA ── */
+function BusinessCardsSection() {
+  // Get current date information
+  const now = new Date()
+  const currentMonth = now.toLocaleString('en-US', { month: 'short' })
+  const currentYear = now.getFullYear()
+  const currentQuarter = `Q${Math.ceil((now.getMonth() + 1) / 3)}`
+  
+  // Financial card state
+  const [revenue, setRevenue] = useState(2400000)
+  const [expenses, setExpenses] = useState(1800000)
+  const [netProfit, setNetProfit] = useState(600000)
+  const [invoiceCounter, setInvoiceCounter] = useState(4821)
+  const [transactions, setTransactions] = useState([
+    { label: "Invoice #4821", client: "Acme Corp", amount: 12400 },
+    { label: "Invoice #4820", client: "TechWave Ltd", amount: 8750 },
+    { label: "Office Rent", client: "Expense", amount: -3200 },
+    { label: "Invoice #4819", client: "Delta Group", amount: 5100 },
+    { label: "Payroll Run", client: "Expense", amount: -48000 },
+  ])
+
+  // Inventory card state
+  const [totalValue, setTotalValue] = useState(4200000)
+  const [suppliers, setSuppliers] = useState(48)
+  const [lowStock, setLowStock] = useState(24)
+  const [itemsCount, setItemsCount] = useState(11290)
+  const [stockCategories, setStockCategories] = useState([
+    { name: "Electronics", qty: 4820, pct: 78 },
+    { name: "Components", qty: 2340, pct: 55 },
+    { name: "Raw Material", qty: 2110, pct: 64 },
+    { name: "Packaging", qty: 890, pct: 32 },
+    { name: "Finished Goods", qty: 1130, pct: 47 },
+  ])
+
+  // HR card state
+  const [totalStaff, setTotalStaff] = useState(342)
+  const [onLeave, setOnLeave] = useState(18)
+  const [payroll, setPayroll] = useState(685000)
+  
+  // Dynamic employee names pool
+  const employeeNames = [
+    "Sarah Okonkwo", "James Mensah", "Amara Diallo", "Chen Wei", 
+    "Priya Sharma", "Kofi Asante", "Lena Müller", "Diego Santos",
+    "Fatima Hassan", "Raj Patel", "Zara Ibrahim", "Luis Fernandez"
+  ]
+  
+  const hrActions = [
+    "Payslip generated", "Leave approved", "Onboarded", "Performance review",
+    "Training completed", "Promotion processed", "Benefits updated", "Clock in/out"
+  ]
+  
+  const [recentActivity, setRecentActivity] = useState([
+    { name: "Sarah Okonkwo", action: "Payslip generated", time: "2h ago" },
+    { name: "James Mensah", action: "Leave approved", time: "4h ago" },
+    { name: "Amara Diallo", action: "Onboarded", time: "1d ago" },
+    { name: "Chen Wei", action: "Performance review", time: "2d ago" },
+  ])
+
+  useEffect(() => {
+    // Financial updates
+    const financialInterval = setInterval(() => {
+      setRevenue(v => Math.max(2300000, Math.min(2500000, v + (Math.random() * 20000 - 10000))))
+      setExpenses(v => Math.max(1700000, Math.min(1900000, v + (Math.random() * 15000 - 7500))))
+      setNetProfit(v => Math.max(550000, Math.min(650000, v + (Math.random() * 10000 - 5000))))
+    }, 3000)
+
+    // Inventory updates
+    const inventoryInterval = setInterval(() => {
+      setTotalValue(v => Math.max(4000000, Math.min(4400000, v + (Math.random() * 50000 - 25000))))
+      setSuppliers(v => Math.max(45, Math.min(52, v + Math.floor(Math.random() * 3) - 1)))
+      setLowStock(v => Math.max(20, Math.min(30, v + Math.floor(Math.random() * 3) - 1)))
+      setItemsCount(v => Math.max(11000, Math.min(11500, v + Math.floor(Math.random() * 20) - 10)))
+      
+      setStockCategories(prev => prev.map(cat => ({
+        ...cat,
+        qty: Math.max(cat.qty - 100, Math.min(cat.qty + 100, cat.qty + Math.floor(Math.random() * 50) - 25)),
+        pct: Math.max(30, Math.min(90, cat.pct + (Math.random() * 6 - 3)))
+      })))
+    }, 2500)
+
+    // HR updates
+    const hrInterval = setInterval(() => {
+      setTotalStaff(v => Math.max(330, Math.min(350, v + Math.floor(Math.random() * 3) - 1)))
+      setOnLeave(v => Math.max(15, Math.min(25, v + Math.floor(Math.random() * 3) - 1)))
+      setPayroll(v => Math.max(670000, Math.min(700000, v + (Math.random() * 5000 - 2500))))
+    }, 3500)
+
+    // Transaction updates
+    const txInterval = setInterval(() => {
+      const clients = ["Acme Corp", "TechWave Ltd", "Delta Group", "Nova Systems", "Peak Industries"]
+      setInvoiceCounter(prev => prev + 1)
+      const newTx = {
+        label: `Invoice #${invoiceCounter + 1}`,
+        client: clients[Math.floor(Math.random() * clients.length)],
+        amount: Math.floor(Math.random() * 15000) + 5000
+      }
+      setTransactions(prev => [newTx, ...prev.slice(0, 4)])
+    }, 8000)
+    
+    // HR Activity updates
+    const activityInterval = setInterval(() => {
+      const newActivity = {
+        name: employeeNames[Math.floor(Math.random() * employeeNames.length)],
+        action: hrActions[Math.floor(Math.random() * hrActions.length)],
+        time: ["1m ago", "15m ago", "1h ago", "2h ago", "3h ago"][Math.floor(Math.random() * 5)]
+      }
+      setRecentActivity(prev => [newActivity, ...prev.slice(0, 3)])
+    }, 7000)
+
+    return () => {
+      clearInterval(financialInterval)
+      clearInterval(inventoryInterval)
+      clearInterval(hrInterval)
+      clearInterval(txInterval)
+      clearInterval(activityInterval)
+    }
+  }, [invoiceCounter])
+
+  const formatCurrency = (amount: number, format: string = "full") => {
+    if (format === "M") {
+      return `$${(amount / 1000000).toFixed(1)}M`
+    }
+    if (format === "K") {
+      return `$${(amount / 1000).toFixed(0)}K`
+    }
+    return `$${amount.toLocaleString()}`
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-1 items-stretch">
+      {/* Card 1 — Financial Management */}
+      <div className="bg-gray-100 rounded-[2px] flex flex-col overflow-hidden" style={{ minHeight: 580 }}>
+        <div className="p-5 pb-3">
+          <p className="text-[13px] font-medium text-gray-900 mb-1">
+            Financial Management
+          </p>
+          <p className="text-[13px] text-gray-500 leading-relaxed mb-3">
+            Complete accounting, invoicing, and financial reporting. Track revenue, expenses, and cash flow in real-time.
+          </p>
+          <a href="https://login.pryro.com" className="inline-block mt-4 text-[13px] font-medium text-gray-900 hover:underline">
+            Explore finance ↗
+          </a>
+        </div>
+        <div className="flex-1 mx-3 mb-3 rounded-[2px] overflow-hidden bg-white border border-gray-200 flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+            <span className="text-[11px] font-semibold text-gray-700">Revenue Overview</span>
+            <span className="text-[10px] text-gray-400">{currentQuarter} {currentYear}</span>
+          </div>
+          {/* KPI row */}
+          <div className="grid grid-cols-3 gap-px bg-gray-100 border-b border-gray-100">
+            <div className="bg-white px-3 py-2.5">
+              <div className="text-[9px] text-gray-400 mb-0.5">Revenue</div>
+              <div className="text-sm font-bold text-gray-900 transition-all duration-700">{formatCurrency(revenue, "M")}</div>
+              <div className="text-[9px] text-gray-700">↑ 18.3%</div>
+            </div>
+            <div className="bg-white px-3 py-2.5">
+              <div className="text-[9px] text-gray-400 mb-0.5">Expenses</div>
+              <div className="text-sm font-bold text-gray-900 transition-all duration-700">{formatCurrency(expenses, "M")}</div>
+              <div className="text-[9px] text-gray-700">↑ 4.1%</div>
+            </div>
+            <div className="bg-white px-3 py-2.5">
+              <div className="text-[9px] text-gray-400 mb-0.5">Net Profit</div>
+              <div className="text-sm font-bold text-gray-900 transition-all duration-700">{formatCurrency(netProfit, "K")}</div>
+              <div className="text-[9px] text-gray-700">↑ 22.5%</div>
+            </div>
+          </div>
+          {/* Bar chart */}
+          <div className="px-4 pt-3 pb-1">
+            <div className="text-[9px] text-gray-400 mb-2">Monthly Revenue</div>
+            <div className="flex items-end gap-1 h-16">
+              {[42, 58, 35, 72, 55, 88, 65, 78, 50, 92, 70, 85].map((h, i) => (
+                <div key={i} className="flex-1 bg-gray-200 rounded-sm" style={{ height: `${h}%` }} />
+              ))}
+            </div>
+            <div className="flex justify-between text-[9px] text-gray-300 mt-1">
+              <span>Jan</span><span>Apr</span><span>Jul</span><span>Oct</span><span>Dec</span>
+            </div>
+          </div>
+          {/* Recent transactions */}
+          <div className="px-4 pt-2 pb-1">
+            <div className="text-[9px] text-gray-400 mb-1.5">Recent Transactions</div>
+          </div>
+          <div className="flex-1 divide-y divide-gray-100 overflow-hidden">
+            {transactions.map((tx, i) => (
+              <div key={i} className="flex items-center justify-between px-4 py-2 transition-all duration-500">
+                <div>
+                  <div className="text-[11px] font-medium text-gray-800">{tx.label}</div>
+                  <div className="text-[9px] text-gray-400">{tx.client}</div>
+                </div>
+                <span className={`text-[11px] font-semibold text-gray-900`}>
+                  {tx.amount > 0 ? '+' : ''}{formatCurrency(tx.amount, "full")}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Card 2 — Inventory Management */}
+      <div className="bg-gray-100 rounded-[2px] flex flex-col overflow-hidden" style={{ minHeight: 580 }}>
+        <div className="p-5 pb-3">
+          <p className="text-[13px] font-medium text-gray-900 mb-1">
+            Inventory Management
+          </p>
+          <p className="text-[13px] text-gray-500 leading-relaxed mb-3">
+            Track stock levels, manage suppliers, and optimize your supply chain across multiple locations.
+          </p>
+          <a href="https://login.pryro.com" className="inline-block mt-4 text-[13px] font-medium text-gray-900 hover:underline">
+            Explore inventory ↗
+          </a>
+        </div>
+        <div className="flex-1 mx-3 mb-3 rounded-[2px] overflow-hidden bg-white border border-gray-200 flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+            <span className="text-[11px] font-semibold text-gray-700">Stock Dashboard</span>
+            <span className="text-[10px] text-gray-400 transition-all duration-700">{itemsCount.toLocaleString()} items</span>
+          </div>
+          {/* KPI row */}
+          <div className="grid grid-cols-3 gap-px bg-gray-100 border-b border-gray-100">
+            <div className="bg-white px-3 py-2.5">
+              <div className="text-[9px] text-gray-400 mb-0.5">Total Value</div>
+              <div className="text-sm font-bold text-gray-900 transition-all duration-700">{formatCurrency(totalValue, "M")}</div>
+              <div className="text-[9px] text-gray-700">↑ 8.2%</div>
+            </div>
+            <div className="bg-white px-3 py-2.5">
+              <div className="text-[9px] text-gray-400 mb-0.5">Suppliers</div>
+              <div className="text-sm font-bold text-gray-900 transition-all duration-700">{suppliers}</div>
+              <div className="text-[9px] text-gray-400">Active</div>
+            </div>
+            <div className="bg-white px-3 py-2.5">
+              <div className="text-[9px] text-gray-400 mb-0.5">Low Stock</div>
+              <div className="text-sm font-bold text-gray-900 transition-all duration-700">{lowStock}</div>
+              <div className="text-[9px] text-gray-700">Critical</div>
+            </div>
+          </div>
+          {/* Category bars */}
+          <div className="px-4 pt-3 pb-2">
+            <div className="text-[9px] text-gray-400 mb-2">Stock by Category</div>
+            {stockCategories.map((item, i) => (
+              <div key={i} className="flex items-center gap-2 mb-1.5">
+                <span className="text-[10px] text-gray-600 w-24 shrink-0">{item.name}</span>
+                <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gray-700 rounded-full transition-all duration-1000" 
+                    style={{ width: `${Math.floor(item.pct)}%` }} 
+                  />
+                </div>
+                <span className="text-[9px] text-gray-400 w-10 text-right transition-all duration-700">{item.qty.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+          {/* Recent movements */}
+          <div className="px-4 pb-1">
+            <div className="text-[9px] text-gray-400 mb-1.5">Recent Movements</div>
+          </div>
+          <div className="flex-1 divide-y divide-gray-100 overflow-hidden">
+            {[
+              { item: "MacBook Pro 14\"", action: "Restocked", qty: "+120", color: "text-gray-900" },
+              { item: "USB-C Cables ×5", action: "Dispatched", qty: "-45", color: "text-gray-900" },
+              { item: "Office Chairs", action: "Restocked", qty: "+30", color: "text-gray-900" },
+              { item: "Laptop Stand", action: "Low Stock Alert", qty: "8 left", color: "text-gray-900" },
+            ].map((mv, i) => (
+              <div key={i} className="flex items-center justify-between px-4 py-2">
+                <div>
+                  <div className="text-[11px] font-medium text-gray-800">{mv.item}</div>
+                  <div className="text-[9px] text-gray-400">{mv.action}</div>
+                </div>
+                <span className={`text-[11px] font-semibold ${mv.color}`}>{mv.qty}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Card 3 — HR & Payroll */}
+      <div className="bg-gray-100 rounded-[2px] flex flex-col overflow-hidden" style={{ minHeight: 580 }}>
+        <div className="p-5 pb-3">
+          <p className="text-[13px] font-medium text-gray-900 mb-1">
+            HR & Payroll
+          </p>
+          <p className="text-[13px] text-gray-500 leading-relaxed mb-3">
+            Manage employees, attendance, payroll processing, and benefits administration in one unified platform.
+          </p>
+          <a href="https://login.pryro.com" className="inline-block mt-4 text-[13px] font-medium text-gray-900 hover:underline">
+            Explore HR →
+          </a>
+        </div>
+        <div className="flex-1 mx-3 mb-3 rounded-[2px] overflow-hidden bg-white border border-gray-200 flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+            <span className="text-[11px] font-semibold text-gray-700">Workforce Overview</span>
+            <span className="text-[10px] text-gray-400">{currentMonth} {currentYear}</span>
+          </div>
+          {/* KPI row */}
+          <div className="grid grid-cols-3 gap-px bg-gray-100 border-b border-gray-100">
+            <div className="bg-white px-3 py-2.5">
+              <div className="text-[9px] text-gray-400 mb-0.5">Total Staff</div>
+              <div className="text-sm font-bold text-gray-900 transition-all duration-700">{totalStaff}</div>
+              <div className="text-[9px] text-gray-700">↑ 12.4%</div>
+            </div>
+            <div className="bg-white px-3 py-2.5">
+              <div className="text-[9px] text-gray-400 mb-0.5">On Leave</div>
+              <div className="text-sm font-bold text-gray-900 transition-all duration-700">{onLeave}</div>
+              <div className="text-[9px] text-gray-400">Today</div>
+            </div>
+            <div className="bg-white px-3 py-2.5">
+              <div className="text-[9px] text-gray-400 mb-0.5">Payroll</div>
+              <div className="text-sm font-bold text-gray-900 transition-all duration-700">{formatCurrency(payroll, "K")}</div>
+              <div className="text-[9px] text-gray-400">Monthly</div>
+            </div>
+          </div>
+          {/* Department breakdown */}
+          {/* Area chart — Headcount trend */}
+          <div className="px-4 pt-3 pb-2">
+            <div className="text-[9px] text-gray-400 mb-2">Headcount trend — last 8 months</div>
+            <div className="relative h-24">
+              <svg viewBox="0 0 300 80" preserveAspectRatio="none" className="w-full h-full">
+                {/* grid lines */}
+                <line x1="0" y1="20" x2="300" y2="20" stroke="#f3f4f6" strokeWidth="1"/>
+                <line x1="0" y1="40" x2="300" y2="40" stroke="#f3f4f6" strokeWidth="1"/>
+                <line x1="0" y1="60" x2="300" y2="60" stroke="#f3f4f6" strokeWidth="1"/>
+                {/* area 1 — lighter */}
+                <path d="M0,60 C15,55 25,45 40,48 C55,51 65,35 80,30 C95,25 105,40 120,35 C135,30 145,20 160,18 C175,16 185,28 200,24 C215,20 225,14 240,12 C255,10 265,18 280,16 C290,14 295,12 300,10 L300,80 L0,80 Z"
+                  fill="rgba(209,213,219,0.5)" stroke="none"/>
+                <path d="M0,60 C15,55 25,45 40,48 C55,51 65,35 80,30 C95,25 105,40 120,35 C135,30 145,20 160,18 C175,16 185,28 200,24 C215,20 225,14 240,12 C255,10 265,18 280,16 C290,14 295,12 300,10"
+                  fill="none" stroke="rgba(156,163,175,0.9)" strokeWidth="1.5"/>
+                {/* area 2 — darker */}
+                <path d="M0,68 C15,64 25,56 40,60 C55,64 65,50 80,44 C95,38 105,52 120,47 C135,42 145,34 160,30 C175,26 185,40 200,36 C215,32 225,26 240,23 C255,20 265,30 280,27 C290,25 295,22 300,20 L300,80 L0,80 Z"
+                  fill="rgba(156,163,175,0.3)" stroke="none"/>
+                <path d="M0,68 C15,64 25,56 40,60 C55,64 65,50 80,44 C95,38 105,52 120,47 C135,42 145,34 160,30 C175,26 185,40 200,36 C215,32 225,26 240,23 C255,20 265,30 280,27 C290,25 295,22 300,20"
+                  fill="none" stroke="rgba(107,114,128,0.8)" strokeWidth="1.5"/>
+              </svg>
+            </div>
+            <div className="flex justify-between text-[9px] text-gray-300 mt-1">
+              <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+            </div>
+            <div className="flex gap-4 mt-2">
+              <div className="flex items-center gap-1"><div className="w-3 h-px bg-gray-300"/><span className="text-[9px] text-gray-400">Headcount</span></div>
+              <div className="flex items-center gap-1"><div className="w-3 h-px bg-gray-500"/><span className="text-[9px] text-gray-400">Attendance</span></div>
+            </div>
+          </div>
+          {/* Recent activity */}
+          <div className="px-4 pb-1">
+            <div className="text-[9px] text-gray-400 mb-1.5">Recent Activity</div>
+          </div>
+          <div className="flex-1 divide-y divide-gray-100 overflow-hidden">
+            {recentActivity.map((activity, i) => (
+              <div key={i} className="flex items-center justify-between px-4 py-2 transition-all duration-500">
+                <div>
+                  <div className="text-[11px] font-medium text-gray-800">{activity.name}</div>
+                  <div className="text-[9px] text-gray-400">{activity.action}</div>
+                </div>
+                <span className="text-[9px] text-gray-400">{activity.time}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ── MINI DASHBOARD COMPONENT ── */
 function MiniDashboard() {
   const [clients, setClients] = useState(15)
@@ -477,7 +840,7 @@ function MiniDashboard() {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-100 px-2.5 py-1 text-[10px] text-gray-500">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-            <span>Aug 2026</span>
+            <span>{new Date().toLocaleString('en-US', { month: 'short', year: 'numeric' })}</span>
             <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
           </div>
           <div className="flex items-center gap-1 text-[10px] text-gray-500">
@@ -538,7 +901,15 @@ function MiniDashboard() {
         <div className="flex items-center justify-between mb-3">
           <div>
             <span className="text-[11px] font-semibold text-gray-800">Revenue Overview</span>
-            <span className="ml-2 text-[9px] text-gray-400">Apr – Jun 2026</span>
+            <span className="ml-2 text-[9px] text-gray-400">
+              {(() => {
+                const now = new Date()
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                const currentMonth = now.getMonth()
+                const startMonth = Math.max(0, currentMonth - 2)
+                return `${months[startMonth]} – ${months[currentMonth]} ${now.getFullYear()}`
+              })()}
+            </span>
           </div>
           <div className="flex gap-3 text-[9px] text-gray-400">
             <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-1.5 border-t" style={{backgroundColor:"#0072FD",opacity:0.3,borderColor:"#0072FD"}}/>Sessions</span>
@@ -643,7 +1014,17 @@ function MiniDashboard() {
         <div className="border-r border-gray-100 p-4 flex flex-col">
           <div className="flex items-center justify-between mb-3">
             <span className="text-[11px] font-semibold text-gray-800">Weekly Spend</span>
-            <span className="text-[9px] text-gray-400">Aug 22 – 28, 2026</span>
+            <span className="text-[9px] text-gray-400">
+              {(() => {
+                const now = new Date()
+                const startOfWeek = new Date(now)
+                startOfWeek.setDate(now.getDate() - now.getDay())
+                const endOfWeek = new Date(startOfWeek)
+                endOfWeek.setDate(startOfWeek.getDate() + 6)
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                return `${months[startOfWeek.getMonth()]} ${startOfWeek.getDate()} – ${endOfWeek.getDate()}, ${now.getFullYear()}`
+              })()}
+            </span>
           </div>
           <div className="flex items-end gap-2 flex-1" style={{ minHeight: 90 }}>
             {barCols.map((b, i) => (
@@ -1546,7 +1927,7 @@ export default function PryroPage() {
                   <div className="flex items-center gap-2">
                     <h3 className="text-sm font-semibold text-gray-900">Budget</h3>
                   </div>
-                  <span className="text-[10px] text-gray-400 border border-gray-200 rounded px-2 py-0.5">FY 2024</span>
+                  <span className="text-[10px] text-gray-400 border border-gray-200 rounded px-2 py-0.5">FY {new Date().getFullYear()}</span>
                 </div>
 
                 {/* Budget stat tiles */}
@@ -1604,7 +1985,7 @@ export default function PryroPage() {
                 <div className="mb-3 card-fade-up" style={{ animationDelay: "240ms" }}>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[10px] font-medium text-gray-600">Category Breakdown</span>
-                    <span className="text-[9px] text-gray-400">Q3 2024</span>
+                    <span className="text-[9px] text-gray-400">Q{Math.ceil((new Date().getMonth() + 1) / 3)} {new Date().getFullYear()}</span>
                   </div>
                   <div className="space-y-1.5">
                     <LiveCategoryBreakdown />
@@ -1618,7 +1999,7 @@ export default function PryroPage() {
                       <BarChart3 className="w-3 h-3 text-gray-400" />
                       <span className="text-[10px] font-medium text-gray-600">Monthly Analytics</span>
                     </div>
-                    <span className="text-[9px] text-gray-400">Jan – Dec 2024</span>
+                    <span className="text-[9px] text-gray-400">Jan – Dec {new Date().getFullYear()}</span>
                   </div>
                   <div className="bg-gray-50 rounded-[3px] px-2 pt-2 pb-1">
                     {/* Bar area: more bars, thinner, shorter */}
@@ -1833,6 +2214,17 @@ export default function PryroPage() {
       </section>
 
       <section className="relative py-16 md:py-20 px-4 animate-on-scroll bg-gray-50">
+        <div className="max-w-[1200px] w-full mx-auto">
+
+          <h2 className="text-[18px] md:text-[22px] font-normal text-gray-900 mb-6">
+            Built for every part of your business
+          </h2>
+
+          <BusinessCardsSection />
+        </div>
+      </section>
+
+      <section className="relative py-16 md:py-20 px-4 animate-on-scroll bg-gray-50" style={{ display: 'none' }}>
         <div className="max-w-[1200px] w-full mx-auto">
 
           <h2 className="text-[18px] md:text-[22px] font-normal text-gray-900 mb-6">
@@ -2472,7 +2864,7 @@ export default function PryroPage() {
 
           {/* Footer Bottom */}
           <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/80">
-            <div>© 2026 Pryro. All rights reserved.</div>
+            <div>© {new Date().getFullYear()} Pryro. All rights reserved.</div>
             <div className="flex gap-6">
               <a href="/privacy" className="hover:text-white transition-colors">
                 Privacy Policy

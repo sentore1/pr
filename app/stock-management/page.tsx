@@ -67,20 +67,19 @@ export default function StockManagementPage() {
               <p className="text-gray-700">
                 Built for efficiency. <span className="font-semibold">Everything you need in one place</span> — track stock levels, manage suppliers, automate reordering, and prevent stockouts. Simple, powerful, and designed for modern inventory management.
               </p>
-              <div className="flex gap-3 pt-4">
+              <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
                 <Button
                   asChild
                   size="sm"
-                  className="gap-1">
+                  className="rounded-[4px] bg-black text-white hover:bg-black/90">
                   <Link href="/contact">
                     <span>Get Started Free</span>
                   </Link>
                 </Button>
                 <Button
                   asChild
-                  variant="outline"
                   size="sm"
-                  className="gap-1">
+                  className="rounded-[4px] bg-white text-black hover:bg-white/80">
                   <Link href="/demo">
                     <span>Learn More</span>
                     <ChevronRight className="size-3" />

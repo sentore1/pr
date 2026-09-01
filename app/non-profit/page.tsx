@@ -22,11 +22,11 @@ export default function NonProfitPage() {
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                 Manage donations, volunteers, and demonstrate impact with transparent reporting tools.
               </p>
-              <div className="flex gap-3">
-                <Button asChild size="lg" className="rounded-full bg-blue-600 hover:bg-blue-700 text-white">
+              <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
+                <Button asChild size="lg" className="rounded-[4px] bg-black text-white hover:bg-black/90">
                   <Link href="https://login.pryro.com">Start Free Trial <ArrowRight className="w-4 h-4 ml-2" /></Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="rounded-full bg-white border-gray-300 text-gray-900">
+                <Button asChild size="lg" className="rounded-[4px] bg-white text-black hover:bg-white/80">
                   <Link href="/contact">Learn More</Link>
                 </Button>
               </div>
