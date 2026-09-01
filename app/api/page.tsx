@@ -1,6 +1,6 @@
 "use client"
 
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Header } from "@/components/header"
 import { useState } from "react"
 
@@ -509,7 +509,7 @@ export default function APIPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

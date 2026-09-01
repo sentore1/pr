@@ -1,6 +1,6 @@
 "use client"
 
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 
 export default function BlogPage() {
   return (
@@ -36,7 +36,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

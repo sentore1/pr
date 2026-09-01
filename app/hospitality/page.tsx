@@ -1,7 +1,7 @@
 "use client"
 
 import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Check, Users, Calendar, ClipboardList } from 'lucide-react'
 import Link from 'next/link'
@@ -143,7 +143,7 @@ export default function HospitalityPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

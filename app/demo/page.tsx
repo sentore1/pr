@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 
 export default function DemoPage() {
   const [form, setForm] = useState({
@@ -165,7 +165,7 @@ export default function DemoPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

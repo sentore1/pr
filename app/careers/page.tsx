@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Header } from "@/components/header"
 import { MapPin, ChevronDown } from "lucide-react"
 import { useState } from "react"
@@ -84,7 +84,7 @@ Please find my resume attached.`
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

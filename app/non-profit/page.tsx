@@ -1,7 +1,7 @@
 "use client"
 
 import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Check, Heart, Users, FileText } from 'lucide-react'
 import Link from 'next/link'
@@ -143,7 +143,7 @@ export default function NonProfitPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

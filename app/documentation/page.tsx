@@ -1,6 +1,6 @@
 "use client"
 
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Header } from "@/components/header"
 import { useState } from "react"
 
@@ -124,7 +124,7 @@ export default function DocumentationPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setIsModalOpen(false)}>

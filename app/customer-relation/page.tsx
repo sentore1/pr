@@ -1,7 +1,7 @@
 "use client"
 
 import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { Users, Mail, TrendingUp, Target, Phone, MessageSquare, BarChart3, Zap } from 'lucide-react'
 import Link from 'next/link'
@@ -219,7 +219,7 @@ export default function CustomerRelationPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

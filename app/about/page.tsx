@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Target, Users, Zap, Shield, Award, Globe, TrendingUp, Heart, Rocket, CheckCircle2 } from "lucide-react"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Header } from "@/components/header"
 
 export default function AboutPage() {
@@ -101,21 +101,24 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 px-4 border-t border-white">
-        <div className="max-w-4xl mx-auto text-left">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">Join Our Team</h2>
-          <p className="text-gray-600 mb-8">
-            We're building the future of business software and looking for passionate individuals to join us.
+      <section className="py-32 px-4 bg-gradient-to-b from-white via-blue-50 to-blue-100 mt-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-block px-4 py-2 bg-blue-50 text-blue-600 text-sm font-semibold rounded-full mb-6">
+            We're Hiring
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">Join Our Team</h2>
+          <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+            We're building the future of business software and looking for passionate individuals to join us on this exciting journey.
           </p>
           <a href="/careers">
-            <Button className="bg-blue-600 text-white px-8 py-6 rounded-full hover:bg-blue-700">
+            <Button className="bg-blue-600 text-white px-10 py-7 rounded-full hover:bg-blue-700 text-base font-semibold shadow-lg hover:shadow-xl transition-all">
               View Open Positions
             </Button>
           </a>
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

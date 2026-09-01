@@ -2,11 +2,14 @@
 
 import { Youtube, Instagram } from "lucide-react"
 
-export function Footer() {
+export function SimpleFooter() {
   return (
-    <footer className="relative px-4 pb-16 pt-[120px] -mt-[60px]" style={{ background: "linear-gradient(to bottom, #93C5FD 0%, #60A5FA 8%, #3B82F6 18%, #3B82F6 45%, #2563EB 60%, #1E40AF 75%, #1E3A8A 88%, #1E3A8A 100%)" }}>
-      <div className="max-w-[1120px] w-full mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-8 mb-20">
+    <footer className="relative px-4 pb-16 pt-[180px] -mt-[60px]">
+      {/* Main footer background with white at top transitioning to blue */}
+      <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, #FFFFFF 0%, #80C2FF 20%, #40A3FF 35%, #2094FF 50%, #108CFF 65%, #0084FF 80%, #0084FF 100%)" }} />
+      
+      <div className="max-w-[1120px] w-full mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-8 mb-12">
           <div className="flex flex-col gap-4">
             <div className="w-fit">
               <img src="/pryro logo.png" alt="Pryro" className="h-8 w-auto" />
@@ -73,14 +76,14 @@ export function Footer() {
                 type="text"
                 placeholder="Type your message"
                 id="whatsapp-message"
-                className="px-4 py-2 bg-white/20 rounded-s text-xs text-white placeholder-white/60 focus:outline-none transition-all"
+                className="px-4 py-2 bg-white/20 rounded-[5px] text-xs text-white placeholder-white/60 focus:outline-none border-0 transition-all"
               />
               <button 
                 onClick={() => {
                   const message = (document.getElementById('whatsapp-message') as HTMLInputElement)?.value || '';
                   window.open(`https://wa.me/250788715075?text=${encodeURIComponent(message)}`, '_blank');
                 }}
-                className="px-4 py-2 border rounded-lg text-xs font-medium hover:bg-white/90 transition-all bg-white border-white text-blue-600"
+                className="px-4 py-2 border rounded-[5px] text-xs font-medium hover:bg-white/90 transition-all bg-white border-white text-blue-600"
               >
                 Send WhatsApp
               </button>

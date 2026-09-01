@@ -4,7 +4,7 @@ import { Cpu, Lock, Sparkles, Zap, Shield, Users, Check, Package, ShoppingCart, 
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 
 export default function FeaturesPage() {
   return (
@@ -248,7 +248,7 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

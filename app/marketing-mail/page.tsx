@@ -1,7 +1,7 @@
 "use client"
 
 import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { Mail, Users, Target, TrendingUp } from 'lucide-react'
 
@@ -104,7 +104,7 @@ export default function MarketingMailPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

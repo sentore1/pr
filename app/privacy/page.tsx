@@ -1,6 +1,6 @@
 "use client"
 
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 
 export default function PrivacyPage() {
   return (
@@ -62,7 +62,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

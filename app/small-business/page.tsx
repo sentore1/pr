@@ -1,14 +1,15 @@
 "use client"
 
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import FeaturesSection from "@/components/features-5"
 import ContentSection from "@/components/content-2"
+import { Header } from "@/components/header"
 import { Button } from '@/components/ui/button'
 import { ChevronRight, Check, Users, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
 
 export default function SmallBusinessPage() {
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -179,7 +180,7 @@ export default function SmallBusinessPage() {
           </div>
         </div>
       </section>
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

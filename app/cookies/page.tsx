@@ -1,6 +1,6 @@
 "use client"
 
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { useState, useEffect } from "react"
 
 export default function CookiesPage() {
@@ -93,7 +93,7 @@ export default function CookiesPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

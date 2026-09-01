@@ -1,7 +1,7 @@
 "use client"
 
 import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Check, Zap, Clock, FileText } from 'lucide-react'
 import Link from 'next/link'
@@ -127,7 +127,7 @@ export default function SelfEmployedPage() {
         </div>
       </section>
 
-      <section className="py-32 px-6">
+      <section className="py-32 px-6 bg-gradient-to-b from-white via-blue-50 to-blue-100">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-6 text-gray-900">Ready to simplify your business?</h2>
           <p className="text-xl text-gray-600 mb-10">Join thousands of self-employed professionals using Pryro.</p>
@@ -137,7 +137,7 @@ export default function SelfEmployedPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

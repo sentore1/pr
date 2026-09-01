@@ -1,7 +1,7 @@
 "use client"
 
 import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { HardHat, Truck, Calendar, DollarSign, FileText, Users, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
@@ -236,7 +236,7 @@ export default function ConstructionPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

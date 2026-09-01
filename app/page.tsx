@@ -941,36 +941,23 @@ export default function PryroPage() {
                 </a>
                 {showProductsMenu && (
                   <div className="absolute top-full left-0 pt-2">
-                    <div className="bg-white border border-black/10 rounded-2xl shadow-xl p-6 w-[600px] backdrop-blur-md">
+                    <div className="bg-white rounded-[5px] shadow-xl p-6 w-[600px] backdrop-blur-md">
                       <div className="grid grid-cols-2 gap-4">
-                        <a href="/features" className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                          <Zap className="w-5 h-5 text-blue-500 mt-0.5" />
-                          <div>
-                            <div className="font-medium text-sm text-gray-900">Features</div>
-                            <div className="text-xs text-gray-500 mt-0.5">Explore all capabilities</div>
-                          </div>
-                        </a>
-                        <a href="/pricing" className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                          <DollarSign className="w-5 h-5 text-blue-500 mt-0.5" />
-                          <div>
-                            <div className="font-medium text-sm text-gray-900">Pricing</div>
-                            <div className="text-xs text-gray-500 mt-0.5">Simple, transparent plans</div>
-                          </div>
-                        </a>
-                        <a href="/documentation" className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                          <FileText className="w-5 h-5 text-blue-500 mt-0.5" />
-                          <div>
-                            <div className="font-medium text-sm text-gray-900">Documentation</div>
-                            <div className="text-xs text-gray-500 mt-0.5">Complete guides</div>
-                          </div>
-                        </a>
-                        <a href="/api" className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                          <Plug className="w-5 h-5 text-blue-500 mt-0.5" />
-                          <div>
-                            <div className="font-medium text-sm text-gray-900">API</div>
-                            <div className="text-xs text-gray-500 mt-0.5">Developer resources</div>
-                          </div>
-                        </a>
+                        {[
+                          { href: "/features",      icon: "/icon/dashboard icon.png",     label: "Features",       sub: "Explore all capabilities"  },
+                          { href: "/pricing",       icon: "/icon/budget icon.png",        label: "Pricing",        sub: "Simple, transparent plans" },
+                          { href: "/ai-calculator", icon: "/icon/ai business review icon.png", label: "AI Calculator",  sub: "Calculate your savings"    },
+                          { href: "/documentation", icon: "/icon/document icon.png",      label: "Documentation",  sub: "Guides & references"       },
+                          { href: "/api",           icon: "/icon/0code icon.png",         label: "API",            sub: "Developer resources"       },
+                        ].map(({ href, icon, label, sub }) => (
+                          <a key={href} href={href} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50/50 transition-colors">
+                            <img src={icon} alt={label} className="w-8 h-8 object-contain mt-0.5" />
+                            <div>
+                              <div className="font-medium text-sm text-gray-900">{label}</div>
+                              <div className="text-xs text-gray-500 mt-0.5">{sub}</div>
+                            </div>
+                          </a>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -987,106 +974,32 @@ export default function PryroPage() {
                 </button>
                 {showSolutionsMenu && (
                   <div className="absolute top-full left-0 pt-2">
-                    <div className="bg-white border border-black/10 rounded-2xl shadow-xl p-6 w-[700px] backdrop-blur-md">
+                    <div className="bg-white rounded-[5px] shadow-xl p-6 w-[700px] backdrop-blur-md">
                       <div className="grid grid-cols-3 gap-3">
-                      <a href="/small-business" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Building2 className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Small Business</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">For growing teams</div>
-                        </div>
-                      </a>
-                      <a href="/accountants-bookkeepers" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Receipt className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Accountants</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Financial experts</div>
-                        </div>
-                      </a>
-                      <a href="/project" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Briefcase className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Project</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Manage projects</div>
-                        </div>
-                      </a>
-                      <a href="/human-resource" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <UserCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Human Resource</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">HR management</div>
-                        </div>
-                      </a>
-                      <a href="/stock-management" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Boxes className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Stock Management</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Inventory control</div>
-                        </div>
-                      </a>
-                      <a href="/customer-relation" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Users className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">CRM</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Customer relations</div>
-                        </div>
-                      </a>
-                      <a href="/self-employed" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <UserCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Self-employed</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Freelancers</div>
-                        </div>
-                      </a>
-                      <a href="/non-profit" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <HeartHandshake className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Non-profit</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">NGO solutions</div>
-                        </div>
-                      </a>
-                      <a href="/hospitality" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Building2 className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Hospitality</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Hotels & restaurants</div>
-                        </div>
-                      </a>
-                      <a href="/construction" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Hammer className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Construction</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Build projects</div>
-                        </div>
-                      </a>
-                      <a href="/logistic" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Truck className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Logistic</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Supply chain</div>
-                        </div>
-                      </a>
-                      <a href="/marketing-mail" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Mail className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Marketing (Mail)</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Email campaigns</div>
-                        </div>
-                      </a>
-                      <a href="/marketing-call" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Phone className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">Marketing (Call)</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">Call center</div>
-                        </div>
-                      </a>
-                      <a href="/ai-enterprise" className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Bot className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-xs text-gray-900">AI Enterprise</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">AI-powered tools</div>
-                        </div>
-                      </a>
+                        {[
+                          { href: "/small-business",          icon: "/icon/business coach icon.png",  label: "Small Business",   sub: "For growing teams"     },
+                          { href: "/accountants-bookkeepers", icon: "/icon/accounting icon.png",      label: "Accountants",      sub: "Financial experts"     },
+                          { href: "/project",                 icon: "/icon/project icon.png",         label: "Project",          sub: "Manage projects"       },
+                          { href: "/human-resource",          icon: "/icon/HR icon.png",              label: "Human Resource",   sub: "HR management"         },
+                          { href: "/stock-management",        icon: "/icon/Inventory icon.png",       label: "Stock Management", sub: "Inventory control"     },
+                          { href: "/customer-relation",       icon: "/icon/CRM icon.png",             label: "CRM",              sub: "Customer relations"    },
+                          { href: "/self-employed",           icon: "/icon/0coder icon.png",          label: "Self-employed",    sub: "Freelancers"           },
+                          { href: "/non-profit",              icon: "/icon/help desk icon.png",       label: "Non-profit",       sub: "NGO solutions"         },
+                          { href: "/hospitality",             icon: "/icon/pos icon.png",             label: "Hospitality",      sub: "Hotels & restaurants"  },
+                          { href: "/construction",            icon: "/icon/manufacturers icon.png",   label: "Construction",     sub: "Build projects"        },
+                          { href: "/logistic",                icon: "/icon/logistic icon.png",        label: "Logistic",         sub: "Supply chain"          },
+                          { href: "/marketing-mail",          icon: "/icon/ai email icon.png",        label: "Marketing (Mail)", sub: "Email campaigns"       },
+                          { href: "/marketing-call",          icon: "/icon/cold call icon.png",       label: "Marketing (Call)", sub: "Call center"           },
+                          { href: "/ai-enterprise",           icon: "/icon/ai interprise icon.png",   label: "AI Enterprise",    sub: "AI-powered tools"      },
+                        ].map(({ href, icon, label, sub }) => (
+                          <a key={href} href={href} className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50/50 transition-colors">
+                            <img src={icon} alt={label} className="w-6 h-6 object-contain mt-0.5 flex-shrink-0" />
+                            <div>
+                              <div className="font-medium text-xs text-gray-900">{label}</div>
+                              <div className="text-[10px] text-gray-500 mt-0.5">{sub}</div>
+                            </div>
+                          </a>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -2316,7 +2229,7 @@ export default function PryroPage() {
               </div>
               <div className="border-l border-gray-100 p-4 bg-gray-100/60">
                 <a href="https://login.pryro.com">
-                  <button className="w-full py-2 rounded-[5px] text-white text-sm font-medium transition-all" style={{ backgroundColor: '#0084FF' }} onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#006FD6')} onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#0084FF')}>Upgrade</button>
+                  <button className="w-full py-2 rounded-[5px] bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all">Upgrade</button>
                 </a>
               </div>
               <div className="border-l border-gray-100 p-4">
@@ -2405,7 +2318,7 @@ export default function PryroPage() {
         </div>
       </section>
 
-      <div style={{ background: "linear-gradient(to bottom, #F9FAFB 0%, #F3F4F6 15%, #E5E7EB 28%, #DBEAFE 48%, #93C5FD 62%, #3B82F6 76%, #2563EB 88%, #1E40AF 100%)" }}>
+      <div style={{ background: "linear-gradient(to bottom, #F9FAFB 0%, #FFFFFF 30%, #80C2FF 50%, #40A3FF 65%, #2094FF 75%, #108CFF 85%, #0084FF 100%)" }}>
       <section
         id="cta"
         className="relative py-20 md:py-40 px-4 animate-on-scroll pt-0 bg-transparent"
@@ -2542,7 +2455,7 @@ export default function PryroPage() {
                   type="text"
                   placeholder="Type your message"
                   id="whatsapp-message"
-                  className="px-4 py-1.5 bg-white/20 border border-white/30 rounded-[5px] text-xs text-white placeholder-white/60 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/30 transition-all"
+                  className="px-4 py-1.5 bg-white/20 border-0 rounded-[5px] text-xs text-white placeholder-white/60 focus:outline-none transition-all"
                 />
                 <button 
                   onClick={() => {

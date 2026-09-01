@@ -1,7 +1,7 @@
 "use client"
 
 import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { SimpleFooter } from "@/components/simple-footer"
 import FeaturesSection from "@/components/features-5"
 import ContentSection from "@/components/content-2"
 import { Button } from '@/components/ui/button'
@@ -92,7 +92,7 @@ export default function StockManagementPage() {
         </div>
       </section>
 
-      <Footer />
+      <SimpleFooter />
     </div>
   )
 }

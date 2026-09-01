@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Check } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
-import { Footer } from '@/components/footer'
+import { SimpleFooter } from '@/components/simple-footer'
 import { Header } from '@/components/header'
 
 export default function Pricing() {
@@ -95,7 +95,7 @@ export default function Pricing() {
             </div>
         </section>
 
-        <Footer />
+        <SimpleFooter />
         </div>
     )
 }
