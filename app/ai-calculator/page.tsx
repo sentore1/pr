@@ -41,7 +41,7 @@ export default function AICalculatorPage() {
 
       <section className="pb-20 px-6">
         <div className="max-w-2xl mx-auto">
-          <div className="bg-gray-50 rounded-2xl p-8 md:p-12">
+          <div className="bg-gray-50 p-8 md:p-12" style={{borderRadius: '5px'}}>
             <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-center text-gray-900">
               Calculurate how much you can save just by using pryro AI tool
             </h2>
@@ -59,7 +59,8 @@ export default function AICalculatorPage() {
                   placeholder="e.g. Kigali Eats"
                   value={formData.businessName}
                   onChange={(e) => setFormData({...formData, businessName: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+                  style={{borderRadius: '5px'}}
                 />
               </div>
 
@@ -70,7 +71,8 @@ export default function AICalculatorPage() {
                 <select
                   value={formData.industry}
                   onChange={(e) => setFormData({...formData, industry: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                  style={{borderRadius: '5px'}}
                 >
                   <option value="">Choose one</option>
                   <option value="retail">Retail</option>
@@ -90,7 +92,8 @@ export default function AICalculatorPage() {
                 <select
                   value={formData.businessSize}
                   onChange={(e) => setFormData({...formData, businessSize: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                  style={{borderRadius: '5px'}}
                 >
                   <option value="">Select size</option>
                   <option value="1-10">1-10 employees</option>
@@ -110,7 +113,8 @@ export default function AICalculatorPage() {
                 <select
                   value={formData.softwareTool}
                   onChange={(e) => setFormData({...formData, softwareTool: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                  style={{borderRadius: '5px'}}
                 >
                   <option value="">Select one</option>
                   <option value="small-business">Small Business</option>
@@ -139,7 +143,8 @@ export default function AICalculatorPage() {
                   value={formData.tasks}
                   onChange={(e) => setFormData({...formData, tasks: e.target.value})}
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-900 placeholder:text-gray-500"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-900 placeholder:text-gray-500"
+                  style={{borderRadius: '5px'}}
                 />
               </div>
 
@@ -152,7 +157,8 @@ export default function AICalculatorPage() {
                   placeholder="e.g. 1000"
                   value={formData.budget}
                   onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+                  style={{borderRadius: '5px'}}
                 />
               </div>
 
@@ -165,7 +171,8 @@ export default function AICalculatorPage() {
                   placeholder="To receive your full report"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+                  style={{borderRadius: '5px'}}
                 />
               </div>
 
@@ -174,7 +181,7 @@ export default function AICalculatorPage() {
               </Button>
 
               {result !== null && (
-                <div className="mt-6 p-6 bg-gray-50 border border-gray-200 rounded-lg text-center">
+                <div className="mt-6 p-6 bg-gray-50 border border-gray-200 text-center" style={{borderRadius: '5px'}}>
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Estimated Monthly Savings</h3>
                   <p className="text-4xl font-bold text-green-600">${result}</p>
                   <p className="text-sm text-gray-600 mt-2">You could save approximately ${result} per month using Pryro AI tools</p>

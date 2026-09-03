@@ -15,7 +15,7 @@ export default function AIEnterprisePage() {
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-6xl md:text-7xl font-bold mb-6 text-gray-900 tracking-tight">AI-Powered Infrastructure</h1>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">Building intelligent systems that power the future of enterprise software</p>
-          <a href="https://login.pryro.com" className="inline-flex px-8 py-3.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">Get started</a>
+          <a href="https://login.pryro.com" className="inline-flex px-8 py-3.5 bg-blue-600 text-white rounded-[5px] hover:bg-blue-700 transition-colors font-medium">Get started</a>
         </div>
       </section>
 
@@ -24,7 +24,10 @@ export default function AIEnterprisePage() {
           <div className="mx-auto max-w-xl space-y-6 text-center md:space-y-12">
             <p className="text-gray-600">Our AI automation design infrastructure seamlessly integrates across your entire company technology stack — from edge computing to cloud platforms, enabling real-time intelligence and automated decision-making at every layer of your operations.</p>
           </div>
-          <img className="rounded-lg grayscale w-full" src="/109919.jpg" alt="team image" loading="lazy" />
+          <div className="relative rounded-[5px] overflow-hidden">
+            <img className="w-full" src="/109919.jpg" alt="team image" loading="lazy" />
+            <div className="absolute inset-0 bg-blue-600/20"></div>
+          </div>
 
           <div className="relative mx-auto grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-8 lg:grid-cols-4">
             <div className="space-y-3">
@@ -99,9 +102,9 @@ export default function AIEnterprisePage() {
           <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">Building AI for infrastructure</h2>
           <p className="text-lg text-gray-600 mb-16 text-center max-w-2xl mx-auto">Pioneering the next generation of intelligent infrastructure systems.</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="border border-gray-200 rounded-full px-6 py-4 hover:border-blue-600 transition-colors">
+            <div className="border border-gray-200 rounded-[5px] px-6 py-4 hover:border-blue-600 transition-colors">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
@@ -109,9 +112,9 @@ export default function AIEnterprisePage() {
                 <h3 className="text-sm font-semibold text-gray-900">Neural Infrastructure</h3>
               </div>
             </div>
-            <div className="border border-gray-200 rounded-full px-6 py-4 hover:border-blue-600 transition-colors">
+            <div className="border border-gray-200 rounded-[5px] px-6 py-4 hover:border-blue-600 transition-colors">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
@@ -119,9 +122,9 @@ export default function AIEnterprisePage() {
                 <h3 className="text-sm font-semibold text-gray-900">Real-Time Processing</h3>
               </div>
             </div>
-            <div className="border border-gray-200 rounded-full px-6 py-4 hover:border-blue-600 transition-colors">
+            <div className="border border-gray-200 rounded-[5px] px-6 py-4 hover:border-blue-600 transition-colors">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
@@ -129,9 +132,9 @@ export default function AIEnterprisePage() {
                 <h3 className="text-sm font-semibold text-gray-900">Self-Improving Systems</h3>
               </div>
             </div>
-            <div className="border border-gray-200 rounded-full px-6 py-4 hover:border-blue-600 transition-colors">
+            <div className="border border-gray-200 rounded-[5px] px-6 py-4 hover:border-blue-600 transition-colors">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                   </svg>
@@ -151,7 +154,7 @@ export default function AIEnterprisePage() {
           </div>
 
           <div className="mx-auto mt-12 max-w-xl">
-            <Accordion type="single" collapsible className="w-full rounded-2xl border px-8 py-3 shadow-sm">
+            <Accordion type="single" collapsible className="w-full rounded-[5px] border px-8 py-3 shadow-sm">
               <AccordionItem value="item-1" className="border-dashed">
                 <AccordionTrigger className="cursor-pointer text-base hover:no-underline text-gray-900">What makes your AI infrastructure different?</AccordionTrigger>
                 <AccordionContent>
@@ -236,7 +239,7 @@ export default function AIEnterprisePage() {
             <p className="text-gray-600">Connect seamlessly with popular platforms and services to enhance your workflow.</p>
             <a
               href="https://login.pryro.com"
-              className="inline-flex items-center justify-center px-6 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-black">
+              className="inline-flex items-center justify-center px-6 py-2 text-sm border border-gray-300 rounded-[5px] hover:bg-gray-100 transition-colors text-black">
               Get Started
             </a>
           </div>
@@ -248,8 +251,8 @@ export default function AIEnterprisePage() {
           <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to get started?</h2>
           <p className="text-lg text-gray-600 mb-8">Transform your operations with AI-powered infrastructure.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/demo" className="inline-flex px-8 py-3.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">Schedule a demo</a>
-            <a href="/contact" className="inline-flex px-8 py-3.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:border-gray-400 transition-colors font-medium">Contact sales</a>
+            <a href="/demo" className="inline-flex px-8 py-3.5 bg-blue-600 text-white rounded-[5px] hover:bg-blue-700 transition-colors font-medium">Schedule a demo</a>
+            <a href="/contact" className="inline-flex px-8 py-3.5 bg-white border border-gray-300 text-gray-700 rounded-[5px] hover:border-gray-400 transition-colors font-medium">Contact sales</a>
           </div>
         </div>
       </section>
@@ -261,10 +264,10 @@ export default function AIEnterprisePage() {
 
 const IntegrationCard = ({ children, className, borderClassName }: { children: React.ReactNode; className?: string; borderClassName?: string }) => {
   return (
-    <div className={`relative flex size-20 rounded-xl bg-white ${className || ''}`}>
+    <div className={`relative flex size-20 rounded-[5px] bg-white ${className || ''}`}>
       <div
         role="presentation"
-        className={`absolute inset-0 rounded-xl border border-black/20 ${borderClassName || ''}`}
+        className={`absolute inset-0 rounded-[5px] border border-black/20 ${borderClassName || ''}`}
       />
       <div className="relative z-20 m-auto size-fit text-gray-700">{children}</div>
     </div>

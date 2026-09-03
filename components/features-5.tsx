@@ -79,9 +79,9 @@ export default function FeaturesSection({ variant = 'default' }: FeaturesSection
                             })}
                         </ul>
                     </div>
-                    <div className="border-border/50 relative rounded-3xl border p-3 lg:col-span-3">
-                        <div className="aspect-video relative rounded-2xl overflow-hidden">
-                            <img src={content.image} className="rounded-[15px] w-full h-full object-cover" alt="business management" />
+                    <div className="border-border/50 relative rounded-[5px] border p-3 lg:col-span-3">
+                        <div className="aspect-video relative rounded-[5px] overflow-hidden">
+                            <img src={content.image} className="rounded-[5px] w-full h-full object-cover" alt="business management" />
                         </div>
                     </div>
                 </div>

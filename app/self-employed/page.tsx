@@ -15,7 +15,7 @@ export default function SelfEmployedPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="inline-block px-3 py-1 bg-blue-600 text-white text-sm font-medium rounded-full mb-6">
+              <div className="inline-block px-3 py-1 bg-blue-600 text-white text-sm font-medium rounded-[5px] mb-6">
                 For Freelancers & Solo Entrepreneurs
               </div>
               <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900">Self-Employed</h1>
@@ -31,7 +31,7 @@ export default function SelfEmployedPage() {
                 </Button>
               </div>
             </div>
-            <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+            <div className="border border-gray-200 rounded-[5px] overflow-hidden shadow-sm">
               <img src="moreimages/pryro small business 2.jpg" alt="Dashboard" className="w-full" />
             </div>
           </div>
@@ -45,22 +45,22 @@ export default function SelfEmployedPage() {
             <p className="text-gray-600">Powerful tools designed specifically for self-employed professionals</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl p-8 border border-gray-200">
-              <div className="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+            <div className="bg-white rounded-[5px] p-8 border border-gray-200">
+              <div className="w-6 h-6 bg-blue-500 rounded-[5px] flex items-center justify-center mb-4">
                 <FileText className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-900">Invoicing Made Simple</h3>
               <p className="text-gray-600">Create professional invoices in seconds. Get paid faster with automated reminders.</p>
             </div>
-            <div className="bg-white rounded-xl p-8 border border-gray-200">
-              <div className="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+            <div className="bg-white rounded-[5px] p-8 border border-gray-200">
+              <div className="w-6 h-6 bg-blue-500 rounded-[5px] flex items-center justify-center mb-4">
                 <Clock className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-900">Time Management</h3>
               <p className="text-gray-600">Log billable hours and convert them to invoices instantly. Never miss time again.</p>
             </div>
-            <div className="bg-white rounded-xl p-8 border border-gray-200">
-              <div className="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+            <div className="bg-white rounded-[5px] p-8 border border-gray-200">
+              <div className="w-6 h-6 bg-blue-500 rounded-[5px] flex items-center justify-center mb-4">
                 <Zap className="w-4 h-4 text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-900">Expense Tracking</h3>
@@ -103,7 +103,7 @@ export default function SelfEmployedPage() {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-2xl p-8 border border-gray-200 flex items-center justify-center">
+            <div className="bg-white rounded-[5px] p-8 border border-gray-200 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-6xl font-bold text-blue-600 mb-3">$0</div>
                 <p className="text-lg text-gray-900 font-semibold mb-6">to get started</p>
@@ -131,7 +131,7 @@ export default function SelfEmployedPage() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-6 text-gray-900">Ready to simplify your business?</h2>
           <p className="text-xl text-gray-600 mb-10">Join thousands of self-employed professionals using Pryro.</p>
-          <Button asChild size="lg" className="rounded-full bg-blue-600 hover:bg-blue-700 text-white">
+          <Button asChild size="lg" className="rounded-[5px] bg-blue-600 hover:bg-blue-700 text-white">
             <Link href="https://login.pryro.com">Start Free Trial <ArrowRight className="w-4 h-4 ml-2" /></Link>
           </Button>
         </div>

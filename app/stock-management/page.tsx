@@ -15,8 +15,8 @@ export default function StockManagementPage() {
 
       <section className="pt-40 pb-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-700 border border-blue-100 rounded-full mb-6">
-            <span className="w-2 h-2 bg-white rounded-full"></span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-700 border border-blue-100 rounded-[5px] mb-6">
+            <span className="w-2 h-2 bg-white rounded-[5px]"></span>
             <span className="text-sm text-white font-medium">Trusted by 6,500+ inventory teams</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">Pryro for<br />Stock Management</h1>
@@ -24,9 +24,9 @@ export default function StockManagementPage() {
             Take control of your inventory with real-time tracking, automated reordering, and comprehensive stock analytics.
           </p>
           <div className="flex flex-wrap gap-3">
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Real-time tracking</span>
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Auto reorder alerts</span>
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Multi-location support</span>
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">Real-time tracking</span>
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">Auto reorder alerts</span>
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">Multi-location support</span>
           </div>
         </div>
       </section>
@@ -39,7 +39,7 @@ export default function StockManagementPage() {
         <div className="mx-auto max-w-5xl px-6">
           <div className="grid gap-6 md:grid-cols-2 md:gap-12">
             <div>
-              <div className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full mb-4">
+              <div className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-[5px] mb-4">
                 Inventory Platform
               </div>
               <h2 className="text-4xl font-medium text-gray-900 mb-6">The Pryro ecosystem brings together powerful tools for inventory management.</h2>

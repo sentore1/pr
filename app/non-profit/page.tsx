@@ -15,7 +15,7 @@ export default function NonProfitPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-full mb-6">
+              <div className="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-[5px] mb-6">
                 For Non-Profit Organizations
               </div>
               <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900">Non-Profit</h1>
@@ -31,7 +31,7 @@ export default function NonProfitPage() {
                 </Button>
               </div>
             </div>
-            <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+            <div className="border border-gray-200 rounded-[5px] overflow-hidden shadow-sm">
               <img src="/wer.jpg" alt="Dashboard" className="w-full" />
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function NonProfitPage() {
           </div>
           <div className="space-y-6">
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                 <Heart className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -55,7 +55,7 @@ export default function NonProfitPage() {
               </div>
             </div>
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                 <Users className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -64,7 +64,7 @@ export default function NonProfitPage() {
               </div>
             </div>
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                 <FileText className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -109,7 +109,7 @@ export default function NonProfitPage() {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-2xl p-8 border border-gray-200 flex items-center justify-center">
+            <div className="bg-white rounded-[5px] p-8 border border-gray-200 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-6xl font-bold text-blue-600 mb-3">$0</div>
                 <p className="text-lg text-gray-900 font-semibold mb-6">to get started</p>
@@ -137,7 +137,7 @@ export default function NonProfitPage() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-6 text-gray-900">Ready to maximize your impact?</h2>
           <p className="text-xl text-gray-600 mb-10">Join non-profit organizations using Pryro to manage operations and demonstrate impact.</p>
-          <Button asChild size="lg" className="rounded-full bg-blue-600 hover:bg-blue-700 text-white">
+          <Button asChild size="lg" className="rounded-[5px] bg-blue-600 hover:bg-blue-700 text-white">
             <Link href="https://login.pryro.com">Start Free Trial <ArrowRight className="w-4 h-4 ml-2" /></Link>
           </Button>
         </div>

@@ -1,12 +1,13 @@
 ﻿"use client"
 
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { PawPrint, Zap, Package, ShoppingCart, DollarSign, Calendar, Users, Trees, Satellite, Menu, X, Youtube, Instagram, ChevronDown, ListTodo, Clock, FileText, BarChart3, Receipt, Wallet, TrendingUp, Plug, Building2, Briefcase, UserCircle, Boxes, HeartHandshake, Hammer, Truck, Mail, Phone, Bot, Check, Minus, ArrowRight } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AnimatedText } from "@/components/animated-text"
 import { CustomDroneIcon } from "@/components/drone-icon"
 import { WorldMap } from "@/components/world-map"
+import { Header } from "@/components/header"
 import { experiences } from "@/lib/experience-data"
 import type { Experience } from "@/lib/experience-data"
 
@@ -827,41 +828,42 @@ function MiniDashboard() {
   const xLabels = ["Apr 2","Apr 7","Apr 12","Apr 17","Apr 23","Apr 29","May 4","May 9","May 15","May 21","May 27","Jun 1","Jun 6","Jun 11","Jun 17","Jun 23","Jun 30"]
 
   return (
-    <div className="w-full bg-white" style={{ minHeight: 980 }}>
+    <div className="w-full bg-white overflow-x-auto" style={{ minHeight: 980 }}>
       {/* Topbar */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 bg-white">
-        <div className="flex items-center gap-2 text-[11px] text-gray-500">
-          <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-          <span className="text-gray-300 select-none">|</span>
-          <span>Dashboard</span>
-          <svg className="w-2.5 h-2.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+      <div className="flex items-center justify-between px-3 sm:px-5 py-2 sm:py-3 border-b border-gray-100 bg-white">
+        <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-[11px] text-gray-500 overflow-x-auto">
+          <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span className="text-gray-300 select-none hidden sm:inline">|</span>
+          <span className="hidden sm:inline">Dashboard</span>
+          <svg className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-gray-300 hidden sm:inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
           <span className="font-semibold text-gray-800">Account Dashboard</span>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-100 px-2.5 py-1 text-[10px] text-gray-500">
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-            <span>{new Date().toLocaleString('en-US', { month: 'short', year: 'numeric' })}</span>
-            <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        <div className="flex items-center gap-1.5 sm:gap-3">
+          <div className="flex items-center gap-1 sm:gap-1.5 bg-gray-50 border border-gray-100 px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] text-gray-500">
+            <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <span className="hidden sm:inline">{new Date().toLocaleString('en-US', { month: 'short', year: 'numeric' })}</span>
+            <span className="sm:hidden">{new Date().toLocaleString('en-US', { month: 'short' })}</span>
+            <svg className="w-2 h-2 sm:w-2.5 sm:h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
           </div>
-          <div className="flex items-center gap-1 text-[10px] text-gray-500">
+          <div className="hidden md:flex items-center gap-1 text-[10px] text-gray-500">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"/><path d="M2 12h20"/></svg>
             <span>GB English</span>
           </div>
-          <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center">
-            <span className="text-[9px] text-white font-bold">P</span>
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+            <span className="text-[8px] sm:text-[9px] text-white font-bold">P</span>
           </div>
         </div>
       </div>
 
       {/* Title row */}
-      <div className="flex items-center justify-between px-5 pt-4 pb-2">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-3 sm:px-5 pt-3 sm:pt-4 pb-2 gap-2">
         <div>
-          <h3 className="text-[14px] font-semibold text-gray-800">Account Dashboard</h3>
-          <p className="text-[10px] text-gray-400 mt-0.5">Live overview · updates every few seconds</p>
+          <h3 className="text-[13px] sm:text-[14px] font-semibold text-gray-800">Account Dashboard</h3>
+          <p className="text-[9px] sm:text-[10px] text-gray-400 mt-0.5">Live overview · updates every few seconds</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-1 sm:gap-2 overflow-x-auto w-full sm:w-auto">
           {["Overview","Finance","HR","Stock"].map((t, i) => (
-            <button key={t} className={`text-[10px] px-2.5 py-1 border transition-colors ${i === 0 ? "border-gray-300 text-gray-700 bg-gray-50" : "border-gray-100 text-gray-400 hover:bg-gray-50"}`}>
+            <button key={t} className={`text-[9px] sm:text-[10px] px-2 sm:px-2.5 py-1 border transition-colors flex-shrink-0 ${i === 0 ? "border-gray-300 text-gray-700 bg-gray-50" : "border-gray-100 text-gray-400 hover:bg-gray-50"}`}>
               {t}
             </button>
           ))}
@@ -869,7 +871,7 @@ function MiniDashboard() {
       </div>
 
       {/* ── ROW 1: 6 stat cards — no color ── */}
-      <div className="grid grid-cols-3 md:grid-cols-6 border-t border-gray-100">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 border-t border-gray-100">
         {[
           { label: "Total Clients",  value: String(clients),  sub: "active",           icon: "users"    },
           { label: "Total Vendors",  value: String(vendors),  sub: "active",           icon: "building" },
@@ -878,10 +880,10 @@ function MiniDashboard() {
           { label: "Open Invoices",  value: String(openInvoices),    sub: "awaiting payment", icon: "file"     },
           { label: "Overdue",        value: String(overdueInvoices), sub: "need attention",   icon: "alert"    },
         ].map((card, i) => (
-          <div key={i} className="border-r border-b border-gray-100 last:border-r-0 px-4 py-3 flex flex-col gap-1.5 bg-white">
+          <div key={i} className="border-r border-b border-gray-100 lg:last:border-r-0 px-3 sm:px-4 py-2.5 sm:py-3 flex flex-col gap-1 sm:gap-1.5 bg-white">
             <div className="flex items-center justify-between">
-              <span className="text-[9.5px] text-gray-400 font-medium uppercase tracking-wide">{card.label}</span>
-              <div className="w-5 h-5 bg-gray-50 flex items-center justify-center">
+              <span className="text-[9px] sm:text-[9.5px] text-gray-400 font-medium uppercase tracking-wide">{card.label}</span>
+              <div className="w-4 h-4 sm:w-5 sm:h-5 bg-gray-50 flex items-center justify-center flex-shrink-0">
                 {card.icon === "users"    && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>}
                 {card.icon === "building" && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>}
                 {card.icon === "trending" && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>}
@@ -890,18 +892,18 @@ function MiniDashboard() {
                 {card.icon === "alert"    && <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>}
               </div>
             </div>
-            <span className="text-[18px] font-bold text-gray-800 transition-all duration-700">{card.value}</span>
-            <span className="text-[9px] text-gray-400">{card.sub}</span>
+            <span className="text-[16px] sm:text-[18px] font-bold text-gray-800 transition-all duration-700">{card.value}</span>
+            <span className="text-[8.5px] sm:text-[9px] text-gray-400">{card.sub}</span>
           </div>
         ))}
       </div>
 
       {/* ── BIG LAYERED AREA CHART (full width) ── */}
-      <div className="border-t border-gray-100 px-5 pt-4 pb-2">
-        <div className="flex items-center justify-between mb-3">
+      <div className="border-t border-gray-100 px-3 sm:px-5 pt-3 sm:pt-4 pb-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 sm:mb-3 gap-1 sm:gap-0">
           <div>
-            <span className="text-[11px] font-semibold text-gray-800">Revenue Overview</span>
-            <span className="ml-2 text-[9px] text-gray-400">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-gray-800">Revenue Overview</span>
+            <span className="ml-1 sm:ml-2 text-[8.5px] sm:text-[9px] text-gray-400">
               {(() => {
                 const now = new Date()
                 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -911,18 +913,18 @@ function MiniDashboard() {
               })()}
             </span>
           </div>
-          <div className="flex gap-3 text-[9px] text-gray-400">
-            <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-1.5 border-t" style={{backgroundColor:"#0072FD",opacity:0.3,borderColor:"#0072FD"}}/>Sessions</span>
-            <span className="flex items-center gap-1.5"><span className="inline-block w-3 h-1.5 border-t" style={{backgroundColor:"#0072FD",opacity:0.7,borderColor:"#0072FD"}}/>Revenue</span>
+          <div className="flex gap-2 sm:gap-3 text-[8.5px] sm:text-[9px] text-gray-400">
+            <span className="flex items-center gap-1 sm:gap-1.5"><span className="inline-block w-2.5 sm:w-3 h-1 sm:h-1.5 border-t" style={{backgroundColor:"#0072FD",opacity:0.3,borderColor:"#0072FD"}}/>Sessions</span>
+            <span className="flex items-center gap-1 sm:gap-1.5"><span className="inline-block w-2.5 sm:w-3 h-1 sm:h-1.5 border-t" style={{backgroundColor:"#0072FD",opacity:0.7,borderColor:"#0072FD"}}/>Revenue</span>
           </div>
         </div>
 
         {/* SVG area chart */}
-        <div className="relative w-full" style={{ height: 160 }}>
+        <div className="relative w-full" style={{ height: 140 }}>
           <svg
             viewBox="0 0 800 130"
             className="w-full"
-            style={{ height: 140 }}
+            style={{ height: 120 }}
             preserveAspectRatio="none"
           >
             {/* grid lines — painted first so areas cover them */}
@@ -951,19 +953,24 @@ function MiniDashboard() {
           </svg>
 
           {/* X-axis labels */}
-          <div className="flex justify-between px-0 mt-1">
+          <div className="hidden sm:flex justify-between px-0 mt-1">
             {xLabels.map(l => (
               <span key={l} className="text-[8px] text-gray-400">{l}</span>
+            ))}
+          </div>
+          <div className="flex sm:hidden justify-between px-0 mt-1">
+            {xLabels.filter((_, i) => i % 3 === 0).map(l => (
+              <span key={l} className="text-[7px] text-gray-400">{l}</span>
             ))}
           </div>
         </div>
       </div>
 
       {/* ── ROW 3: Financial Snapshot + Top Clients ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
+      <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-gray-100">
         {/* Financial snapshot */}
-        <div className="border-r border-gray-100 p-4 flex flex-col gap-0">
-          <span className="text-[11px] font-semibold text-gray-800 mb-2">Financial Snapshot</span>
+        <div className="lg:border-r border-gray-100 p-3 sm:p-4 flex flex-col gap-0">
+          <span className="text-[10px] sm:text-[11px] font-semibold text-gray-800 mb-2">Financial Snapshot</span>
           {[
             { label: "Gross Profit",  value: `$${Math.round(revenue - expenses).toLocaleString()}`, change: "+8.2%",  up: true  },
             { label: "Net Margin",    value: `${((revenue - expenses) / revenue * 100).toFixed(1)}%`, change: "+1.4%", up: true  },
@@ -971,11 +978,11 @@ function MiniDashboard() {
             { label: "Cust. Payment", value: `$${Math.round(custPayment).toLocaleString()}`,          change: "+5.7%", up: true  },
             { label: "Vendor Cost",   value: `$${Math.round(vendPayment).toLocaleString()}`,          change: "+3.1%", up: false },
           ].map((row, i) => (
-            <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
-              <span className="text-[10px] text-gray-500">{row.label}</span>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-semibold text-gray-800">{row.value}</span>
-                <span className={`text-[9px] font-medium px-1 py-0.5 ${row.up ? "bg-gray-50 text-gray-500" : "bg-gray-50 text-gray-400"}`}>
+            <div key={i} className="flex items-center justify-between py-1.5 sm:py-2 border-b border-gray-50 last:border-0">
+              <span className="text-[9px] sm:text-[10px] text-gray-500">{row.label}</span>
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="text-[10px] sm:text-[11px] font-semibold text-gray-800">{row.value}</span>
+                <span className={`text-[8.5px] sm:text-[9px] font-medium px-1 py-0.5 ${row.up ? "bg-gray-50 text-gray-500" : "bg-gray-50 text-gray-400"}`}>
                   {row.change}
                 </span>
               </div>
@@ -984,22 +991,22 @@ function MiniDashboard() {
         </div>
 
         {/* Top clients */}
-        <div className="p-4 flex flex-col">
-          <span className="text-[11px] font-semibold text-gray-800 mb-3">Top Clients by Revenue</span>
-          <div className="flex flex-col gap-2.5">
+        <div className="p-3 sm:p-4 flex flex-col border-t lg:border-t-0">
+          <span className="text-[10px] sm:text-[11px] font-semibold text-gray-800 mb-2 sm:mb-3">Top Clients by Revenue</span>
+          <div className="flex flex-col gap-2 sm:gap-2.5">
             {topClients.map((c, i) => (
-              <div key={i} className="flex flex-col gap-1">
+              <div key={i} className="flex flex-col gap-0.5 sm:gap-1">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-4 h-4 bg-gray-100 flex items-center justify-center">
+                  <div className="flex items-center gap-1 sm:gap-1.5">
+                    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 bg-gray-100 flex items-center justify-center flex-shrink-0">
                       <span className="text-[7px] font-bold text-gray-500">{c.name[0]}</span>
                     </div>
-                    <span className="text-[10px] text-gray-700">{c.name}</span>
+                    <span className="text-[9px] sm:text-[10px] text-gray-700">{c.name}</span>
                   </div>
-                  <span className="text-[10px] font-semibold text-gray-700">${c.revenue.toLocaleString()}</span>
+                  <span className="text-[9px] sm:text-[10px] font-semibold text-gray-700">${c.revenue.toLocaleString()}</span>
                 </div>
-                <div className="w-full bg-gray-100 h-1">
-                  <div className="bg-blue-300 h-1 transition-all duration-1000" style={{ width: `${Math.floor(c.pct)}%` }}/>
+                <div className="w-full bg-gray-100 h-0.5 sm:h-1">
+                  <div className="bg-blue-300 h-0.5 sm:h-1 transition-all duration-1000" style={{ width: `${Math.floor(c.pct)}%` }}/>
                 </div>
               </div>
             ))}
@@ -1008,13 +1015,13 @@ function MiniDashboard() {
       </div>
 
       {/* ── ROW 5: Weekly bar chart + Activity feed ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
+      <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-gray-100">
 
         {/* Weekly spend bar chart */}
-        <div className="border-r border-gray-100 p-4 flex flex-col">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-semibold text-gray-800">Weekly Spend</span>
-            <span className="text-[9px] text-gray-400">
+        <div className="lg:border-r border-gray-100 p-3 sm:p-4 flex flex-col">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 sm:mb-3 gap-1 sm:gap-0">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-gray-800">Weekly Spend</span>
+            <span className="text-[8.5px] sm:text-[9px] text-gray-400">
               {(() => {
                 const now = new Date()
                 const startOfWeek = new Date(now)
@@ -1026,10 +1033,10 @@ function MiniDashboard() {
               })()}
             </span>
           </div>
-          <div className="flex items-end gap-2 flex-1" style={{ minHeight: 90 }}>
+          <div className="flex items-end gap-1.5 sm:gap-2 flex-1" style={{ minHeight: 80 }}>
             {barCols.map((b, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <div className="w-full flex flex-col justify-end" style={{ height: 80 }}>
+              <div key={i} className="flex-1 flex flex-col items-center gap-0.5 sm:gap-1">
+                <div className="w-full flex flex-col justify-end" style={{ height: 70 }}>
                   <div
                     className="w-full"
                     style={{
@@ -1039,24 +1046,24 @@ function MiniDashboard() {
                     }}
                   />
                 </div>
-                <span className="text-[8px] text-gray-400">{b.label}</span>
+                <span className="text-[7.5px] sm:text-[8px] text-gray-400">{b.label}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Activity feed */}
-        <div className="p-4 flex flex-col">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-semibold text-gray-800">Activity Feed</span>
-            <span className="text-[9px] text-gray-400 flex items-center gap-1">
+        <div className="p-3 sm:p-4 flex flex-col border-t lg:border-t-0">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-gray-800">Activity Feed</span>
+            <span className="text-[8.5px] sm:text-[9px] text-gray-400 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[#0072FD] animate-pulse inline-block"/>Live
             </span>
           </div>
           <div className="flex flex-col divide-y divide-gray-50">
             {activity.map((a, i) => (
-              <div key={i} className="flex items-start gap-2.5 py-2">
-                <div className="w-5 h-5 bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
+              <div key={i} className="flex items-start gap-2 sm:gap-2.5 py-1.5 sm:py-2">
+                <div className="w-4 h-4 sm:w-5 sm:h-5 bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
                   {a.icon === "check" && <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>}
                   {a.icon === "plus"  && <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>}
                   {a.icon === "alert" && <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>}
@@ -1064,8 +1071,8 @@ function MiniDashboard() {
                   {a.icon === "file"  && <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[10px] text-gray-700 leading-snug">{a.msg}</p>
-                  <span className="text-[8.5px] text-gray-400">{a.time}</span>
+                  <p className="text-[9px] sm:text-[10px] text-gray-700 leading-snug">{a.msg}</p>
+                  <span className="text-[8px] sm:text-[8.5px] text-gray-400">{a.time}</span>
                 </div>
               </div>
             ))}
@@ -1074,58 +1081,75 @@ function MiniDashboard() {
       </div>
 
       {/* ── ROW 6: HR employees + Stock levels ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
+      <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-gray-100">
 
         {/* HR / Employees */}
-        <div className="border-r border-gray-100 p-4">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-semibold text-gray-800">HRM — Employees</span>
-            <span className="text-[9px] text-gray-400">5 of 48 shown</span>
+        <div className="lg:border-r border-gray-100 p-3 sm:p-4">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-gray-800">HRM — Employees</span>
+            <span className="text-[8.5px] sm:text-[9px] text-gray-400">5 of 48 shown</span>
           </div>
-          <div className="border border-gray-100">
-            <div className="grid grid-cols-[1fr_80px_70px_56px] gap-x-2 px-3 py-1.5 bg-gray-50 border-b border-gray-100">
+          <div className="border border-gray-100 overflow-x-auto">
+            <div className="hidden sm:grid grid-cols-[1fr_80px_70px_56px] gap-x-2 px-3 py-1.5 bg-gray-50 border-b border-gray-100">
               {["Name","Department","Status","Salary"].map(h => (
                 <span key={h} className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">{h}</span>
               ))}
             </div>
+            <div className="sm:hidden grid grid-cols-[1fr_65px_50px] gap-x-2 px-3 py-1.5 bg-gray-50 border-b border-gray-100">
+              {["Name","Status","Salary"].map(h => (
+                <span key={h} className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">{h}</span>
+              ))}
+            </div>
             {employees.map((e, i) => (
-              <div key={i} className="grid grid-cols-[1fr_80px_70px_56px] gap-x-2 px-3 py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/60 transition-colors">
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <div className="w-4 h-4 bg-gray-100 flex items-center justify-center shrink-0">
-                    <span className="text-[7px] font-bold text-gray-500">{e.name[0]}</span>
+              <React.Fragment key={i}>
+                <div className="hidden sm:grid grid-cols-[1fr_80px_70px_56px] gap-x-2 px-3 py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/60 transition-colors">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 bg-gray-100 flex items-center justify-center shrink-0">
+                      <span className="text-[7px] font-bold text-gray-500">{e.name[0]}</span>
+                    </div>
+                    <span className="text-[9px] sm:text-[10px] text-gray-700 truncate">{e.name}</span>
                   </div>
-                  <span className="text-[10px] text-gray-700 truncate">{e.name}</span>
+                  <span className="text-[9px] sm:text-[9.5px] text-gray-500 self-center truncate">{e.dept}</span>
+                  <span className={`text-[8.5px] sm:text-[9px] self-center font-medium px-1.5 py-0.5 w-fit border border-gray-200 ${e.status === "Active" ? "text-gray-600 bg-gray-50" : "text-gray-400 bg-gray-100"}`}>{e.status}</span>
+                  <span className="text-[9px] sm:text-[10px] font-semibold text-gray-700 self-center">${e.salary.toLocaleString()}</span>
                 </div>
-                <span className="text-[9.5px] text-gray-500 self-center truncate">{e.dept}</span>
-                <span className={`text-[9px] self-center font-medium px-1.5 py-0.5 w-fit border border-gray-200 ${e.status === "Active" ? "text-gray-600 bg-gray-50" : "text-gray-400 bg-gray-100"}`}>{e.status}</span>
-                <span className="text-[10px] font-semibold text-gray-700 self-center">${e.salary.toLocaleString()}</span>
-              </div>
+                <div className="sm:hidden grid grid-cols-[1fr_65px_50px] gap-x-2 px-3 py-2 border-b border-gray-50 last:border-0">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <div className="w-3.5 h-3.5 bg-gray-100 flex items-center justify-center shrink-0">
+                      <span className="text-[7px] font-bold text-gray-500">{e.name[0]}</span>
+                    </div>
+                    <span className="text-[9px] text-gray-700 truncate">{e.name}</span>
+                  </div>
+                  <span className={`text-[8.5px] self-center font-medium px-1.5 py-0.5 w-fit border border-gray-200 ${e.status === "Active" ? "text-gray-600 bg-gray-50" : "text-gray-400 bg-gray-100"}`}>{e.status}</span>
+                  <span className="text-[9px] font-semibold text-gray-700 self-center">${e.salary.toLocaleString()}</span>
+                </div>
+              </React.Fragment>
             ))}
           </div>
         </div>
 
         {/* Stock levels */}
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-semibold text-gray-800">Stock Levels</span>
-            <span className="text-[9px] text-gray-400">Live inventory</span>
+        <div className="p-3 sm:p-4 border-t lg:border-t-0">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-gray-800">Stock Levels</span>
+            <span className="text-[8.5px] sm:text-[9px] text-gray-400">Live inventory</span>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2 sm:gap-3">
             {stockItems.map((s, i) => {
               const pct = Math.round((s.stock / s.max) * 100)
               const barColor = s.status === "Low" ? "rgba(0,114,253,0.35)" : s.status === "Medium" ? "rgba(0,114,253,0.55)" : "rgba(0,114,253,0.8)"
               return (
-                <div key={i} className="flex flex-col gap-1">
+                <div key={i} className="flex flex-col gap-0.5 sm:gap-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-gray-700">{s.name}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[9px] text-gray-400">{s.stock}/{s.max}</span>
-                      <span className={`text-[8.5px] px-1.5 py-0.5 border border-gray-200 ${s.status === "Low" ? "text-gray-500 bg-gray-100" : "text-gray-500 bg-gray-50"}`}>{s.status}</span>
+                    <span className="text-[9px] sm:text-[10px] text-gray-700">{s.name}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <span className="text-[8.5px] sm:text-[9px] text-gray-400">{s.stock}/{s.max}</span>
+                      <span className={`text-[8px] sm:text-[8.5px] px-1.5 py-0.5 border border-gray-200 ${s.status === "Low" ? "text-gray-500 bg-gray-100" : "text-gray-500 bg-gray-50"}`}>{s.status}</span>
                     </div>
                   </div>
-                  <div className="w-full bg-gray-100 h-1.5">
+                  <div className="w-full bg-gray-100 h-1 sm:h-1.5">
                     <div
-                      className="h-1.5 transition-all duration-1000"
+                      className="h-1 sm:h-1.5 transition-all duration-1000"
                       style={{ width: `${pct}%`, backgroundColor: barColor }}
                     />
                   </div>
@@ -1137,18 +1161,23 @@ function MiniDashboard() {
       </div>
 
       {/* ── ROW 4: Recent invoices ── */}
-      <div className="border-t border-gray-100 p-4">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-[11px] font-semibold text-gray-800">Recent Invoices</span>
-          <div className="flex items-center gap-2">
-            <span className="text-[9px] text-gray-400">{openInvoices} open · {overdueInvoices} overdue</span>
-            <button className="text-[9px] text-gray-500 border border-gray-200 px-2 py-0.5 hover:bg-gray-50 transition-colors">View all</button>
+      <div className="border-t border-gray-100 p-3 sm:p-4">
+        <div className="flex items-center justify-between mb-2 sm:mb-3">
+          <span className="text-[10px] sm:text-[11px] font-semibold text-gray-800">Recent Invoices</span>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="text-[8.5px] sm:text-[9px] text-gray-400">{openInvoices} open · {overdueInvoices} overdue</span>
+            <button className="text-[8.5px] sm:text-[9px] text-gray-500 border border-gray-200 px-2 py-0.5 hover:bg-gray-50 transition-colors">View all</button>
           </div>
         </div>
-        <div className="border border-gray-100">
-          <div className="grid grid-cols-[60px_1fr_1fr_80px_64px] gap-x-3 px-3 py-1.5 bg-gray-50 border-b border-gray-100">
+        <div className="border border-gray-100 overflow-x-auto">
+          <div className="hidden sm:grid grid-cols-[60px_1fr_1fr_80px_64px] gap-x-3 px-3 py-1.5 bg-gray-50 border-b border-gray-100">
             {["ID","Client","Date","Amount","Status"].map(h => (
               <span key={h} className="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">{h}</span>
+            ))}
+          </div>
+          <div className="sm:hidden grid grid-cols-[50px_1fr_65px_50px] gap-x-2 px-3 py-1.5 bg-gray-50 border-b border-gray-100">
+            {["ID","Client","Amount","Status"].map(h => (
+              <span key={h} className="text-[8.5px] font-semibold text-gray-400 uppercase tracking-wide">{h}</span>
             ))}
           </div>
           {recentInvoices.map((inv, i) => {
@@ -1157,13 +1186,21 @@ function MiniDashboard() {
               inv.status === "Overdue" ? "text-gray-500 bg-gray-100 border border-gray-200" :
                                          "text-gray-400 bg-gray-50 border border-gray-200"
             return (
-              <div key={i} className="grid grid-cols-[60px_1fr_1fr_80px_64px] gap-x-3 px-3 py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/60 transition-colors">
-                <span className="text-[10px] text-gray-600 font-medium">{inv.id}</span>
-                <span className="text-[10px] text-gray-700 truncate">{inv.client}</span>
-                <span className="text-[10px] text-gray-400">{inv.date}</span>
-                <span className="text-[10px] font-semibold text-gray-800">${inv.amount.toLocaleString("en-US",{minimumFractionDigits:2})}</span>
-                <span className={`text-[9px] font-medium px-1.5 py-0.5 self-center w-fit ${statusStyle}`}>{inv.status}</span>
-              </div>
+              <React.Fragment key={i}>
+                <div className="hidden sm:grid grid-cols-[60px_1fr_1fr_80px_64px] gap-x-3 px-3 py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/60 transition-colors">
+                  <span className="text-[10px] text-gray-600 font-medium">{inv.id}</span>
+                  <span className="text-[10px] text-gray-700 truncate">{inv.client}</span>
+                  <span className="text-[10px] text-gray-400">{inv.date}</span>
+                  <span className="text-[10px] font-semibold text-gray-800">${inv.amount.toLocaleString("en-US",{minimumFractionDigits:2})}</span>
+                  <span className={`text-[9px] font-medium px-1.5 py-0.5 self-center w-fit ${statusStyle}`}>{inv.status}</span>
+                </div>
+                <div className="sm:hidden grid grid-cols-[50px_1fr_65px_50px] gap-x-2 px-3 py-2 border-b border-gray-50 last:border-0">
+                  <span className="text-[9px] text-gray-600 font-medium">{inv.id}</span>
+                  <span className="text-[9px] text-gray-700 truncate">{inv.client}</span>
+                  <span className="text-[9px] font-semibold text-gray-800">${inv.amount.toLocaleString("en-US",{minimumFractionDigits:0})}</span>
+                  <span className={`text-[8px] font-medium px-1 py-0.5 self-center w-fit ${statusStyle}`}>{inv.status}</span>
+                </div>
+              </React.Fragment>
             )
           })}
         </div>
@@ -1174,10 +1211,7 @@ function MiniDashboard() {
 
 export default function PryroPage() {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const [showProductsMenu, setShowProductsMenu] = useState(false)
-  const [showSolutionsMenu, setShowSolutionsMenu] = useState(false)
   const [selectedFeature, setSelectedFeature] = useState(0)
   const [imageFade, setImageFade] = useState(true)
   const [autoRotationKey, setAutoRotationKey] = useState(0)
@@ -1301,132 +1335,7 @@ export default function PryroPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-[#0f1117] overflow-x-hidden">
-      <header className="fixed top-6 left-6 md:w-auto md:right-auto right-6 z-40 border border-black/10 backdrop-blur-md bg-white/80 rounded-[6px]">
-        <div className="w-full mx-auto px-2">
-          <div className="flex items-center gap-6 md:h-12 h-12">
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-300"
-            >
-              <img src="/pryro logo.png" alt="Pryro" className="h-8 w-auto" />
-            </button>
-
-            <nav className="hidden md:flex items-center gap-4">
-              <div 
-                className="relative"
-                onMouseEnter={() => setShowProductsMenu(true)}
-                onMouseLeave={() => setShowProductsMenu(false)}
-              >
-                <a href="/products" className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300">
-                  Products
-                </a>
-                {showProductsMenu && (
-                  <div className="absolute top-full left-0 pt-2">
-                    <div className="bg-white rounded-[5px] shadow-xl p-6 w-[600px] backdrop-blur-md">
-                      <div className="grid grid-cols-2 gap-4">
-                        {[
-                          { href: "/features",      icon: "/icon/dashboard icon.png",     label: "Features",       sub: "Explore all capabilities"  },
-                          { href: "/pricing",       icon: "/icon/budget icon.png",        label: "Pricing",        sub: "Simple, transparent plans" },
-                          { href: "/ai-calculator", icon: "/icon/ai business review icon.png", label: "AI Calculator",  sub: "Calculate your savings"    },
-                          { href: "/documentation", icon: "/icon/document icon.png",      label: "Documentation",  sub: "Guides & references"       },
-                          { href: "/api",           icon: "/icon/0code icon.png",         label: "API",            sub: "Developer resources"       },
-                        ].map(({ href, icon, label, sub }) => (
-                          <a key={href} href={href} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50/50 transition-colors">
-                            <img src={icon} alt={label} className="w-8 h-8 object-contain mt-0.5" />
-                            <div>
-                              <div className="font-medium text-sm text-gray-900">{label}</div>
-                              <div className="text-xs text-gray-500 mt-0.5">{sub}</div>
-                            </div>
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              
-              <div 
-                className="relative"
-                onMouseEnter={() => setShowSolutionsMenu(true)}
-                onMouseLeave={() => setShowSolutionsMenu(false)}
-              >
-                <button className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300">
-                  Solutions
-                </button>
-                {showSolutionsMenu && (
-                  <div className="absolute top-full left-0 pt-2">
-                    <div className="bg-white rounded-[5px] shadow-xl p-6 w-[700px] backdrop-blur-md">
-                      <div className="grid grid-cols-3 gap-3">
-                        {[
-                          { href: "/small-business",          icon: "/icon/business coach icon.png",  label: "Small Business",   sub: "For growing teams"     },
-                          { href: "/accountants-bookkeepers", icon: "/icon/accounting icon.png",      label: "Accountants",      sub: "Financial experts"     },
-                          { href: "/project",                 icon: "/icon/project icon.png",         label: "Project",          sub: "Manage projects"       },
-                          { href: "/human-resource",          icon: "/icon/HR icon.png",              label: "Human Resource",   sub: "HR management"         },
-                          { href: "/stock-management",        icon: "/icon/Inventory icon.png",       label: "Stock Management", sub: "Inventory control"     },
-                          { href: "/customer-relation",       icon: "/icon/CRM icon.png",             label: "CRM",              sub: "Customer relations"    },
-                          { href: "/self-employed",           icon: "/icon/0coder icon.png",          label: "Self-employed",    sub: "Freelancers"           },
-                          { href: "/non-profit",              icon: "/icon/help desk icon.png",       label: "Non-profit",       sub: "NGO solutions"         },
-                          { href: "/hospitality",             icon: "/icon/pos icon.png",             label: "Hospitality",      sub: "Hotels & restaurants"  },
-                          { href: "/construction",            icon: "/icon/manufacturers icon.png",   label: "Construction",     sub: "Build projects"        },
-                          { href: "/logistic",                icon: "/icon/logistic icon.png",        label: "Logistic",         sub: "Supply chain"          },
-                          { href: "/marketing-mail",          icon: "/icon/ai email icon.png",        label: "Marketing (Mail)", sub: "Email campaigns"       },
-                          { href: "/marketing-call",          icon: "/icon/cold call icon.png",       label: "Marketing (Call)", sub: "Call center"           },
-                          { href: "/ai-enterprise",           icon: "/icon/ai interprise icon.png",   label: "AI Enterprise",    sub: "AI-powered tools"      },
-                        ].map(({ href, icon, label, sub }) => (
-                          <a key={href} href={href} className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50/50 transition-colors">
-                            <img src={icon} alt={label} className="w-6 h-6 object-contain mt-0.5 flex-shrink-0" />
-                            <div>
-                              <div className="font-medium text-xs text-gray-900">{label}</div>
-                              <div className="text-[10px] text-gray-500 mt-0.5">{sub}</div>
-                            </div>
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              
-              <a href="/about" className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-300">About</a>
-
-              {/* Nav CTA group */}
-              <div className="flex items-center gap-1 bg-black/5 rounded-[9px] p-1 ml-2">
-                <a
-                  href="/contact"
-                  className="text-sm text-[#0f1117] font-medium px-3 py-1.5 rounded-[6px] hover:bg-white/80 transition-all duration-200"
-                >
-                  Contact
-                </a>
-                <a
-                  href="https://login.pryro.com"
-                  className="text-sm font-medium px-3 py-1.5 rounded-[6px] bg-white text-[#0f1117] hover:bg-white/80 transition-all duration-200"
-                >
-                  Log in
-                </a>
-              </div>
-            </nav>
-
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden ml-auto p-2 hover:bg-black/5 rounded-lg transition-colors duration-300"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {isMenuOpen && (
-        <div className="fixed inset-0 bg-white/95 backdrop-blur-md z-50 flex flex-col items-start justify-end pb-20 pt-20 px-6">
-          <div className="flex flex-col gap-8 items-start text-left w-full">
-            <a href="/products" className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300">Products</a>
-            <a href="/about" className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300">About</a>
-            <a href="/demo" className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300">Demo</a>
-            <a href="/contact" className="font-serif text-5xl md:text-7xl font-light text-[#0f1117] hover:text-pink-400 transition-colors duration-300">Contact</a>
-          </div>
-        </div>
-      )}
+      <Header />
 
       <section
         ref={heroRef}
@@ -1446,32 +1355,32 @@ export default function PryroPage() {
           <div className="text-center mb-8 md:mb-12">
             <h1 className="font-serif text-[44px] leading-[1.1] md:text-[72px] md:leading-[1.05] font-medium mb-6 text-balance">
               <span
-                className={`block stagger-reveal text-7xl font-light transition-all duration-500 md:text-8xl text-white ${
+                className={`block stagger-reveal text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-light transition-all duration-500 text-white px-4 ${
                   wordFade ? "opacity-100 blur-0" : "opacity-0 blur-lg"
                 }`}
                 style={{ textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)" }}
               >
                 Streamline <AnimatedText key={dynamicWordIndex} text={dynamicWords[dynamicWordIndex]} delay={0} />
               </span>
-              <span className="block stagger-reveal text-7xl font-light md:text-8xl text-white" style={{ animationDelay: "90ms", textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)" }}>
+              <span className="block stagger-reveal text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white px-4" style={{ animationDelay: "90ms", textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)" }}>
                 effortlessly
               </span>
             </h1>
             <p
-              className="text-white text-base md:text-lg max-w-[520px] mx-auto mb-8 leading-relaxed stagger-reveal"
+              className="text-white text-sm sm:text-base md:text-lg max-w-[90%] sm:max-w-[520px] mx-auto mb-6 md:mb-8 leading-relaxed stagger-reveal px-4"
               style={{ animationDelay: "180ms", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)" }}
             >
               Complete ERP solution with AI-powered insights. Manage finance, inventory, HR, and operations in one unified platform.
             </p>
-            <div className="stagger-reveal flex justify-center" style={{ animationDelay: "270ms" }}>
-              <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm rounded-[6px] p-1">
-                <a href="https://login.pryro.com">
-                  <Button className="px-6 py-2.5 h-auto text-sm font-medium rounded-[4px] bg-white border-0 hover:bg-white/90 transition-all duration-300 text-gray-900">
+            <div className="stagger-reveal flex justify-center px-4" style={{ animationDelay: "270ms" }}>
+              <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-1 bg-white/20 backdrop-blur-sm rounded-[6px] p-1 w-full sm:w-auto max-w-sm sm:max-w-none">
+                <a href="https://login.pryro.com" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto px-6 py-2.5 h-auto text-sm font-medium rounded-[4px] bg-white border-0 hover:bg-white/90 transition-all duration-300 text-gray-900">
                     Start Free Trial
                   </Button>
                 </a>
-                <a href="/demo">
-                  <Button className="px-6 py-2.5 h-auto text-sm font-medium rounded-[4px] bg-white/25 border-0 hover:bg-white/35 transition-all duration-300 text-gray-900">
+                <a href="/demo" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto px-6 py-2.5 h-auto text-sm font-medium rounded-[4px] bg-white/25 border-0 hover:bg-white/35 transition-all duration-300 text-gray-900">
                     Book a Demo
                   </Button>
                 </a>
@@ -1482,7 +1391,7 @@ export default function PryroPage() {
           <div className="mt-12 md:mt-20 stagger-reveal" style={{ animationDelay: "360ms" }} ref={dashboardRef}>
             <div style={{ perspective: "1200px" }}>
               <div
-                className="relative aspect-[16/10] md:aspect-[16/9] rounded-[10px] overflow-hidden"
+                className="relative aspect-[16/10] md:aspect-[16/9] rounded-[5px] overflow-hidden"
                 style={{
                   transform: `rotateX(${dashboardScrollOffset}deg)`,
                   transformStyle: "preserve-3d",
@@ -1596,16 +1505,16 @@ export default function PryroPage() {
 
       <section className="relative py-20 md:py-32 px-4 animate-on-scroll">
         <div className="max-w-[1120px] w-full mx-auto">
-          <div className="text-center mb-12">
-            <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">SEAMLESS ACROSS DEVICES</div>
-            <h2 className="text-[32px] md:text-[48px] font-bold mb-6 leading-tight text-gray-900">
+          <div className="text-center mb-8 md:mb-12 px-4">
+            <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-3 md:mb-4">SEAMLESS ACROSS DEVICES</div>
+            <h2 className="text-2xl sm:text-3xl md:text-[40px] lg:text-[48px] font-bold mb-4 md:mb-6 leading-tight text-gray-900">
               Work from anywhere,<br />stay in sync
             </h2>
           </div>
 
 
-          <div className="relative overflow-hidden">
-            <div className="rounded-[5px] overflow-hidden relative min-h-[600px] md:min-h-[700px]">
+          <div className="relative overflow-hidden px-4">
+            <div className="rounded-[5px] overflow-hidden relative min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[700px]">
               <div className="relative w-full h-full">
                 <img
                   src="/image switch 1.png"
@@ -1736,10 +1645,10 @@ export default function PryroPage() {
                 </div>
               </div>
 
-              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-1 bg-white/20 backdrop-blur-sm rounded-[5px] p-1">
+              <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 flex gap-1 bg-white/20 backdrop-blur-sm rounded-[5px] p-1 w-[90%] sm:w-auto max-w-sm sm:max-w-none">
                 <button
                   onClick={() => setSelectedDevice(0)}
-                  className={`px-6 py-2.5 rounded-[5px] text-sm font-medium transition-all ${
+                  className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-2.5 rounded-[5px] text-xs sm:text-sm font-medium transition-all ${
                     selectedDevice === 0
                       ? "bg-white text-gray-900"
                       : "text-white hover:bg-white/10"
@@ -1749,7 +1658,7 @@ export default function PryroPage() {
                 </button>
                 <button
                   onClick={() => setSelectedDevice(1)}
-                  className={`px-6 py-2.5 rounded-[5px] text-sm font-medium transition-all ${
+                  className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-2.5 rounded-[5px] text-xs sm:text-sm font-medium transition-all ${
                     selectedDevice === 1
                       ? "bg-white text-gray-900"
                       : "text-white hover:bg-white/10"
@@ -2031,26 +1940,26 @@ export default function PryroPage() {
       </section>
 
       {/* AI Agent showcase section */}
-      <section className="relative py-20 md:py-28 px-4 animate-on-scroll overflow-hidden bg-gray-50">
+      <section className="relative py-20 md:py-28 px-2 sm:px-4 animate-on-scroll overflow-hidden bg-gray-50">
         <div className="relative z-10 max-w-[1120px] w-full mx-auto">
 
           {/* ── OUTER BLUE CARD ── */}
           <div
-            className="p-12 md:p-20 max-w-[1160px] mx-auto"
+            className="p-6 sm:p-8 md:p-12 lg:p-20 max-w-[1160px] mx-auto"
             style={{
               borderRadius: "5px",
               background: "linear-gradient(to bottom, #0072FD 0%, #0274FD 11%, #0376FC 22%, #097AFC 33%, #0E7EFC 44%, #1986FC 55%, #3393FC 66%, #4CA0FC 77%, #7FBAFC 88%, #E5EDFC 100%)",
             }}
           >
             {/* Headline inside blue card */}
-            <div className="text-center mb-8 md:mb-10">
-              <h2 className="font-serif text-[32px] md:text-[52px] leading-[1.1] font-medium text-white mb-3" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.15)" }}>
+            <div className="text-center mb-6 md:mb-8 lg:mb-10 px-2 sm:px-4">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-[42px] lg:text-[52px] leading-[1.2] md:leading-[1.1] font-medium text-white mb-3" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.15)" }}>
                 Meet Pryro, business<br />management, finally simple.
               </h2>
             </div>
 
             {/* ── INNER WHITE CARD ── */}
-            <div className="bg-white overflow-hidden shadow-xl" style={{ borderRadius: "8px" }}>
+            <div className="bg-white overflow-hidden shadow-xl mx-0 sm:mx-2" style={{ borderRadius: "8px" }}>
 
               {/* Animated Dashboard UI */}
               <div className="border-b border-black/6 overflow-hidden">
@@ -2063,15 +1972,15 @@ export default function PryroPage() {
 
 
 
-      <section id="narrative" className="relative py-20 md:py-32 px-4 animate-on-scroll bg-gray-50">
+      <section id="narrative" className="relative py-12 md:py-20 lg:py-32 px-4 animate-on-scroll bg-gray-50">
         <div className="max-w-[1120px] w-full mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-stretch">
             <div className="max-w-[720px]">
-              <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-6 flex items-center gap-2">
+              <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4 md:mb-6 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
                 ENTERPRISE TECHNOLOGY
               </div>
-              <h2 className="font-serif text-[36px] leading-[1.15] md:text-[56px] md:leading-[1.1] font-medium mb-8 text-balance">
+              <h2 className="font-serif text-[28px] sm:text-[32px] md:text-[42px] lg:text-[56px] leading-[1.2] md:leading-[1.15] lg:leading-[1.1] font-medium mb-6 md:mb-8 text-balance">
                 Every business process{" "}
                 <span
                   className="inline-block"
@@ -2085,11 +1994,11 @@ export default function PryroPage() {
                   optimized
                 </span>
               </h2>
-              <p className="text-[#4a5568] text-base md:text-lg leading-relaxed mb-12">
+              <p className="text-[#4a5568] text-sm sm:text-base md:text-lg leading-relaxed mb-8 md:mb-12">
                 Our AI-powered ERP platform automates workflows, manages inventory, tracks finances, and provides real-time analytics. Business intelligence at the speed your company demands.
               </p>
 
-              <div className="md:hidden mb-8">
+              <div className="md:hidden mb-6 md:mb-8">
                 <div className="rounded-[5px] p-1 w-full aspect-square overflow-hidden">
                   <img
                     src={
@@ -2108,7 +2017,7 @@ export default function PryroPage() {
                 </div>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {[
                   {
                     title: "Financial Management",
@@ -2479,35 +2388,86 @@ export default function PryroPage() {
         </div>
       </section>
      
-      <section id="pricing" className="relative py-20 md:py-32 px-4 animate-on-scroll bg-gray-50">
+      <section id="pricing" className="relative py-12 md:py-20 lg:py-32 px-4 animate-on-scroll bg-gray-50">
         <div className="max-w-[1200px] w-full mx-auto">
-          <div className="text-center mb-10">
-            <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">PRICING</div>
-            <h2 className="text-[32px] md:text-[48px] font-bold mb-6 leading-tight text-gray-900">
+          <div className="text-center mb-8 md:mb-10">
+            <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-3 md:mb-4">PRICING</div>
+            <h2 className="text-2xl sm:text-3xl md:text-[40px] lg:text-[48px] font-bold mb-4 md:mb-6 leading-tight text-gray-900 px-4">
               Simple plans<br />for serious work
             </h2>
           </div>
 
           {/* Toggle */}
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-6 md:mb-8">
             <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
               <button
                 onClick={() => setPricingToggle("annually")}
-                className={`text-sm font-medium px-3 py-1.5 rounded-[6px] transition-all duration-200 ${pricingToggle === "annually" ? "bg-white text-[#0f1117]" : "text-[#4a5568] hover:bg-white/60"}`}
+                className={`text-xs sm:text-sm font-medium px-3 py-1.5 rounded-[6px] transition-all duration-200 ${pricingToggle === "annually" ? "bg-white text-[#0f1117]" : "text-[#4a5568] hover:bg-white/60"}`}
               >
                 Annually
               </button>
               <button
                 onClick={() => setPricingToggle("monthly")}
-                className={`text-sm font-medium px-3 py-1.5 rounded-[6px] transition-all duration-200 ${pricingToggle === "monthly" ? "bg-white text-[#0f1117]" : "text-[#4a5568] hover:bg-white/60"}`}
+                className={`text-xs sm:text-sm font-medium px-3 py-1.5 rounded-[6px] transition-all duration-200 ${pricingToggle === "monthly" ? "bg-white text-[#0f1117]" : "text-[#4a5568] hover:bg-white/60"}`}
               >
                 Monthly
               </button>
             </div>
           </div>
 
-          {/* Comparison table */}
-          <div className="rounded-[5px] border border-gray-200 bg-white">
+          {/* Mobile Cards View (hidden on lg screens) */}
+          <div className="lg:hidden space-y-4 mb-6">
+            {[
+              { name: 'Basic', price: '$0', period: 'Free forever', users: '2', projects: 'Unlimited', invoices: '100/mo', features: ['Time Tracking', 'CRM'], cta: 'Get started', link: 'https://login.pryro.com' },
+              { name: 'Premium', price: pricingToggle === "annually" ? "$29" : "$50", period: 'Per workspace', users: '20', projects: 'Unlimited', invoices: 'Unlimited', features: ['Time Tracking', 'CRM', 'HR Management', 'POS', 'AI Reports', 'Invoice Link'], cta: 'Upgrade', link: 'https://login.pryro.com', popular: true, savings: pricingToggle === "annually" },
+              { name: 'Business', price: pricingToggle === "annually" ? "$79" : "$99", period: 'Up to 100 users', users: '100', projects: 'Unlimited', invoices: 'Unlimited', features: ['Everything in Premium', 'Advanced Security', 'Phone & Chat Support'], cta: 'Get Business', link: 'https://login.pryro.com' },
+              { name: 'Enterprise', price: 'Custom', period: 'Contact sales', users: 'Unlimited', projects: 'Unlimited', invoices: 'Unlimited', features: ['Everything in Business', 'Custom Webhooks', 'Dedicated Support'], cta: 'Contact sales', link: '/contact' },
+            ].map((plan) => (
+              <div key={plan.name} className={`rounded-lg border ${plan.popular ? 'border-blue-500 bg-blue-50/30' : 'border-gray-200 bg-white'} p-5 relative`}>
+                {plan.popular && plan.savings && (
+                  <span className="absolute -top-2 right-4 bg-green-400 text-[10px] font-semibold px-2 py-0.5 rounded-full text-white">Save 20%</span>
+                )}
+                <div className="text-center mb-4">
+                  <h3 className="font-semibold text-gray-900 mb-2">{plan.name}</h3>
+                  <div className="text-3xl font-bold text-gray-900">{plan.price}</div>
+                  <div className="text-xs text-gray-500 mt-1">{plan.period}</div>
+                </div>
+                <div className="space-y-2 mb-4 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Users:</span>
+                    <span className="font-medium text-gray-900">{plan.users}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Projects:</span>
+                    <span className="font-medium text-gray-900">{plan.projects}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Invoices:</span>
+                    <span className="font-medium text-gray-900">{plan.invoices}</span>
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <div className="text-xs font-semibold text-gray-700 mb-2">Key Features:</div>
+                  <ul className="space-y-1">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="text-xs text-gray-600 flex items-center gap-2">
+                        <Check className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <a href={plan.link} className="block">
+                  <button className={`w-full py-2.5 rounded-[5px] text-sm font-medium transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700' : 'border border-gray-300 hover:bg-gray-50'}`}>
+                    {plan.cta}
+                  </button>
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Comparison Table (hidden on mobile, shown on lg+) */}
+          <div className="hidden lg:block rounded-[5px] border border-gray-200 bg-white overflow-x-auto">
             {/* Header row */}
             <div className="grid grid-cols-[1fr_140px_140px_140px_140px]">
               <div className="p-5 flex flex-col justify-end">
@@ -2637,7 +2597,7 @@ export default function PryroPage() {
             </div>
           </div>
 
-          <div className="text-center mt-8 text-sm text-gray-500">Trusted by 64,000+ businesses, startups, NGOs, and studios</div>
+          <div className="text-center mt-6 md:mt-8 text-xs sm:text-sm text-gray-500 px-4">Trusted by 64,000+ businesses, startups, NGOs, and studios</div>
         </div>
       </section>
 

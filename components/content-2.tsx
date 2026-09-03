@@ -90,10 +90,10 @@ export default function ContentSection({ variant = 'default' }: ContentSectionPr
                         </div>
                     </div>
                     <div className="md:mask-l-from-35% md:mask-l-to-55% mt-12 h-fit md:absolute md:-inset-y-12 md:inset-x-0 md:mt-0">
-                        <div className="border-border/50 relative rounded-2xl border border-dotted p-2">
+                        <div className="border-border/50 relative rounded-[5px] border border-dotted p-2">
                             <img
                                 src={content.image}
-                                className="rounded-[12px]"
+                                className="rounded-[5px]"
                                 alt="dashboard"
                                 width={1207}
                                 height={929}

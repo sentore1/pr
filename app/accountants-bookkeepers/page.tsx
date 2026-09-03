@@ -37,7 +37,7 @@ export default function AccountantsBookkeepersPage() {
       <section className="py-32 px-6 bg-gray-70">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white border border-gray-200 rounded-xl p-8">
+            <div className="bg-white border border-gray-200 rounded-[5px] p-8">
               <div className="mb-6">
                 <div className="text-3xl font-semibold text-gray-900">$128,450.75</div>
                 <div className="text-sm text-gray-500">Total Client Balance</div>
@@ -64,7 +64,7 @@ export default function AccountantsBookkeepersPage() {
                   </div>
                 </div>
               </div>
-              <div className="h-32 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg flex items-end justify-around p-4">
+              <div className="h-32 bg-gradient-to-r from-blue-50 to-blue-100 rounded-[5px] flex items-end justify-around p-4">
                 <div className="w-4 bg-blue-600 rounded-t" style={{height: '40%'}}></div>
                 <div className="w-4 bg-blue-500 rounded-t" style={{height: '70%'}}></div>
                 <div className="w-4 bg-blue-400 rounded-t" style={{height: '40%'}}></div>
@@ -83,7 +83,7 @@ export default function AccountantsBookkeepersPage() {
             </div>
             <div className="space-y-6">
               <div className="flex gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <Users className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -92,7 +92,7 @@ export default function AccountantsBookkeepersPage() {
                 </div>
               </div>
               <div className="flex gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -101,12 +101,12 @@ export default function AccountantsBookkeepersPage() {
                 </div>
               </div>
               <div className="space-y-2 pt-4">
-                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors flex items-center justify-between">
+                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-[5px] text-sm font-medium text-gray-700 transition-colors flex items-center justify-between">
                   <span>Income Statement</span>
-                  <span className="px-2 py-0.5 bg-blue-600 text-white text-xs rounded-full">New</span>
+                  <span className="px-2 py-0.5 bg-blue-600 text-white text-xs rounded-[5px]">New</span>
                 </button>
-                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors text-left">Balance Sheet</button>
-                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors text-left">Cash Flow</button>
+                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-[5px] text-sm font-medium text-gray-700 transition-colors text-left">Balance Sheet</button>
+                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-[5px] text-sm font-medium text-gray-700 transition-colors text-left">Cash Flow</button>
               </div>
             </div>
           </div>

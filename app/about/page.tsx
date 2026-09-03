@@ -30,7 +30,7 @@ export default function AboutPage() {
               Our founders, experienced entrepreneurs themselves, understood the pain of juggling multiple platforms for ERP, HRM, CRM, accounting, and project management. They knew there had to be a better way.
             </p>
             <p>
-              Today, Pryro is the trusted platform for over 64,000 businesses across 5 continents, from startups to enterprises, helping them streamline operations and unlock their full potential.
+              Today, Pryro is the trusted platform for over 64K+ businesses across 2 continents, from startups to enterprises, helping them streamline operations and unlock their full potential.
             </p>
           </div>
         </div>
@@ -47,32 +47,9 @@ export default function AboutPage() {
               { icon: Shield, title: "Security & Trust", desc: "Enterprise-grade protection with complete transparency" }
             ].map((value, i) => (
               <div key={i}>
-                <value.icon className="w-6 h-6 text-black mb-4" />
+                <value.icon className="w-4 h-4 text-black mb-4" />
                 <h3 className="font-bold text-lg mb-2 text-black">{value.title}</h3>
                 <p className="text-gray-600 leading-relaxed">{value.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-4 border-t border-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-black text-left">Our Journey</h2>
-          <div className="space-y-8">
-            {[
-              { year: "2020", title: "Foundation", desc: "Pryro was founded with a vision to unify business management tools" },
-              { year: "2021", title: "First 1,000 Customers", desc: "Reached our first major milestone and expanded to 3 countries" },
-              { year: "2022", title: "Series A Funding", desc: "Raised Disclosed funding to accelerate product development and global expansion" },
-              { year: "2027", title: "AI Integration", desc: "Launched AI-powered features for predictive analytics and automation" },
-              { year: "2024", title: "Global Leader", desc: "Serving 64,000+ businesses with 50+ team members worldwide" }
-            ].map((milestone, i) => (
-              <div key={i} className="flex gap-6">
-                <div className="flex-shrink-0 w-20 font-bold text-black">{milestone.year}</div>
-                <div className="flex-1">
-                  <h3 className="font-bold mb-1 text-black">{milestone.title}</h3>
-                  <p className="text-gray-600">{milestone.desc}</p>
-                </div>
               </div>
             ))}
           </div>
@@ -92,7 +69,7 @@ export default function AboutPage() {
               { icon: Shield, title: "Bank-Level Security", desc: "256-bit encryption and compliance with global data protection" }
             ].map((feature, i) => (
               <div key={i}>
-                <feature.icon className="w-6 h-6 text-black mb-3" />
+                <feature.icon className="w-4 h-4 text-black mb-3" />
                 <h3 className="font-bold mb-2 text-black">{feature.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">{feature.desc}</p>
               </div>
@@ -101,7 +78,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-32 px-4 bg-gradient-to-b from-white via-blue-50 to-blue-100 mt-20">
+      <section className="py-32 px-4 mt-20">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block px-4 py-2 bg-blue-50 text-blue-600 text-sm font-semibold rounded-full mb-6">
             We're Hiring

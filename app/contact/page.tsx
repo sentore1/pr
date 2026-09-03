@@ -38,11 +38,11 @@ export default function ContactPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+            <div className="bg-white p-8 shadow-xl border border-gray-100" style={{borderRadius: '5px'}}>
               <h2 className="text-2xl font-semibold text-gray-900 mb-8">Contact Information</h2>
               <div className="space-y-8">
                 <div className="flex items-start gap-4">
-                  <div className="w-5 h-5 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
+                  <div className="w-5 h-5 bg-blue-600 flex items-center justify-center flex-shrink-0" style={{borderRadius: '5px'}}>
                     <Mail className="w-2 h-2 text-white" />
                   </div>
                   <div>
@@ -53,7 +53,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-5 h-5 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
+                  <div className="w-5 h-5 bg-blue-600 flex items-center justify-center flex-shrink-0" style={{borderRadius: '5px'}}>
                     <Phone className="w-2 h-2 text-white" />
                   </div>
                   <div>
@@ -64,7 +64,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-5 h-5 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
+                  <div className="w-5 h-5 bg-blue-600 flex items-center justify-center flex-shrink-0" style={{borderRadius: '5px'}}>
                     <MapPin className="w-2 h-2 text-white" />
                   </div>
                   <div>
@@ -76,7 +76,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+            <div className="bg-white p-8 shadow-xl border border-gray-100" style={{borderRadius: '5px'}}>
               {status === "success" ? (
                 <div className="text-center py-12">
                   <p className="text-2xl font-semibold text-gray-900 mb-2">Message Sent!</p>
@@ -88,8 +88,9 @@ export default function ContactPage() {
                   <input
                     type="text"
                     required
-                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white text-gray-900"
+                    className="w-full px-5 py-3.5 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white text-gray-900"
                     placeholder="Your Name"
+                    style={{borderRadius: '5px'}}
                     value={form.name}
                     onChange={e => setForm({ ...form, name: e.target.value })}
                   />
@@ -98,8 +99,9 @@ export default function ContactPage() {
                   <input
                     type="email"
                     required
-                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white text-gray-900"
+                    className="w-full px-5 py-3.5 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white text-gray-900"
                     placeholder="Email Address"
+                    style={{borderRadius: '5px'}}
                     value={form.email}
                     onChange={e => setForm({ ...form, email: e.target.value })}
                   />
@@ -107,8 +109,9 @@ export default function ContactPage() {
                 <div>
                   <input
                     type="text"
-                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white text-gray-900"
+                    className="w-full px-5 py-3.5 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white text-gray-900"
                     placeholder="Company (Optional)"
+                    style={{borderRadius: '5px'}}
                     value={form.company}
                     onChange={e => setForm({ ...form, company: e.target.value })}
                   />
@@ -117,14 +120,15 @@ export default function ContactPage() {
                   <textarea
                     rows={5}
                     required
-                    className="w-full px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white resize-none text-gray-900"
+                    className="w-full px-5 py-3.5 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 transition-all duration-200 bg-gray-50 focus:bg-white resize-none text-gray-900"
                     placeholder="Your Message"
+                    style={{borderRadius: '5px'}}
                     value={form.message}
                     onChange={e => setForm({ ...form, message: e.target.value })}
                   />
                 </div>
                 {status === "error" && <p className="text-red-500 text-sm">Something went wrong. Please try again.</p>}
-                <Button disabled={status === "loading"} className="w-full bg-blue-600 text-white rounded-xl py-3.5 hover:bg-blue-700 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+                <Button disabled={status === "loading"} className="w-full bg-blue-600 text-white py-3.5 hover:bg-blue-700 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300" style={{borderRadius: '5px'}}>
                   {status === "loading" ? "Sending..." : "Send Message"}
                 </Button>
               </form>

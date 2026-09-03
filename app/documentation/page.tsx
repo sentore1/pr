@@ -59,7 +59,7 @@ export default function DocumentationPage() {
                 link: "/demo"
               }
             ].map((item, i) => (
-              <a key={i} href={item.link} className="group bg-white border border-gray-200 rounded-3xl p-8 hover:border-gray-400 transition-all">
+              <a key={i} href={item.link} className="group bg-white border border-gray-200 p-8 hover:border-gray-400 transition-all" style={{borderRadius: '5px'}}>
                 <h3 className="text-xl font-normal mb-2 text-gray-900">{item.title}</h3>
                 <p className="text-gray-600 mb-4">{item.desc}</p>
                 <div className="flex items-center text-sm text-gray-900 group-hover:gap-2 transition-all">
@@ -78,7 +78,7 @@ export default function DocumentationPage() {
               <div className="space-y-4">
                 {filteredTopics.length > 0 ? (
                   filteredTopics.map((topic, i) => (
-                    <button key={i} onClick={() => handleTopicClick(topic.title)} className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-colors group">
+                    <button key={i} onClick={() => handleTopicClick(topic.title)} className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors group" style={{borderRadius: '5px'}}>
                       <span className="text-gray-900 group-hover:text-gray-600">{topic.title}</span>
                       <span className="text-sm text-gray-500">{topic.time}</span>
                     </button>
@@ -92,10 +92,10 @@ export default function DocumentationPage() {
             <div>
               <h2 className="text-3xl font-normal mb-8 text-gray-900">Developer Resources</h2>
               <div className="space-y-6">
-                <div className="bg-gradient-to-br from-white via-blue-100 to-blue-200 rounded-3xl p-8 border border-gray-200">
+                <div className="bg-gradient-to-br from-white via-blue-100 to-blue-200 p-8 border border-gray-200" style={{borderRadius: '5px'}}>
                   <h3 className="text-xl font-normal mb-3 text-gray-900">REST API</h3>
                   <p className="text-gray-600 mb-4">200+ endpoints for complete platform control</p>
-                  <a href="/api" className="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-full text-sm hover:bg-gray-800 transition-colors">
+                  <a href="/api" className="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 text-sm hover:bg-gray-800 transition-colors" style={{borderRadius: '5px'}}>
                     <span>View API Docs</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -103,17 +103,17 @@ export default function DocumentationPage() {
                   </a>
                 </div>
 
-                <div className="bg-white rounded-3xl p-8 border border-gray-200">
+                <div className="bg-white p-8 border border-gray-200" style={{borderRadius: '5px'}}>
                   <h3 className="text-xl font-normal mb-3 text-gray-900">SDK Libraries</h3>
                   <p className="text-gray-600 mb-4">Official libraries for popular languages</p>
                   <div className="flex flex-wrap gap-2">
                     {['Python', 'JavaScript', 'Java', 'Ruby', 'Go', 'PHP'].map((lang, i) => (
-                      <span key={i} className="px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700">{lang}</span>
+                      <span key={i} className="px-4 py-2 bg-gray-100 text-sm text-gray-700" style={{borderRadius: '5px'}}>{lang}</span>
                     ))}
                   </div>
                 </div>
 
-                <div className="bg-white rounded-3xl p-8 border border-gray-200">
+                <div className="bg-white p-8 border border-gray-200" style={{borderRadius: '5px'}}>
                   <h3 className="text-xl font-normal mb-3 text-gray-900">Support</h3>
                   <p className="text-gray-600 mb-4">24/7 enterprise support with 99.9% SLA</p>
                   <a href="/contact" className="text-sm text-gray-900 hover:text-gray-600 transition-colors">Contact Support →</a>
@@ -128,7 +128,7 @@ export default function DocumentationPage() {
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setIsModalOpen(false)}>
-          <div className="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto" style={{borderRadius: '5px'}} onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-normal text-gray-900">{selectedTopic}</h3>
               <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
@@ -150,7 +150,7 @@ export default function DocumentationPage() {
               </ul>
               <h4 className="text-lg font-medium text-gray-900 mt-6 mb-3">Getting Started</h4>
               <p className="text-gray-600 mb-4">To begin, ensure you have the necessary permissions and access to your Pryro dashboard. Follow the steps outlined in this guide to complete the setup.</p>
-              <div className="bg-blue-500 border border-white rounded-4xl p-4 mt-6">
+              <div className="bg-blue-500 border border-white p-4 mt-6" style={{borderRadius: '5px'}}>
                 <p className="text-sm text-white"><strong>Tip:</strong> For detailed API documentation and code examples, visit our <a href="/api" className="text-black hover:underline">API Reference</a> page.</p>
               </div>
             </div>
@@ -161,14 +161,15 @@ export default function DocumentationPage() {
                   placeholder="Type your message here..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-400 transition-colors mb-4 resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-400 transition-colors mb-4 resize-none"
+                  style={{borderRadius: '5px'}}
                   rows={4}
                 />
                 <div className="flex gap-3">
-                  <button type="submit" className="flex-1 bg-gray-900 text-white px-6 py-3 rounded-full hover:bg-gray-800 transition-colors">
+                  <button type="submit" className="flex-1 bg-gray-900 text-white px-6 py-3 hover:bg-gray-800 transition-colors" style={{borderRadius: '5px'}}>
                     Send Message
                   </button>
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 border border-gray-300 text-gray-900 px-6 py-3 rounded-full hover:bg-gray-50 transition-colors">
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 border border-gray-300 text-gray-900 px-6 py-3 hover:bg-gray-50 transition-colors" style={{borderRadius: '5px'}}>
                     Close
                   </button>
                 </div>

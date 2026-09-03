@@ -20,7 +20,7 @@ export function Header() {
             </a>
 
             {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-4">
+            <nav className="hidden md:flex items-center gap-2">
 
               {/* Products dropdown */}
               <div
@@ -43,7 +43,7 @@ export function Header() {
                           { href: "/documentation", icon: "/icon/document icon.png",      label: "Documentation",  sub: "Guides & references"       },
                           { href: "/api",           icon: "/icon/0code icon.png",         label: "API",            sub: "Developer resources"       },
                         ].map(({ href, icon, label, sub }) => (
-                          <a key={href} href={href} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50/50 transition-colors">
+                          <a key={href} href={href} className="flex items-start gap-3 p-3 rounded-[4px] hover:bg-gray-50/50 transition-colors">
                             <img src={icon} alt={label} className="w-8 h-8 object-contain mt-0.5" />
                             <div>
                               <div className="font-medium text-sm text-gray-900">{label}</div>
@@ -87,7 +87,7 @@ export function Header() {
                           { href: "/marketing-call",          icon: "/icon/cold call icon.png",       label: "Marketing Call",   sub: "Call center"           },
                           { href: "/ai-enterprise",           icon: "/icon/ai interprise icon.png",   label: "AI Enterprise",    sub: "AI-powered tools"      },
                         ].map(({ href, icon, label, sub }) => (
-                          <a key={href} href={href} className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-gray-50/50 transition-colors">
+                          <a key={href} href={href} className="flex items-start gap-2 p-2.5 rounded-[4px] hover:bg-gray-50/50 transition-colors">
                             <img src={icon} alt={label} className="w-6 h-6 object-contain mt-0.5 flex-shrink-0" />
                             <div>
                               <div className="font-medium text-xs text-gray-900">{label}</div>

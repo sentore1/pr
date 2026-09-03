@@ -15,8 +15,8 @@ export default function ProjectPage() {
 
       <section className="pt-40 pb-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500 border border-blue-100 rounded-full mb-6">
-            <span className="w-2 h-2 bg-white rounded-full"></span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500 border border-blue-100 rounded-[5px] mb-6">
+            <span className="w-2 h-2 bg-white rounded-[5px]"></span>
             <span className="text-sm text-white font-medium">Used by 12,000+ project teams</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">Pryro for<br />Project Management</h1>
@@ -24,9 +24,9 @@ export default function ProjectPage() {
             Plan, track, and deliver projects on time. Collaborate with your team and keep stakeholders informed with powerful project management tools.
           </p>
           <div className="flex flex-wrap gap-3">
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Free for small teams</span>
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Unlimited projects</span>
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Real-time collaboration</span>
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">Free for small teams</span>
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">Unlimited projects</span>
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">Real-time collaboration</span>
           </div>
         </div>
       </section>
@@ -38,7 +38,7 @@ export default function ProjectPage() {
       <section className="py-32 px-6 bg-gray-70">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white border border-gray-200 rounded-xl p-8">
+            <div className="bg-white border border-gray-200 rounded-[5px] p-8">
               <div className="mb-6">
                 <div className="text-3xl font-semibold text-gray-900">$78,450.75</div>
                 <div className="text-sm text-gray-500">Total Project Budget</div>
@@ -65,7 +65,7 @@ export default function ProjectPage() {
                   </div>
                 </div>
               </div>
-              <div className="h-32 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg flex items-end justify-around p-4">
+              <div className="h-32 bg-gradient-to-r from-blue-50 to-blue-100 rounded-[5px] flex items-end justify-around p-4">
                 <div className="w-4 bg-blue-600 rounded-t" style={{height: '40%'}}></div>
                 <div className="w-4 bg-blue-500 rounded-t" style={{height: '70%'}}></div>
                 <div className="w-4 bg-blue-400 rounded-t" style={{height: '40%'}}></div>
@@ -84,7 +84,7 @@ export default function ProjectPage() {
             </div>
             <div className="space-y-6">
               <div className="flex gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <Users className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -93,7 +93,7 @@ export default function ProjectPage() {
                 </div>
               </div>
               <div className="flex gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -102,12 +102,12 @@ export default function ProjectPage() {
                 </div>
               </div>
               <div className="space-y-2 pt-4">
-                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors flex items-center justify-between">
+                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-[5px] text-sm font-medium text-gray-700 transition-colors flex items-center justify-between">
                   <span>Gantt Chart</span>
-                  <span className="px-2 py-0.5 bg-blue-600 text-white text-xs rounded-full">New</span>
+                  <span className="px-2 py-0.5 bg-blue-600 text-white text-xs rounded-[5px]">New</span>
                 </button>
-                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors text-left">Kanban Board</button>
-                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors text-left">Timeline View</button>
+                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-[5px] text-sm font-medium text-gray-700 transition-colors text-left">Kanban Board</button>
+                <button className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-[5px] text-sm font-medium text-gray-700 transition-colors text-left">Timeline View</button>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function ProjectPage() {
         <div className="mx-auto max-w-5xl px-6">
           <div className="grid gap-6 md:grid-cols-2 md:gap-12">
             <div>
-              <div className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full mb-4">
+              <div className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-[5px] mb-4">
                 Project Platform
               </div>
               <h2 className="text-4xl font-medium text-gray-900 mb-6">The Pryro ecosystem brings together powerful tools for project teams.</h2>
