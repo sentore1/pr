@@ -8,8 +8,26 @@ import { AnimatedText } from "@/components/animated-text"
 import { CustomDroneIcon } from "@/components/drone-icon"
 import { WorldMap } from "@/components/world-map"
 import { Header } from "@/components/header"
+import { useCMS } from "@/components/cms-provider"
+import { DEFAULTS } from "@/lib/page-content"
 import { experiences } from "@/lib/experience-data"
 import type { Experience } from "@/lib/experience-data"
+
+// Fallback carousel icons used when DB has no icons seeded yet
+const FALLBACK_CAROUSEL = [
+  { url: '/icon/accounting icon.png',         name: 'Accounting' },
+  { url: '/icon/ai business review icon.png', name: 'AI Business Review' },
+  { url: '/icon/budget icon.png',             name: 'Budget' },
+  { url: '/icon/CRM icon.png',               name: 'CRM' },
+  { url: '/icon/dashboard icon.png',         name: 'Dashboard' },
+  { url: '/icon/document icon.png',          name: 'Document' },
+  { url: '/icon/HR icon.png',               name: 'HR' },
+  { url: '/icon/Inventory icon.png',        name: 'Inventory' },
+  { url: '/icon/logistic icon.png',         name: 'Logistics' },
+  { url: '/icon/project icon.png',          name: 'Project' },
+  { url: '/icon/sales icon.png',            name: 'Sales' },
+  { url: '/icon/subscription icon.png',    name: 'Subscription' },
+]
 
 function CardCounter({ target, prefix = "", suffix = "", className = "" }: { target: number; prefix?: string; suffix?: string; className?: string }) {
   const [count, setCount] = useState(0)
@@ -1210,6 +1228,11 @@ function MiniDashboard() {
 }
 
 export default function PryroPage() {
+  const cms = useCMS()
+  // Page content values from CMS, merged with defaults
+  const pv: Record<string, string> = { ...DEFAULTS, ...(cms?.pageContent || {}) }
+  // Carousel icons from media library (falls back to hardcoded if empty)
+  const carouselIcons = cms?.carouselIcons?.length ? cms.carouselIcons : FALLBACK_CAROUSEL
   const [isLoaded, setIsLoaded] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const [selectedFeature, setSelectedFeature] = useState(0)
@@ -1360,28 +1383,28 @@ export default function PryroPage() {
                 }`}
                 style={{ textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)" }}
               >
-                Streamline <AnimatedText key={dynamicWordIndex} text={dynamicWords[dynamicWordIndex]} delay={0} />
+                {pv['hero_title_line1'] || 'Streamline'} <AnimatedText key={dynamicWordIndex} text={dynamicWords[dynamicWordIndex]} delay={0} />
               </span>
               <span className="block stagger-reveal text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-white px-4" style={{ animationDelay: "90ms", textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)" }}>
-                effortlessly
+                {pv['hero_title_line2'] || 'effortlessly'}
               </span>
             </h1>
             <p
               className="text-white text-sm sm:text-base md:text-lg max-w-[90%] sm:max-w-[520px] mx-auto mb-6 md:mb-8 leading-relaxed stagger-reveal px-4"
               style={{ animationDelay: "180ms", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)" }}
             >
-              Complete ERP solution with AI-powered insights. Manage finance, inventory, HR, and operations in one unified platform.
+              {pv['hero_subtitle'] || 'Complete ERP solution with AI-powered insights. Manage finance, inventory, HR, and operations in one unified platform.'}
             </p>
             <div className="stagger-reveal flex justify-center px-4" style={{ animationDelay: "270ms" }}>
               <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-1 bg-white/20 backdrop-blur-sm rounded-[6px] p-1 w-full sm:w-auto max-w-sm sm:max-w-none">
-                <a href="https://login.pryro.com" className="w-full sm:w-auto">
+                <a href={pv['hero_cta_primary_url'] || 'https://login.pryro.com'} className="w-full sm:w-auto">
                   <Button className="w-full sm:w-auto px-6 py-2.5 h-auto text-sm font-medium rounded-[4px] bg-white border-0 hover:bg-white/90 transition-all duration-300 text-gray-900">
-                    Start Free Trial
+                    {pv['hero_cta_primary'] || 'Start Free Trial'}
                   </Button>
                 </a>
-                <a href="/demo" className="w-full sm:w-auto">
+                <a href={pv['hero_cta_secondary_url'] || '/demo'} className="w-full sm:w-auto">
                   <Button className="w-full sm:w-auto px-6 py-2.5 h-auto text-sm font-medium rounded-[4px] bg-white/25 border-0 hover:bg-white/35 transition-all duration-300 text-gray-900">
-                    Book a Demo
+                    {pv['hero_cta_secondary'] || 'Book a Demo'}
                   </Button>
                 </a>
               </div>
@@ -1455,31 +1478,19 @@ export default function PryroPage() {
       <section id="metrics" className="relative py-20 md:py-32 px-4 animate-on-scroll md:pt-24 md:pb-20">
         <div className="max-w-[1120px] w-full mx-auto">
           <h2 className="font-serif text-[32px] leading-[1.15] md:text-[48px] md:leading-[1.1] font-medium mb-6 md:mb-8 text-center text-balance">
-            Business{" "}
-            <span
-              className="inline-block"
-              style={{
-                backgroundImage: "linear-gradient(135deg, #3B82F6 0%, #FFFFFF 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Performance
-            </span>{" "}
-            at Scale
+            {pv['metrics_title'] || 'Business Performance at Scale'}
           </h2>
 
           <p className="text-[#4a5568] text-sm md:text-base mb-12 md:mb-16 text-center max-w-[600px] mx-auto leading-relaxed">
-            Trusted by enterprises and NGO worldwide. Powered by intelligent automation.
+            {pv['metrics_subtitle'] || 'Trusted by enterprises and NGO worldwide. Powered by intelligent automation.'}
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-[800px] mx-auto">
             {[
-              { label: "ACTIVE USERS", value: "64K+", desc: "worldwide", color: "blue" },
-              { label: "FINANCIAL ENTRIES PROCESSED", value: "2.4M", desc: "monthly", color: "blue" },
-              { label: "COST REDUCTION", value: "38%", desc: "average savings", color: "blue" },
-              { label: "UPTIME", value: "99.9%", desc: "reliability", color: "blue" },
+              { label: pv['metric_1_label'] || 'ACTIVE USERS',                    value: pv['metric_1_value'] || '64K+',  desc: pv['metric_1_desc'] || 'worldwide' },
+              { label: pv['metric_2_label'] || 'FINANCIAL ENTRIES PROCESSED',     value: pv['metric_2_value'] || '2.4M',  desc: pv['metric_2_desc'] || 'monthly' },
+              { label: pv['metric_3_label'] || 'COST REDUCTION',                  value: pv['metric_3_value'] || '38%',   desc: pv['metric_3_desc'] || 'average savings' },
+              { label: pv['metric_4_label'] || 'UPTIME',                          value: pv['metric_4_value'] || '99.9%', desc: pv['metric_4_desc'] || 'reliability' },
             ].map((metric, i) => (
               <div
                 key={i}
@@ -1506,9 +1517,11 @@ export default function PryroPage() {
       <section className="relative py-20 md:py-32 px-4 animate-on-scroll">
         <div className="max-w-[1120px] w-full mx-auto">
           <div className="text-center mb-8 md:mb-12 px-4">
-            <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-3 md:mb-4">SEAMLESS ACROSS DEVICES</div>
+            <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-3 md:mb-4">{pv['devices_label'] || 'SEAMLESS ACROSS DEVICES'}</div>
             <h2 className="text-2xl sm:text-3xl md:text-[40px] lg:text-[48px] font-bold mb-4 md:mb-6 leading-tight text-gray-900">
-              Work from anywhere,<br />stay in sync
+              {(pv['devices_title'] || 'Work from anywhere,\nstay in sync').split('\n').map((line, i, arr) => (
+                <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+              ))}
             </h2>
           </div>
 
@@ -1517,16 +1530,16 @@ export default function PryroPage() {
             <div className="rounded-[5px] overflow-hidden relative min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[700px]">
               <div className="relative w-full h-full">
                 <img
-                  src="/image switch 1.png"
-                  alt="Mobile App"
+                  src={pv['devices_image_mobile'] || '/image switch 1.png'}
+                  alt={pv['devices_btn_mobile'] || 'Mobile App'}
                   className={`w-full h-full object-cover rounded-[8px] transition-transform duration-500 ease-in-out ${
                     selectedDevice === 0 ? "translate-x-0" : "-translate-x-full"
                   }`}
                   style={{ position: selectedDevice === 0 ? "relative" : "absolute", top: 0, left: 0 }}
                 />
                 <img
-                  src="/image switch 2.png"
-                  alt="Web App"
+                  src={pv['devices_image_web'] || '/image switch 2.png'}
+                  alt={pv['devices_btn_web'] || 'Web App'}
                   className={`w-full h-full object-cover rounded-[8px] transition-transform duration-500 ease-in-out ${
                     selectedDevice === 1 ? "translate-x-0" : "translate-x-full"
                   }`}
@@ -1539,52 +1552,12 @@ export default function PryroPage() {
                 {/* First Row - Scrolling Left to Right */}
                 <div className="industry-carousel-full overflow-hidden">
                   <div className="industry-carousel-track flex gap-0.5">
-                    {[
-                      { name: "Accounting", icon: "/icon/accounting icon.png" },
-                      { name: "AI Business Review", icon: "/icon/ai business review icon.png" },
-                      { name: "AI Email", icon: "/icon/ai email icon.png" },
-                      { name: "AI Enterprise", icon: "/icon/ai interprise icon.png" },
-                      { name: "Budget", icon: "/icon/budget icon.png" },
-                      { name: "Business Coach", icon: "/icon/business coach icon.png" },
-                      { name: "Business Review", icon: "/icon/business review icon2.png" },
-                      { name: "Cold Call", icon: "/icon/cold call icon.png" },
-                      { name: "COO", icon: "/icon/COO icon.png" },
-                      { name: "CRM", icon: "/icon/CRM icon.png" },
-                      { name: "Dashboard", icon: "/icon/dashboard icon.png" },
-                      { name: "Discussion", icon: "/icon/disccuss icon.png" },
-                      { name: "Document", icon: "/icon/document icon.png" },
-                      { name: "E-commerce", icon: "/icon/ecommerce icon.png" },
-                      { name: "Help Desk", icon: "/icon/help desk icon.png" },
-                      { name: "HR", icon: "/icon/HR icon.png" },
-                      { name: "Inventory", icon: "/icon/Inventory icon.png" },
-                    ].concat([
-                      { name: "Accounting", icon: "/icon/accounting icon.png" },
-                      { name: "AI Business Review", icon: "/icon/ai business review icon.png" },
-                      { name: "AI Email", icon: "/icon/ai email icon.png" },
-                      { name: "AI Enterprise", icon: "/icon/ai interprise icon.png" },
-                      { name: "Budget", icon: "/icon/budget icon.png" },
-                      { name: "Business Coach", icon: "/icon/business coach icon.png" },
-                      { name: "Business Review", icon: "/icon/business review icon2.png" },
-                      { name: "Cold Call", icon: "/icon/cold call icon.png" },
-                      { name: "COO", icon: "/icon/COO icon.png" },
-                      { name: "CRM", icon: "/icon/CRM icon.png" },
-                      { name: "Dashboard", icon: "/icon/dashboard icon.png" },
-                      { name: "Discussion", icon: "/icon/disccuss icon.png" },
-                      { name: "Document", icon: "/icon/document icon.png" },
-                      { name: "E-commerce", icon: "/icon/ecommerce icon.png" },
-                      { name: "Help Desk", icon: "/icon/help desk icon.png" },
-                      { name: "HR", icon: "/icon/HR icon.png" },
-                      { name: "Inventory", icon: "/icon/Inventory icon.png" },
-                    ]).map((industry, i) => (
+                    {[...carouselIcons, ...carouselIcons].map((industry, i) => (
                       <div
                         key={i}
                         className="flex flex-col items-center justify-center flex-shrink-0 w-20 md:w-24 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
                       >
-                        <img
-                          src={industry.icon}
-                          alt={industry.name}
-                          className="w-12 h-12 md:w-14 md:h-14 object-contain"
-                        />
+                        <img src={industry.url} alt={industry.name} className="w-12 h-12 md:w-14 md:h-14 object-contain" />
                         <span className="text-[8px] text-gray-500 text-center leading-tight w-full truncate px-0.5">{industry.name}</span>
                       </div>
                     ))}
@@ -1594,50 +1567,12 @@ export default function PryroPage() {
                 {/* Second Row - Scrolling Right to Left */}
                 <div className="industry-carousel-full overflow-hidden">
                   <div className="industry-carousel-track-reverse flex gap-0.5" style={{ animationDirection: 'reverse' }}>
-                    {[
-                      { name: "Knowledge", icon: "/icon/knowledge icon.png" },
-                      { name: "Lawyer", icon: "/icon/lawyer icon.png" },
-                      { name: "Logistics", icon: "/icon/logistic icon.png" },
-                      { name: "Manufacturers", icon: "/icon/manufacturers icon.png" },
-                      { name: "Pharmacy", icon: "/icon/pharmacy icon.png" },
-                      { name: "POS", icon: "/icon/pos icon.png" },
-                      { name: "Project", icon: "/icon/project icon.png" },
-                      { name: "Purchase", icon: "/icon/purchase icon.png" },
-                      { name: "Research System", icon: "/icon/research system icon.png" },
-                      { name: "Sales", icon: "/icon/sales icon.png" },
-                      { name: "Signature", icon: "/icon/signuture icon.png" },
-                      { name: "SOP", icon: "/icon/SOP icon.png" },
-                      { name: "Subscription", icon: "/icon/subscription icon.png" },
-                      { name: "Tender", icon: "/icon/Tender icon.png" },
-                      { name: "Code", icon: "/icon/0code icon.png" },
-                      { name: "Coder", icon: "/icon/0coder icon.png" },
-                    ].concat([
-                      { name: "Knowledge", icon: "/icon/knowledge icon.png" },
-                      { name: "Lawyer", icon: "/icon/lawyer icon.png" },
-                      { name: "Logistics", icon: "/icon/logistic icon.png" },
-                      { name: "Manufacturers", icon: "/icon/manufacturers icon.png" },
-                      { name: "Pharmacy", icon: "/icon/pharmacy icon.png" },
-                      { name: "POS", icon: "/icon/pos icon.png" },
-                      { name: "Project", icon: "/icon/project icon.png" },
-                      { name: "Purchase", icon: "/icon/purchase icon.png" },
-                      { name: "Research System", icon: "/icon/research system icon.png" },
-                      { name: "Sales", icon: "/icon/sales icon.png" },
-                      { name: "Signature", icon: "/icon/signuture icon.png" },
-                      { name: "SOP", icon: "/icon/SOP icon.png" },
-                      { name: "Subscription", icon: "/icon/subscription icon.png" },
-                      { name: "Tender", icon: "/icon/Tender icon.png" },
-                      { name: "Code", icon: "/icon/0code icon.png" },
-                      { name: "Coder", icon: "/icon/0coder icon.png" },
-                    ]).map((industry, i) => (
+                    {[...carouselIcons, ...carouselIcons].map((industry, i) => (
                       <div
                         key={i}
                         className="flex flex-col items-center justify-center flex-shrink-0 w-20 md:w-24 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
                       >
-                        <img
-                          src={industry.icon}
-                          alt={industry.name}
-                          className="w-12 h-12 md:w-14 md:h-14 object-contain"
-                        />
+                        <img src={industry.url} alt={industry.name} className="w-12 h-12 md:w-14 md:h-14 object-contain" />
                         <span className="text-[8px] text-gray-500 text-center leading-tight w-full truncate px-0.5">{industry.name}</span>
                       </div>
                     ))}
@@ -1654,7 +1589,7 @@ export default function PryroPage() {
                       : "text-white hover:bg-white/10"
                   }`}
                 >
-                  Mobile App
+                  {pv['devices_btn_mobile'] || 'Mobile App'}
                 </button>
                 <button
                   onClick={() => setSelectedDevice(1)}
@@ -1664,7 +1599,7 @@ export default function PryroPage() {
                       : "text-white hover:bg-white/10"
                   }`}
                 >
-                  Web App
+                  {pv['devices_btn_web'] || 'Web App'}
                 </button>
               </div>
             </div>
@@ -1978,26 +1913,14 @@ export default function PryroPage() {
             <div className="max-w-[720px]">
               <div className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4 md:mb-6 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-                ENTERPRISE TECHNOLOGY
+                {pv['features_tag'] || 'ENTERPRISE TECHNOLOGY'}
               </div>
               <h2 className="font-serif text-[28px] sm:text-[32px] md:text-[42px] lg:text-[56px] leading-[1.2] md:leading-[1.15] lg:leading-[1.1] font-medium mb-6 md:mb-8 text-balance">
-                Every business process{" "}
-                <span
-                  className="inline-block"
-                  style={{
-                    background: "linear-gradient(135deg, #0077ff 0%, #ffffff 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  optimized
-                </span>
+                {pv['features_title'] || 'Every business process optimized'}
               </h2>
               <p className="text-[#4a5568] text-sm sm:text-base md:text-lg leading-relaxed mb-8 md:mb-12">
-                Our AI-powered ERP platform automates workflows, manages inventory, tracks finances, and provides real-time analytics. Business intelligence at the speed your company demands.
+                {pv['features_body'] || 'Our AI-powered ERP platform automates workflows, manages inventory, tracks finances, and provides real-time analytics. Business intelligence at the speed your company demands.'}
               </p>
-
               <div className="md:hidden mb-6 md:mb-8">
                 <div className="rounded-[5px] p-1 w-full aspect-square overflow-hidden">
                   <img
@@ -2020,26 +1943,26 @@ export default function PryroPage() {
               <div className="space-y-4 md:space-y-6">
                 {[
                   {
-                    title: "Financial Management",
-                    desc: "Complete accounting, invoicing, and financial reporting",
+                    title: pv['features_f1_title'] || 'Financial Management',
+                    desc: pv['features_f1_desc'] || 'Complete accounting, invoicing, and financial reporting',
                     icon: Receipt,
                     image: "/images/25164.jpg",
                   },
                   {
-                    title: "Real-time Analytics",
-                    desc: "24/7 business intelligence with instant insights",
+                    title: pv['features_f2_title'] || 'Real-time Analytics',
+                    desc: pv['features_f2_desc'] || '24/7 business intelligence with instant insights',
                     icon: BarChart3,
                     image: "/images/77570.jpg",
                   },
                   {
-                    title: "Inventory Management",
-                    desc: "Track stock levels and supply chain across locations",
+                    title: pv['features_f3_title'] || 'Inventory Management',
+                    desc: pv['features_f3_desc'] || 'Track stock levels and supply chain across locations',
                     icon: ListTodo,
                     image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
                   },
                   {
-                    title: "HR & Payroll",
-                    desc: "Manage employees, attendance, and payroll seamlessly",
+                    title: pv['features_f4_title'] || 'HR & Payroll',
+                    desc: pv['features_f4_desc'] || 'Manage employees, attendance, and payroll seamlessly',
                     icon: Clock,
                     image: "moreimages/office2.jpg",
                   },
@@ -2393,7 +2316,9 @@ export default function PryroPage() {
           <div className="text-center mb-8 md:mb-10">
             <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-3 md:mb-4">PRICING</div>
             <h2 className="text-2xl sm:text-3xl md:text-[40px] lg:text-[48px] font-bold mb-4 md:mb-6 leading-tight text-gray-900 px-4">
-              Simple plans<br />for serious work
+              {(pv['pricing_title'] || 'Simple plans\nfor serious work').split('\n').map((line, i, arr) => (
+                <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+              ))}
             </h2>
           </div>
 
@@ -2418,9 +2343,9 @@ export default function PryroPage() {
           {/* Mobile Cards View (hidden on lg screens) */}
           <div className="lg:hidden space-y-4 mb-6">
             {[
-              { name: 'Basic', price: '$0', period: 'Free forever', users: '2', projects: 'Unlimited', invoices: '100/mo', features: ['Time Tracking', 'CRM'], cta: 'Get started', link: 'https://login.pryro.com' },
-              { name: 'Premium', price: pricingToggle === "annually" ? "$29" : "$50", period: 'Per workspace', users: '20', projects: 'Unlimited', invoices: 'Unlimited', features: ['Time Tracking', 'CRM', 'HR Management', 'POS', 'AI Reports', 'Invoice Link'], cta: 'Upgrade', link: 'https://login.pryro.com', popular: true, savings: pricingToggle === "annually" },
-              { name: 'Business', price: pricingToggle === "annually" ? "$79" : "$99", period: 'Up to 100 users', users: '100', projects: 'Unlimited', invoices: 'Unlimited', features: ['Everything in Premium', 'Advanced Security', 'Phone & Chat Support'], cta: 'Get Business', link: 'https://login.pryro.com' },
+              { name: 'Basic', price: pv['plan_basic_price'] || '$0', period: 'Free forever', users: '2', projects: 'Unlimited', invoices: '100/mo', features: ['Time Tracking', 'CRM'], cta: 'Get started', link: 'https://login.pryro.com' },
+              { name: 'Premium', price: pricingToggle === "annually" ? (pv['plan_premium_price_annual'] || "$29") : (pv['plan_premium_price_monthly'] || "$50"), period: 'Per workspace', users: '20', projects: 'Unlimited', invoices: 'Unlimited', features: ['Time Tracking', 'CRM', 'HR Management', 'POS', 'AI Reports', 'Invoice Link'], cta: 'Upgrade', link: 'https://login.pryro.com', popular: true, savings: pricingToggle === "annually" },
+              { name: 'Business', price: pricingToggle === "annually" ? (pv['plan_business_price_annual'] || "$79") : (pv['plan_business_price_monthly'] || "$99"), period: 'Up to 100 users', users: '100', projects: 'Unlimited', invoices: 'Unlimited', features: ['Everything in Premium', 'Advanced Security', 'Phone & Chat Support'], cta: 'Get Business', link: 'https://login.pryro.com' },
               { name: 'Enterprise', price: 'Custom', period: 'Contact sales', users: 'Unlimited', projects: 'Unlimited', invoices: 'Unlimited', features: ['Everything in Business', 'Custom Webhooks', 'Dedicated Support'], cta: 'Contact sales', link: '/contact' },
             ].map((plan) => (
               <div key={plan.name} className={`rounded-lg border ${plan.popular ? 'border-blue-500 bg-blue-50/30' : 'border-gray-200 bg-white'} p-5 relative`}>
@@ -2678,20 +2603,20 @@ export default function PryroPage() {
         <div className="max-w-[800px] w-full mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-1.5 glass-pill px-3 py-1 rounded-[5px] mb-8 text-[10px] text-[#4a5568]">
             <span className="w-1 h-1 rounded-full bg-blue-400 animate-pulse" />
-            Transform your business
+            {pv['cta_tag'] || 'Transform your business'}
           </div>
 
           <h2 className="font-serif text-[40px] leading-[1.15] md:text-[64px] md:leading-[1.1] font-medium mb-6 text-balance">
-            Join thousands of successful businesses
+            {pv['cta_title'] || 'Join thousands of successful businesses'}
           </h2>
           <p className="text-[#4a5568] text-base md:text-lg mb-10 leading-relaxed max-w-[560px] mx-auto">
-            Together, we're building smarter enterprises. Start optimizing your operations today.
+            {pv['cta_body'] || "Together, we're building smarter enterprises. Start optimizing your operations today."}
           </p>
 
           <div className="flex justify-center">
-            <a href="https://login.pryro.com">
+            <a href={pv['cta_button_url'] || 'https://login.pryro.com'}>
               <Button className="text-base rounded-[5px] bg-blue-600 border border-blue-600 hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 text-white px-8 py-6 md:text-base flex items-center gap-2">
-                Get Started Today <ArrowRight className="w-4 h-4" />
+                {pv['cta_button_text'] || 'Get Started Today'} <ArrowRight className="w-4 h-4" />
               </Button>
             </a>
           </div>

@@ -100,6 +100,38 @@
   }
 }
 
+/* ── Global input/placeholder fixes ──────────────────────────────────────
+   CMS injects CSS vars like --color-bg which can bleed into input styling.
+   These rules hard-pin placeholder and input text to visible colors.
+   ─────────────────────────────────────────────────────────────────────── */
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+input,
+textarea,
+select {
+  color: #111827;
+  background-color: #ffffff;
+}
+
+/* Admin panel isolation — keeps dark text + white backgrounds even when
+   CMS theme vars are injected onto :root */
+.admin-shell input,
+.admin-shell textarea,
+.admin-shell select {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+}
+
+.admin-shell input::placeholder,
+.admin-shell textarea::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
 /* Pryro Glass Morphism Styles */
 .glass-nav {
   background: rgba(15, 17, 23, 0.35);

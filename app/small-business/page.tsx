@@ -7,8 +7,10 @@ import { Header } from "@/components/header"
 import { Button } from '@/components/ui/button'
 import { ChevronRight, Check, Users, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function SmallBusinessPage() {
+  const p = usePageContent('small-business')
 
   return (
     <div className="min-h-screen bg-white">
@@ -18,11 +20,11 @@ export default function SmallBusinessPage() {
         <div className="max-w-6xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500 border border-blue-100 rounded-[5px] mb-6">
             <span className="w-2 h-2 bg-white rounded-[5px]"></span>
-            <span className="text-sm text-white font-medium">Trusted by 10,000+ small businesses</span>
+            <span className="text-sm text-white font-medium">{p('small-business_hero_badge', 'Trusted by 10,000+ small businesses')}</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">Pryro for<br />Small Business</h1>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">{p('small-business_hero_title', 'Pryro for Small Business')}</h1>
           <p className="text-xl text-gray-600 max-w-3xl leading-relaxed mb-8">
-            Everything you need to run your small business efficiently. Manage finances, inventory, customers, and employees from one powerful platform.
+            {p('small-business_hero_subtitle', 'Everything you need to run your small business efficiently. Manage finances, inventory, customers, and employees from one powerful platform.')}
           </p>
           <div className="flex flex-wrap gap-3">
             <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">No credit card required</span>

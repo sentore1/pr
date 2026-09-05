@@ -4,30 +4,37 @@ import { Button } from "@/components/ui/button"
 import { Target, Users, Zap, Shield, Award, Globe, TrendingUp, Heart, Rocket, CheckCircle2 } from "lucide-react"
 import { SimpleFooter } from "@/components/simple-footer"
 import { Header } from "@/components/header"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function AboutPage() {
+  const p = usePageContent('about')
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
 
       <section className="pt-40 pb-20 px-4">
         <div className="max-w-4xl mx-auto text-left">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-black">About Pryro</h1>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-black">
+            {p('about_hero_title', 'About Pryro')}
+          </h1>
           <p className="text-xl text-gray-600 leading-relaxed">
-            Empowering businesses worldwide with intelligent, integrated solutions.
+            {p('about_hero_subtitle', 'Empowering businesses worldwide with intelligent, integrated solutions.')}
           </p>
         </div>
       </section>
 
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-black">Our Story</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-black">
+            {p('about_story_title', 'Our Story')}
+          </h2>
           <div className="space-y-4 text-gray-600 leading-relaxed">
             <p>
-              Founded in 2020, Pryro was born from a vision to solve one of business's biggest challenges: fragmented systems that don't work together.
+              {p('about_story_p1', 'Founded in 2020, Pryro was born from a vision to solve one of business\'s biggest challenges: fragmented systems that don\'t work together.')}
             </p>
             <p>
-              Our founders, experienced entrepreneurs themselves, understood the pain of juggling multiple platforms for ERP, HRM, CRM, accounting, and project management. They knew there had to be a better way.
+              {p('about_story_p2', 'Our founders, experienced entrepreneurs themselves, understood the pain of juggling multiple platforms for ERP, HRM, CRM, accounting, and project management. They knew there had to be a better way.')}
             </p>
             <p>
               Today, Pryro is the trusted platform for over 64K+ businesses across 2 continents, from startups to enterprises, helping them streamline operations and unlock their full potential.

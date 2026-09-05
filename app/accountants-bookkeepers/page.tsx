@@ -7,24 +7,26 @@ import ContentSection from "@/components/content-2"
 import { Button } from "@/components/ui/button"
 import { Users, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function AccountantsBookkeepersPage() {
+  const p = usePageContent('accountants-bookkeepers')
   return (
     <div className="min-h-screen">
       <Header />
 
       <section className="pt-40 pb-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">Pryro for<br />Accountants & Bookkeepers</h1>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">{p('accountants-bookkeepers_hero_title', 'Pryro for Accountants & Bookkeepers')}</h1>
           <p className="text-xl text-gray-600 max-w-3xl leading-relaxed mb-8">
-            Professional accounting tools designed for accountants and bookkeepers. Manage multiple clients with ease and deliver exceptional service.
+            {p('accountants-bookkeepers_hero_subtitle', 'Professional accounting tools designed for accountants and bookkeepers. Manage multiple clients with ease and deliver exceptional service.')}
           </p>
           <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
             <Button asChild size="lg" className="rounded-[4px] bg-black text-white hover:bg-black/90">
-              <Link href="/demo">Get Started</Link>
+              <Link href={p('accountants-bookkeepers_hero_cta1_url', '/demo')}>{p('accountants-bookkeepers_hero_cta1', 'Get Started')}</Link>
             </Button>
             <Button asChild size="lg" className="rounded-[4px] bg-white text-black hover:bg-white/80">
-              <Link href="/contact">Contact Sales</Link>
+              <Link href={p('accountants-bookkeepers_hero_cta2_url', '/contact')}>{p('accountants-bookkeepers_hero_cta2', 'Contact Sales')}</Link>
             </Button>
           </div>
         </div>

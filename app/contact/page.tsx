@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Mail, Phone, MapPin } from "lucide-react"
 import { SimpleFooter } from "@/components/simple-footer"
 import { Header } from "@/components/header"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function ContactPage() {
+  const p = usePageContent('contact')
   const [form, setForm] = useState({ name: "", email: "", company: "", message: "" })
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
 
@@ -30,10 +32,10 @@ export default function ContactPage() {
         <div className="max-w-[1120px] mx-auto">
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">
-              Get in Touch
+              {p('contact_hero_title', 'Get in Touch')}
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+              {p('contact_hero_subtitle', "Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.")}
             </p>
           </div>
 
@@ -47,8 +49,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
-                    <p className="text-gray-600 text-sm mb-1">sales@pryro.com</p>
-                    <p className="text-gray-600 text-sm">support@pryro.com</p>
+                    <p className="text-gray-600 text-sm mb-1">{p('contact_email_sales', 'sales@pryro.com')}</p>
+                    <p className="text-gray-600 text-sm">{p('contact_email_support', 'support@pryro.com')}</p>
                   </div>
                 </div>
 
@@ -58,8 +60,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Phone</h3>
-                    <p className="text-gray-600 text-sm mb-1">+250 788 715 075</p>
-                    <p className="text-gray-600 text-sm">24/7 am-0:00pm EST</p>
+                    <p className="text-gray-600 text-sm mb-1">{p('contact_phone', '+250 788 715 075')}</p>
+                    <p className="text-gray-600 text-sm">{p('contact_hours', '24/7 am-0:00pm EST')}</p>
                   </div>
                 </div>
 
@@ -69,8 +71,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Office</h3>
-                    <p className="text-gray-600 text-sm mb-1">1 kn 78  Nyarugenge Street</p>
-                    <p className="text-gray-600 text-sm">Kigali, Rwanda</p>
+                    <p className="text-gray-600 text-sm whitespace-pre-line">{p('contact_address', '1 kn 78 Nyarugenge Street\nKigali, Rwanda')}</p>
                   </div>
                 </div>
               </div>
