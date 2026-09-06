@@ -17,7 +17,7 @@ export async function PUT(req: NextRequest) {
   const session = await getSession()
   if (!session) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
 
-  const { values } = await req.json()
+  const { values, slug } = await req.json()
 
   for (const [key, value] of Object.entries(values as Record<string, string>)) {
     const existing = await query(
@@ -38,8 +38,12 @@ export async function PUT(req: NextRequest) {
     }
   }
 
-  // Revalidate site so changes appear immediately
+  // Revalidate the root layout (covers CMS context for all pages)
   revalidatePath('/', 'layout')
+  // Revalidate the specific page slug if provided (for dynamic CMS pages)
+  if (slug && typeof slug === 'string' && slug !== 'home') {
+    revalidatePath(`/${slug}`)
+  }
 
   return NextResponse.json({ success: true })
 }

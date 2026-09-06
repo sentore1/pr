@@ -89,9 +89,6 @@ export function Header() {
                     className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors duration-200 flex items-center gap-1 px-1 py-3 select-none"
                   >
                     {item.label}
-                    {item.children?.length > 0 && (
-                      <ChevronDown className={`w-3 h-3 opacity-50 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : ''}`} />
-                    )}
                   </a>
                 </div>
               ))}

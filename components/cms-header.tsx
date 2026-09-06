@@ -58,7 +58,6 @@ export function CMSHeader({ nav, logos, styles }: Props) {
                     className="text-sm text-[#4a5568] hover:text-[#0f1117] transition-colors flex items-center gap-1"
                   >
                     {item.label}
-                    {item.children?.length > 0 && <ChevronDown className="w-3 h-3 opacity-60" />}
                   </a>
 
                   {/* Dropdown */}

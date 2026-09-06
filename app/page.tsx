@@ -2,12 +2,13 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { PawPrint, Zap, Package, ShoppingCart, DollarSign, Calendar, Users, Trees, Satellite, Menu, X, Youtube, Instagram, ChevronDown, ListTodo, Clock, FileText, BarChart3, Receipt, Wallet, TrendingUp, Plug, Building2, Briefcase, UserCircle, Boxes, HeartHandshake, Hammer, Truck, Mail, Phone, Bot, Check, Minus, ArrowRight } from "lucide-react"
+import { PawPrint, Zap, Package, ShoppingCart, DollarSign, Calendar, Users, Trees, Satellite, Menu, X, ChevronDown, ListTodo, Clock, FileText, BarChart3, Receipt, Wallet, TrendingUp, Plug, Building2, Briefcase, UserCircle, Boxes, HeartHandshake, Hammer, Truck, Mail, Phone, Bot, Check, Minus, ArrowRight } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AnimatedText } from "@/components/animated-text"
 import { CustomDroneIcon } from "@/components/drone-icon"
 import { WorldMap } from "@/components/world-map"
 import { Header } from "@/components/header"
+import { SimpleFooter } from "@/components/simple-footer"
 import { useCMS } from "@/components/cms-provider"
 import { DEFAULTS } from "@/lib/page-content"
 import { experiences } from "@/lib/experience-data"
@@ -1353,7 +1354,6 @@ export default function PryroPage() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
     }
-    setIsMenuOpen(false)
   }
 
   return (
@@ -1435,7 +1435,7 @@ export default function PryroPage() {
       <section className="relative py-12 bg-white overflow-hidden md:py-8 md:pt-8 md:pb-4">
         <div className="w-full">
           <p className="text-center text-xs md:text-sm uppercase tracking-[0.2em] text-[#4a5568] mb-8">
-            Trusted by leading enterprises worldwide
+            {pv['logos_headline'] || 'Trusted by leading enterprises worldwide'}
           </p>
           <div className="logo-marquee">
             <div className="logo-marquee-content">
@@ -1500,7 +1500,7 @@ export default function PryroPage() {
                   className={`text-[10px] md:text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4 flex items-center justify-center gap-2`}
                 >
                   <span
-                    className={`w-1.5 h-1.5 rounded-full ${metric.color === "blue" ? "bg-blue-400/60" : "bg-blue-400/60"}`}
+                    className="w-1.5 h-1.5 rounded-full bg-blue-400/60"
                   />
                   {metric.label}
                 </div>
@@ -1700,26 +1700,26 @@ export default function PryroPage() {
 
             {/* Right - Text */}
             <div className="flex flex-col justify-center min-h-[600px]">
-              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">PROJECT MANAGEMENT</div>
+              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">{pv['project_tag'] || 'PROJECT MANAGEMENT'}</div>
               <h2 className="text-[32px] md:text-[42px] font-bold mb-6 leading-tight text-gray-900">
-                Keep every project moving forward
+                {pv['project_title'] || 'Keep every project moving forward'}
               </h2>
               <p className="text-gray-600 text-base md:text-lg mb-8 leading-relaxed">
-                Plan, organize, and collaborate your work - all in one place. Track progress, manage resources, and achieve your business goals.
+                {pv['project_body'] || 'Plan, organize, and collaborate your work - all in one place. Track progress, manage resources, and achieve your business goals.'}
               </p>
               <div className="mb-8">
-                <a href="https://login.pryro.com">
+                <a href={pv['project_cta_url'] || 'https://login.pryro.com'}>
                   <Button className="bg-gray-900 text-white px-8 py-6 rounded-[5px] text-base hover:bg-gray-800 transition-all">
-                    Get Started
+                    {pv['project_cta'] || 'Get Started'}
                   </Button>
                 </a>
               </div>
               <div className="grid grid-cols-2 gap-3 max-w-md">
                 {[
-                  { label: "Tasks", icon: ListTodo },
-                  { label: "Time tracking", icon: Clock },
-                  { label: "Timesheets", icon: FileText },
-                  { label: "Reports", icon: BarChart3 },
+                  { label: pv['project_feat1'] || 'Tasks', icon: ListTodo },
+                  { label: pv['project_feat2'] || 'Time tracking', icon: Clock },
+                  { label: pv['project_feat3'] || 'Timesheets', icon: FileText },
+                  { label: pv['project_feat4'] || 'Reports', icon: BarChart3 },
                 ].map((feature, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-[5px] px-3 py-3">
                     <feature.icon className="w-4 h-4" />
@@ -1733,26 +1733,26 @@ export default function PryroPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16 items-stretch">
             {/* Left - Text */}
             <div className="flex flex-col justify-center min-h-[600px]">
-              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">FINANCIAL MANAGEMENT</div>
+              <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-4">{pv['financial_tag'] || 'FINANCIAL MANAGEMENT'}</div>
               <h2 className="text-[32px] md:text-[42px] font-bold mb-6 leading-tight text-gray-900">
-                Track income, get paid, stress less
+                {pv['financial_title'] || 'Track income, get paid, stress less'}
               </h2>
               <p className="text-gray-600 text-base md:text-lg mb-8 leading-relaxed">
-                Create detailed invoices, track payments, and monitor your business finances. Keep track of your revenue, expenses, and cash flow all in one place.
+                {pv['financial_body'] || 'Create detailed invoices, track payments, and monitor your business finances. Keep track of your revenue, expenses, and cash flow all in one place.'}
               </p>
               <div className="mb-8">
-                <a href="https://login.pryro.com">
+                <a href={pv['financial_cta_url'] || 'https://login.pryro.com'}>
                   <Button className="bg-gray-900 text-white px-8 py-6 rounded-[5px] text-base hover:bg-gray-800 transition-all">
-                    Get Started
+                    {pv['financial_cta'] || 'Get Started'}
                   </Button>
                 </a>
               </div>
               <div className="grid grid-cols-2 gap-3 max-w-md">
                 {[
-                  { label: "Invoicing", icon: Receipt },
-                  { label: "Budgets", icon: Wallet },
-                  { label: "Forecasting", icon: TrendingUp },
-                  { label: "Integrations", icon: Plug },
+                  { label: pv['financial_feat1'] || 'Invoicing', icon: Receipt },
+                  { label: pv['financial_feat2'] || 'Budgets', icon: Wallet },
+                  { label: pv['financial_feat3'] || 'Forecasting', icon: TrendingUp },
+                  { label: pv['financial_feat4'] || 'Integrations', icon: Plug },
                 ].map((feature, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm text-gray-700 border border-gray-200 rounded-[5px] px-3 py-3">
                     <feature.icon className="w-4 h-4" />
@@ -1889,7 +1889,9 @@ export default function PryroPage() {
             {/* Headline inside blue card */}
             <div className="text-center mb-6 md:mb-8 lg:mb-10 px-2 sm:px-4">
               <h2 className="font-serif text-2xl sm:text-3xl md:text-[42px] lg:text-[52px] leading-[1.2] md:leading-[1.1] font-medium text-white mb-3" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.15)" }}>
-                Meet Pryro, business<br />management, finally simple.
+                {(pv['meet_title'] || 'Meet Pryro, business\nmanagement, finally simple.').split('\n').map((line, i, arr) => (
+                  <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+                ))}
               </h2>
             </div>
 
@@ -2049,7 +2051,7 @@ export default function PryroPage() {
         <div className="max-w-[1200px] w-full mx-auto">
 
           <h2 className="text-[18px] md:text-[22px] font-normal text-gray-900 mb-6">
-            Built for every part of your business
+            {pv['business_cards_title'] || 'Built for every part of your business'}
           </h2>
 
           <BusinessCardsSection />
@@ -2314,7 +2316,7 @@ export default function PryroPage() {
       <section id="pricing" className="relative py-12 md:py-20 lg:py-32 px-4 animate-on-scroll bg-gray-50">
         <div className="max-w-[1200px] w-full mx-auto">
           <div className="text-center mb-8 md:mb-10">
-            <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-3 md:mb-4">PRICING</div>
+            <div className="text-xs uppercase tracking-[0.15em] text-[#4a5568] mb-3 md:mb-4">{pv['pricing_tag'] || 'PRICING'}</div>
             <h2 className="text-2xl sm:text-3xl md:text-[40px] lg:text-[48px] font-bold mb-4 md:mb-6 leading-tight text-gray-900 px-4">
               {(pv['pricing_title'] || 'Simple plans\nfor serious work').split('\n').map((line, i, arr) => (
                 <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
@@ -2343,14 +2345,56 @@ export default function PryroPage() {
           {/* Mobile Cards View (hidden on lg screens) */}
           <div className="lg:hidden space-y-4 mb-6">
             {[
-              { name: 'Basic', price: pv['plan_basic_price'] || '$0', period: 'Free forever', users: '2', projects: 'Unlimited', invoices: '100/mo', features: ['Time Tracking', 'CRM'], cta: 'Get started', link: 'https://login.pryro.com' },
-              { name: 'Premium', price: pricingToggle === "annually" ? (pv['plan_premium_price_annual'] || "$29") : (pv['plan_premium_price_monthly'] || "$50"), period: 'Per workspace', users: '20', projects: 'Unlimited', invoices: 'Unlimited', features: ['Time Tracking', 'CRM', 'HR Management', 'POS', 'AI Reports', 'Invoice Link'], cta: 'Upgrade', link: 'https://login.pryro.com', popular: true, savings: pricingToggle === "annually" },
-              { name: 'Business', price: pricingToggle === "annually" ? (pv['plan_business_price_annual'] || "$79") : (pv['plan_business_price_monthly'] || "$99"), period: 'Up to 100 users', users: '100', projects: 'Unlimited', invoices: 'Unlimited', features: ['Everything in Premium', 'Advanced Security', 'Phone & Chat Support'], cta: 'Get Business', link: 'https://login.pryro.com' },
-              { name: 'Enterprise', price: 'Custom', period: 'Contact sales', users: 'Unlimited', projects: 'Unlimited', invoices: 'Unlimited', features: ['Everything in Business', 'Custom Webhooks', 'Dedicated Support'], cta: 'Contact sales', link: '/contact' },
+              {
+                name:     pv['plan_basic_name']     || 'Basic',
+                price:    pv['plan_basic_price']    || '$0',
+                period:   pv['plan_basic_period']   || 'Free forever',
+                users:    pv['plan_basic_users']    || '2',
+                projects: 'Unlimited',
+                invoices: pv['plan_basic_invoices'] || '100/mo',
+                features: [pv['plan_basic_feat1'] || 'Time Tracking', pv['plan_basic_feat2'] || 'CRM'].filter(Boolean),
+                cta:      pv['plan_basic_cta']      || 'Get started',
+                link:     pv['plan_basic_url']      || 'https://login.pryro.com',
+              },
+              {
+                name:     pv['plan_premium_name']   || 'Premium',
+                price:    pricingToggle === "annually" ? (pv['plan_premium_price_annual'] || "$29") : (pv['plan_premium_price_monthly'] || "$50"),
+                period:   pv['plan_premium_period'] || 'Per workspace',
+                users:    pv['plan_premium_users']  || '20',
+                projects: 'Unlimited',
+                invoices: 'Unlimited',
+                features: [pv['plan_premium_feat1'] || 'Time Tracking', pv['plan_premium_feat2'] || 'CRM', pv['plan_premium_feat3'] || 'HR Management', pv['plan_premium_feat4'] || 'POS', pv['plan_premium_feat5'] || 'AI Reports', pv['plan_premium_feat6'] || 'Invoice Link'].filter(Boolean),
+                cta:      pv['plan_premium_cta']    || 'Upgrade',
+                link:     pv['plan_premium_url']    || 'https://login.pryro.com',
+                popular:  true as const,
+                savings:  pricingToggle === "annually",
+              },
+              {
+                name:     pv['plan_business_name']   || 'Business',
+                price:    pricingToggle === "annually" ? (pv['plan_business_price_annual'] || "$79") : (pv['plan_business_price_monthly'] || "$99"),
+                period:   pv['plan_business_period'] || 'Up to 100 users',
+                users:    pv['plan_business_users']  || '100',
+                projects: 'Unlimited',
+                invoices: 'Unlimited',
+                features: [pv['plan_business_feat1'] || 'Everything in Premium', pv['plan_business_feat2'] || 'Advanced Security', pv['plan_business_feat3'] || 'Phone & Chat Support'].filter(Boolean),
+                cta:      pv['plan_business_cta']    || 'Get Business',
+                link:     pv['plan_business_url']    || 'https://login.pryro.com',
+              },
+              {
+                name:     pv['plan_enterprise_name']   || 'Enterprise',
+                price:    pv['plan_enterprise_price']  || 'Custom',
+                period:   pv['plan_enterprise_period'] || 'Contact sales',
+                users:    pv['plan_enterprise_users']  || 'Unlimited',
+                projects: 'Unlimited',
+                invoices: 'Unlimited',
+                features: [pv['plan_enterprise_feat1'] || 'Everything in Business', pv['plan_enterprise_feat2'] || 'Custom Webhooks', pv['plan_enterprise_feat3'] || 'Dedicated Support'].filter(Boolean),
+                cta:      pv['plan_enterprise_cta']    || 'Contact sales',
+                link:     pv['plan_enterprise_url']    || '/contact',
+              },
             ].map((plan) => (
-              <div key={plan.name} className={`rounded-lg border ${plan.popular ? 'border-blue-500 bg-blue-50/30' : 'border-gray-200 bg-white'} p-5 relative`}>
-                {plan.popular && plan.savings && (
-                  <span className="absolute -top-2 right-4 bg-green-400 text-[10px] font-semibold px-2 py-0.5 rounded-full text-white">Save 20%</span>
+              <div key={plan.name} className={`rounded-lg border ${'popular' in plan ? 'border-blue-500 bg-blue-50/30' : 'border-gray-200 bg-white'} p-5 relative`}>
+                {'popular' in plan && 'savings' in plan && plan.savings && (
+                  <span className="absolute -top-2 right-4 bg-green-400 text-[10px] font-semibold px-2 py-0.5 rounded-full text-white">{pv['pricing_save_badge'] || 'Save 20%'}</span>
                 )}
                 <div className="text-center mb-4">
                   <h3 className="font-semibold text-gray-900 mb-2">{plan.name}</h3>
@@ -2358,18 +2402,9 @@ export default function PryroPage() {
                   <div className="text-xs text-gray-500 mt-1">{plan.period}</div>
                 </div>
                 <div className="space-y-2 mb-4 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Users:</span>
-                    <span className="font-medium text-gray-900">{plan.users}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Projects:</span>
-                    <span className="font-medium text-gray-900">{plan.projects}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Invoices:</span>
-                    <span className="font-medium text-gray-900">{plan.invoices}</span>
-                  </div>
+                  <div className="flex justify-between"><span className="text-gray-600">Users:</span><span className="font-medium text-gray-900">{plan.users}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-600">Projects:</span><span className="font-medium text-gray-900">{plan.projects}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-600">Invoices:</span><span className="font-medium text-gray-900">{plan.invoices}</span></div>
                 </div>
                 <div className="mb-4">
                   <div className="text-xs font-semibold text-gray-700 mb-2">Key Features:</div>
@@ -2383,7 +2418,7 @@ export default function PryroPage() {
                   </ul>
                 </div>
                 <a href={plan.link} className="block">
-                  <button className={`w-full py-2.5 rounded-[5px] text-sm font-medium transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700' : 'border border-gray-300 hover:bg-gray-50'}`}>
+                  <button className={`w-full py-2.5 rounded-[5px] text-sm font-medium transition-all ${'popular' in plan ? 'bg-blue-600 text-white hover:bg-blue-700' : 'border border-gray-300 hover:bg-gray-50'}`}>
                     {plan.cta}
                   </button>
                 </a>
@@ -2396,24 +2431,24 @@ export default function PryroPage() {
             {/* Header row */}
             <div className="grid grid-cols-[1fr_140px_140px_140px_140px]">
               <div className="p-5 flex flex-col justify-end">
-                <p className="text-sm font-semibold text-gray-900 mb-1">Compare plans</p>
-                <p className="text-xs text-gray-400 leading-relaxed">Pick the right plan for your team.</p>
+                <p className="text-sm font-semibold text-gray-900 mb-1">{pv['pricing_compare_title'] || 'Compare plans'}</p>
+                <p className="text-xs text-gray-400 leading-relaxed">{pv['pricing_compare_subtitle'] || 'Pick the right plan for your team.'}</p>
               </div>
               <div className="border-l border-gray-200 p-5 text-center">
-                <p className="font-medium text-gray-900 text-sm">Basic</p>
-                <p className="text-2xl font-bold text-gray-900 mt-1">$0</p>
-                <p className="text-xs text-gray-500 mt-0.5">Free forever</p>
+                <p className="font-medium text-gray-900 text-sm">{pv['plan_basic_name'] || 'Basic'}</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">{pv['plan_basic_price'] || '$0'}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{pv['plan_basic_period'] || 'Free forever'}</p>
               </div>
               <div className="border-l border-gray-200 p-5 text-center bg-gray-100/60 relative overflow-visible">
                 {pricingToggle === "annually" && (
-                  <span className="absolute -top-1 right-3 bg-green-400 text-[10px] font-semibold px-2 py-0.5 rounded-full text-white">Save 20%</span>
+                  <span className="absolute -top-1 right-3 bg-green-400 text-[10px] font-semibold px-2 py-0.5 rounded-full text-white">{pv['pricing_save_badge'] || 'Save 20%'}</span>
                 )}
-                <p className="font-medium text-gray-900 text-sm">Premium</p>
+                <p className="font-medium text-gray-900 text-sm">{pv['plan_premium_name'] || 'Premium'}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1 flex items-baseline justify-center gap-0.5">
                   <span className="flex items-center overflow-hidden h-8">
-                    {"$".split("").concat((pricingToggle === "annually" ? "29" : "50").split("")).map((char, i) => (
+                    {"$".split("").concat((pricingToggle === "annually" ? (pv['plan_premium_price_annual'] || '$29') : (pv['plan_premium_price_monthly'] || '$50')).replace('$', '').split("")).map((char, i) => (
                       <span
-                        key={`${pricingToggle}-${i}`}
+                        key={`${pricingToggle}-premium-${i}`}
                         className="inline-block animate-[slideUp_0.3s_ease-out_both]"
                         style={{ animationDelay: `${i * 60}ms` }}
                       >
@@ -2423,15 +2458,15 @@ export default function PryroPage() {
                   </span>
                   <span className="text-sm font-normal text-gray-500">/mo</span>
                 </p>
-                <p className="text-xs text-gray-500 mt-0.5">Per workspace</p>
+                <p className="text-xs text-gray-500 mt-0.5">{pv['plan_premium_period'] || 'Per workspace'}</p>
               </div>
               <div className="border-l border-gray-200 p-5 text-center">
-                <p className="font-medium text-gray-900 text-sm">Business</p>
+                <p className="font-medium text-gray-900 text-sm">{pv['plan_business_name'] || 'Business'}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1 flex items-baseline justify-center gap-0.5">
                   <span className="flex items-center overflow-hidden h-8">
-                    {"$".split("").concat((pricingToggle === "annually" ? "79" : "99").split("")).map((char, i) => (
+                    {"$".split("").concat((pricingToggle === "annually" ? (pv['plan_business_price_annual'] || '$79') : (pv['plan_business_price_monthly'] || '$99')).replace('$', '').split("")).map((char, i) => (
                       <span
-                        key={`${pricingToggle}-${i}`}
+                        key={`${pricingToggle}-business-${i}`}
                         className="inline-block animate-[slideUp_0.3s_ease-out_both]"
                         style={{ animationDelay: `${i * 60}ms` }}
                       >
@@ -2441,29 +2476,29 @@ export default function PryroPage() {
                   </span>
                   <span className="text-sm font-normal text-gray-500">/mo</span>
                 </p>
-                <p className="text-xs text-gray-500 mt-0.5">Up to 100 users</p>
+                <p className="text-xs text-gray-500 mt-0.5">{pv['plan_business_period'] || 'Up to 100 users'}</p>
               </div>
               <div className="border-l border-gray-200 p-5 text-center">
-                <p className="font-medium text-gray-900 text-sm">Enterprise</p>
-                <p className="text-2xl font-bold text-gray-900 mt-1">Custom</p>
-                <p className="text-xs text-gray-500 mt-0.5">Contact sales</p>
+                <p className="font-medium text-gray-900 text-sm">{pv['plan_enterprise_name'] || 'Enterprise'}</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">{pv['plan_enterprise_price'] || 'Custom'}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{pv['plan_enterprise_period'] || 'Contact sales'}</p>
               </div>
             </div>
 
             {/* Feature rows */}
             {[
-              { name: 'Users',             desc: 'Team members with full access',         basic: '2',         premium: '20',       business: '100',        enterprise: 'Unlimited' },
-              { name: 'Projects',          desc: 'Active projects you can manage',        basic: 'Unlimited', premium: 'Unlimited', business: 'Unlimited',  enterprise: 'Unlimited' },
-              { name: 'Invoices',          desc: 'Professional invoices per month',       basic: '100/mo',    premium: 'Unlimited', business: 'Unlimited',  enterprise: 'Unlimited' },
-              { name: 'Time Tracking',     desc: 'Log hours and track billable time',     basic: true,        premium: true,        business: true,         enterprise: true },
-              { name: 'CRM',               desc: 'Manage clients and deal pipelines',     basic: true,        premium: true,        business: true,         enterprise: true },
-              { name: 'HR Management',     desc: 'Payroll, leaves, employee records',     basic: false,       premium: true,        business: true,         enterprise: true },
-              { name: 'POS',               desc: 'Point-of-sale for retail & hospitality',basic: false,       premium: true,        business: true,         enterprise: true },
-              { name: 'AI Reports',        desc: 'Smart insights generated automatically',basic: false,       premium: true,        business: true,         enterprise: true },
-              { name: 'Invoice Link',      desc: 'Share payment links with clients',      basic: false,       premium: true,        business: false,        enterprise: true },
-              { name: 'Custom Webhooks',   desc: 'Connect to external apps via webhooks', basic: false,       premium: false,       business: false,        enterprise: true },
-              { name: 'Advanced Security', desc: 'SSO, audit logs and access controls',   basic: false,       premium: false,       business: true,         enterprise: true },
-              { name: 'Support',           desc: 'How we help when you need us',          basic: 'Email',     premium: 'Priority',  business: 'Phone & Chat', enterprise: 'Dedicated' },
+              { name: pv['cmp_row1_name']  || 'Users',             desc: pv['cmp_row1_desc']  || 'Team members with full access',          basic: pv['plan_basic_users'] || '2',         premium: pv['plan_premium_users'] || '20',    business: pv['plan_business_users'] || '100',   enterprise: pv['plan_enterprise_users'] || 'Unlimited' },
+              { name: pv['cmp_row2_name']  || 'Projects',          desc: pv['cmp_row2_desc']  || 'Active projects you can manage',         basic: 'Unlimited', premium: 'Unlimited', business: 'Unlimited', enterprise: 'Unlimited' },
+              { name: pv['cmp_row3_name']  || 'Invoices',          desc: pv['cmp_row3_desc']  || 'Professional invoices per month',        basic: pv['plan_basic_invoices'] || '100/mo',  premium: 'Unlimited', business: 'Unlimited', enterprise: 'Unlimited' },
+              { name: pv['cmp_row4_name']  || 'Time Tracking',     desc: pv['cmp_row4_desc']  || 'Log hours and track billable time',      basic: true,  premium: true,  business: true,  enterprise: true },
+              { name: pv['cmp_row5_name']  || 'CRM',               desc: pv['cmp_row5_desc']  || 'Manage clients and deal pipelines',      basic: true,  premium: true,  business: true,  enterprise: true },
+              { name: pv['cmp_row6_name']  || 'HR Management',     desc: pv['cmp_row6_desc']  || 'Payroll, leaves, employee records',      basic: false, premium: true,  business: true,  enterprise: true },
+              { name: pv['cmp_row7_name']  || 'POS',               desc: pv['cmp_row7_desc']  || 'Point-of-sale for retail & hospitality', basic: false, premium: true,  business: true,  enterprise: true },
+              { name: pv['cmp_row8_name']  || 'AI Reports',        desc: pv['cmp_row8_desc']  || 'Smart insights generated automatically', basic: false, premium: true,  business: true,  enterprise: true },
+              { name: pv['cmp_row9_name']  || 'Invoice Link',      desc: pv['cmp_row9_desc']  || 'Share payment links with clients',       basic: false, premium: true,  business: false, enterprise: true },
+              { name: pv['cmp_row10_name'] || 'Custom Webhooks',   desc: pv['cmp_row10_desc'] || 'Connect to external apps via webhooks',  basic: false, premium: false, business: false, enterprise: true },
+              { name: pv['cmp_row11_name'] || 'Advanced Security', desc: pv['cmp_row11_desc'] || 'SSO, audit logs and access controls',    basic: false, premium: false, business: true,  enterprise: true },
+              { name: pv['cmp_row12_name'] || 'Support',           desc: pv['cmp_row12_desc'] || 'How we help when you need us',           basic: pv['cmp_row12_basic'] || 'Email', premium: pv['cmp_row12_premium'] || 'Priority', business: pv['cmp_row12_business'] || 'Phone & Chat', enterprise: pv['cmp_row12_enterprise'] || 'Dedicated' },
             ].map((row) => (
               <div key={row.name} className="grid grid-cols-[1fr_140px_140px_140px_140px] border-t border-gray-100">
                 <div className="p-4 flex items-center gap-3">
@@ -2496,55 +2531,57 @@ export default function PryroPage() {
             {/* CTA row */}
             <div className="grid grid-cols-[1fr_140px_140px_140px_140px] border-t border-gray-100">
               <div className="p-4">
-                <p className="text-sm font-medium text-gray-900">Ready to get started?</p>
-                <p className="text-xs text-gray-400 mt-0.5">No credit card required for Basic.</p>
+                <p className="text-sm font-medium text-gray-900">{pv['pricing_cta_heading'] || 'Ready to get started?'}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{pv['pricing_cta_subtext'] || 'No credit card required for Basic.'}</p>
               </div>
               <div className="border-l border-gray-100 p-4">
-                <a href="https://login.pryro.com">
-                  <button className="w-full py-2 rounded-[5px] border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Get started</button>
+                <a href={pv['plan_basic_url'] || 'https://login.pryro.com'}>
+                  <button className="w-full py-2 rounded-[5px] border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">{pv['plan_basic_cta'] || 'Get started'}</button>
                 </a>
               </div>
               <div className="border-l border-gray-100 p-4 bg-gray-100/60">
-                <a href="https://login.pryro.com">
-                  <button className="w-full py-2 rounded-[5px] bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all">Upgrade</button>
+                <a href={pv['plan_premium_url'] || 'https://login.pryro.com'}>
+                  <button className="w-full py-2 rounded-[5px] bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-all">{pv['plan_premium_cta'] || 'Upgrade'}</button>
                 </a>
               </div>
               <div className="border-l border-gray-100 p-4">
-                <a href="https://login.pryro.com">
-                  <button className="w-full py-2 rounded-[5px] border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Get Business</button>
+                <a href={pv['plan_business_url'] || 'https://login.pryro.com'}>
+                  <button className="w-full py-2 rounded-[5px] border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">{pv['plan_business_cta'] || 'Get Business'}</button>
                 </a>
               </div>
               <div className="border-l border-gray-100 p-4">
-                <a href="/contact">
-                  <button className="w-full py-2 rounded-[5px] border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">Contact sales</button>
+                <a href={pv['plan_enterprise_url'] || '/contact'}>
+                  <button className="w-full py-2 rounded-[5px] border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-all">{pv['plan_enterprise_cta'] || 'Contact sales'}</button>
                 </a>
               </div>
             </div>
           </div>
 
-          <div className="text-center mt-6 md:mt-8 text-xs sm:text-sm text-gray-500 px-4">Trusted by 64,000+ businesses, startups, NGOs, and studios</div>
+          <div className="text-center mt-6 md:mt-8 text-xs sm:text-sm text-gray-500 px-4">{pv['pricing_trust_line'] || 'Trusted by 64,000+ businesses, startups, NGOs, and studios'}</div>
         </div>
       </section>
 
       <section className="relative py-20 md:py-32 px-4 animate-on-scroll overflow-hidden bg-gray-50 rounded-none">
         <div className="max-w-[1120px] w-full mx-auto text-center">
           <h2 className="text-[32px] md:text-[48px] font-bold mb-12 leading-tight text-gray-900">
-            Finally, one platform that actually<br />runs our whole operation
+            {(pv['testimonials_title'] || 'Finally, one platform that actually\nruns our whole operation').split('\n').map((line, i, arr) => (
+              <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+            ))}
           </h2>
 
-          <div className="text-base font-medium mb-1">Kofi</div>
-          <div className="text-sm text-gray-600 mb-16">CEO, Accra Fresh Foods</div>
+          <div className="text-base font-medium mb-1">{pv['testimonials_name'] || 'Kofi'}</div>
+          <div className="text-sm text-gray-600 mb-16">{pv['testimonials_role'] || 'CEO, Accra Fresh Foods'}</div>
 
           <div className="relative max-w-6xl mx-auto">
             <div className="flex items-stretch justify-center gap-6">
               {[
-                { text: 'We used to manage invoices in Excel and chase payments over WhatsApp. Pryro cleaned all that up in the first week. Our clients noticed the difference immediately.', name: 'Amara', role: 'Founder, Dakar Studio Co.', avatar: 'https://i.pravatar.cc/150?img=38' },
-                { text: 'Our accountant recommended we try Pryro and it was the best decision we made this year. Payroll, expenses, and reports all in one place.', name: 'Ngozi', role: 'MD, Eze Logistics Ltd.', avatar: 'https://i.pravatar.cc/150?img=45' },
-                { text: "I run a small construction firm and keeping track of projects, staff, and suppliers was a nightmare. Pryro made it manageable. I actually know what's going on now.", name: 'Kwame', role: 'Director, Asante Build Group', avatar: 'https://i.pravatar.cc/150?img=12' },
-                { text: "The invoicing and CRM features alone justified the switch. We've reduced unpaid invoices by over 60% since going live three months ago.", name: 'Fatou', role: 'Finance Lead, Camara Trading', avatar: 'https://i.pravatar.cc/150?img=47' },
-                { text: 'Setting it up took less than a day. The HR module handles leave requests and payroll automatically. My team stopped complaining about admin work.', name: 'James', role: 'COO, Okonkwo & Partners', avatar: 'https://i.pravatar.cc/150?img=33' },
-                { text: 'We manage stock across three branches and Pryro keeps everything in sync. Low stock alerts have basically eliminated stockouts for us.', name: 'Aissatou', role: 'Operations Manager, Bah Retail', avatar: 'https://i.pravatar.cc/150?img=44' },
-                { text: 'As a non-profit we needed something affordable that still did everything. Pryro fit perfectly - donor tracking, expense reports, and team management all covered.', name: 'Emmanuel', role: 'Executive Director, Hope Forward NGO', avatar: 'https://i.pravatar.cc/150?img=15' },
+                { text: pv['testimonial_1_text'] || 'We used to manage invoices in Excel and chase payments over WhatsApp. Pryro cleaned all that up in the first week. Our clients noticed the difference immediately.', name: pv['testimonial_1_name'] || 'Amara', role: pv['testimonial_1_role'] || 'Founder, Dakar Studio Co.', avatar: 'https://i.pravatar.cc/150?img=38' },
+                { text: pv['testimonial_2_text'] || 'Our accountant recommended we try Pryro and it was the best decision we made this year. Payroll, expenses, and reports all in one place.', name: pv['testimonial_2_name'] || 'Ngozi', role: pv['testimonial_2_role'] || 'MD, Eze Logistics Ltd.', avatar: 'https://i.pravatar.cc/150?img=45' },
+                { text: pv['testimonial_3_text'] || "I run a small construction firm and keeping track of projects, staff, and suppliers was a nightmare. Pryro made it manageable. I actually know what's going on now.", name: pv['testimonial_3_name'] || 'Kwame', role: pv['testimonial_3_role'] || 'Director, Asante Build Group', avatar: 'https://i.pravatar.cc/150?img=12' },
+                { text: pv['testimonial_4_text'] || "The invoicing and CRM features alone justified the switch. We've reduced unpaid invoices by over 60% since going live three months ago.", name: pv['testimonial_4_name'] || 'Fatou', role: pv['testimonial_4_role'] || 'Finance Lead, Camara Trading', avatar: 'https://i.pravatar.cc/150?img=47' },
+                { text: pv['testimonial_5_text'] || 'Setting it up took less than a day. The HR module handles leave requests and payroll automatically. My team stopped complaining about admin work.', name: pv['testimonial_5_name'] || 'James', role: pv['testimonial_5_role'] || 'COO, Okonkwo & Partners', avatar: 'https://i.pravatar.cc/150?img=33' },
+                { text: pv['testimonial_6_text'] || 'We manage stock across three branches and Pryro keeps everything in sync. Low stock alerts have basically eliminated stockouts for us.', name: pv['testimonial_6_name'] || 'Aissatou', role: pv['testimonial_6_role'] || 'Operations Manager, Bah Retail', avatar: 'https://i.pravatar.cc/150?img=44' },
+                { text: pv['testimonial_7_text'] || 'As a non-profit we needed something affordable that still did everything. Pryro fit perfectly - donor tracking, expense reports, and team management all covered.', name: pv['testimonial_7_name'] || 'Emmanuel', role: pv['testimonial_7_role'] || 'Executive Director, Hope Forward NGO', avatar: 'https://i.pravatar.cc/150?img=15' },
               ].map((testimonial, i) => {
                 const offset = (i - testimonialIndex + 7) % 7
                 const isCenter = offset === 0
@@ -2595,6 +2632,113 @@ export default function PryroPage() {
         </div>
       </section>
 
+      {/* ── CMS Content Blocks (from /admin/content) ── */}
+      {(cms?.contentBlocks ?? []).filter(b => b.is_active).sort((a, b) => a.sort_order - b.sort_order).map(block => (
+        <section key={block.id} className="relative px-4 py-12 md:py-16 animate-on-scroll"
+          style={{ background: block.settings?.background || undefined }}>
+          <div className="max-w-[1120px] w-full mx-auto">
+
+            {/* HERO block */}
+            {block.block_type === 'hero' && (
+              <div className="text-center py-12" style={{ color: block.settings?.textColor || 'inherit' }}>
+                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-16 h-16 object-contain mx-auto mb-6" />}
+                <h2 className="font-serif text-4xl md:text-6xl font-medium mb-6">{block.title}</h2>
+                {block.content && <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 opacity-80">{block.content}</p>}
+                {block.settings?.buttonText && (
+                  <a href={block.settings.buttonUrl || '#'}>
+                    <Button className="px-8 py-6 text-base rounded-[5px]">{block.settings.buttonText}</Button>
+                  </a>
+                )}
+              </div>
+            )}
+
+            {/* TEXT block */}
+            {block.block_type === 'text' && (
+              <div className={`max-w-3xl mx-auto text-${block.settings?.alignment || 'left'}`}>
+                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-10 h-10 object-contain mb-4" />}
+                {block.title && <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">{block.title}</h2>}
+                <p className={`text-${block.settings?.fontSize || 'base'} text-gray-600 leading-relaxed`}>{block.content}</p>
+              </div>
+            )}
+
+            {/* IMAGE block */}
+            {block.block_type === 'image' && block.settings?.src && (
+              <div className="text-center">
+                {block.title && <h2 className="text-2xl font-bold mb-6 text-gray-900">{block.title}</h2>}
+                <img
+                  src={block.settings.src}
+                  alt={block.settings.alt || block.title}
+                  className={`mx-auto ${block.settings.rounded !== false ? 'rounded-[5px]' : ''}`}
+                  style={{ width: block.settings.width || '100%', maxWidth: '100%' }}
+                />
+                {block.content && <p className="text-sm text-gray-500 mt-3">{block.content}</p>}
+              </div>
+            )}
+
+            {/* CTA block */}
+            {block.block_type === 'cta' && (
+              <div className="text-center py-8 rounded-[5px] px-8"
+                style={{ background: block.settings?.background || '#0072FD', color: block.settings?.textColor || '#ffffff' }}>
+                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-12 h-12 object-contain mx-auto mb-4" />}
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">{block.title}</h2>
+                {block.content && <p className="text-lg mb-8 opacity-80 max-w-2xl mx-auto">{block.content}</p>}
+                {block.settings?.buttonText && (
+                  <a href={block.settings.buttonUrl || '#'}>
+                    <Button className="bg-white text-blue-600 hover:bg-white/90 px-8 py-6 text-base rounded-[5px]">
+                      {block.settings.buttonText}
+                    </Button>
+                  </a>
+                )}
+              </div>
+            )}
+
+            {/* FEATURES block */}
+            {block.block_type === 'features' && (
+              <div>
+                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-10 h-10 object-contain mb-4" />}
+                {block.title && <h2 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900">{block.title}</h2>}
+                {block.content && <p className="text-gray-600 mb-8">{block.content}</p>}
+                {Array.isArray(block.settings?.items) && block.settings.items.length > 0 && (
+                  <div className={`grid grid-cols-1 md:grid-cols-${block.settings?.columns || 3} gap-6`}>
+                    {block.settings.items.map((item: any, i: number) => (
+                      <div key={i} className="border border-gray-200 rounded-[5px] p-5">
+                        {item.icon && <img src={item.icon} alt="" className="w-8 h-8 object-contain mb-3" />}
+                        <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
+                        <p className="text-sm text-gray-600">{item.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* TESTIMONIALS block */}
+            {block.block_type === 'testimonials' && (
+              <div className="text-center">
+                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-10 h-10 object-contain mx-auto mb-4" />}
+                {block.title && <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">{block.title}</h2>}
+                {block.content && <p className="text-gray-600 italic text-lg max-w-2xl mx-auto">&ldquo;{block.content}&rdquo;</p>}
+              </div>
+            )}
+
+            {/* PRICING block */}
+            {block.block_type === 'pricing' && (
+              <div>
+                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-10 h-10 object-contain mb-4" />}
+                {block.title && <h2 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900">{block.title}</h2>}
+                {block.content && <p className="text-gray-600 mb-8">{block.content}</p>}
+              </div>
+            )}
+
+            {/* CUSTOM HTML block */}
+            {block.block_type === 'custom' && block.content && (
+              <div dangerouslySetInnerHTML={{ __html: block.content }} />
+            )}
+
+          </div>
+        </section>
+      ))}
+
       <div style={{ background: "linear-gradient(to bottom, #F9FAFB 0%, #FFFFFF 30%, #80C2FF 50%, #40A3FF 65%, #2094FF 75%, #108CFF 85%, #0084FF 100%)" }}>
       <section
         id="cta"
@@ -2623,148 +2767,9 @@ export default function PryroPage() {
         </div>
       </section>
 
-      <footer className="relative px-4 py-8 pt-16 bg-transparent">
-        <div className="max-w-[1120px] w-full mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-8 mb-12">
-            {/* Brand Column */}
-            <div className="flex flex-col gap-4">
-              <div className="w-fit">
-                <img src="/pryro logo.png" alt="Pryro" className="h-8 w-auto" />
-              </div>
-              <p className="text-xs text-white/80 leading-relaxed">
-                Empowering businesses worldwide with intelligent ERP solutions and automation.
-              </p>
-              <div className="flex items-center gap-4 mt-2">
-                <a
-                  href="https://twitter.com/pryro.co"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/80 hover:text-white transition-colors"
-                  aria-label="X (Twitter)"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                </a>
-                <a
-                  href="https://youtube.com/pryroo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/80 hover:text-white transition-colors"
-                  aria-label="YouTube"
-                >
-                  <Youtube className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://instagram.com/pryro.co"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/80 hover:text-white transition-colors"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-
-            {/* Solutions Menu */}
-            <div className="flex flex-col gap-4">
-              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Solutions</div>
-              <div className="flex flex-col gap-3">
-                <a href="/small-business" className="text-sm text-white/80 hover:text-white transition-colors">Small Business</a>
-                <a href="/accountants-bookkeepers" className="text-sm text-white/80 hover:text-white transition-colors">Accountants & Bookkeepers</a>
-                <a href="/project" className="text-sm text-white/80 hover:text-white transition-colors">Project</a>
-                <a href="/human-resource" className="text-sm text-white/80 hover:text-white transition-colors">Human Resource</a>
-                <a href="/stock-management" className="text-sm text-white/80 hover:text-white transition-colors">Stock Management</a>
-                <a href="/customer-relation" className="text-sm text-white/80 hover:text-white transition-colors">Customer Relation</a>
-                <a href="/self-employed" className="text-sm text-white/80 hover:text-white transition-colors">Self-employed</a>
-                <a href="/non-profit" className="text-sm text-white/80 hover:text-white transition-colors">Non-profit</a>
-                <a href="/hospitality" className="text-sm text-white/80 hover:text-white transition-colors">Hospitality</a>
-                <a href="/construction" className="text-sm text-white/80 hover:text-white transition-colors">Construction</a>
-                <a href="/logistic" className="text-sm text-white/80 hover:text-white transition-colors">Logistic</a>
-                <a href="/marketing-mail" className="text-sm text-white/80 hover:text-white transition-colors">Marketing (Mail)</a>
-                <a href="/marketing-call" className="text-sm text-white/80 hover:text-white transition-colors">Marketing (Call)</a>
-                <a href="/ai-enterprise" className="text-sm text-white/80 hover:text-white transition-colors">AI for Enterprise</a>
-              </div>
-            </div>
-
-            {/* Product Menu */}
-            <div className="flex flex-col gap-4">
-              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Product</div>
-              <div className="flex flex-col gap-3">
-                <a href="/features" className="text-sm text-white/80 hover:text-white transition-colors">
-                  Features
-                </a>
-                <a href="/pricing" className="text-sm text-white/80 hover:text-white transition-colors">
-                  Pricing
-                </a>
-                <a href="/documentation" className="text-sm text-white/80 hover:text-white transition-colors">
-                  Documentation
-                </a>
-                <a href="/api" className="text-sm text-white/80 hover:text-white transition-colors">
-                  API
-                </a>
-              </div>
-            </div>
-
-            {/* Company Menu */}
-            <div className="flex flex-col gap-4">
-              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Company</div>
-              <div className="flex flex-col gap-3">
-                <a href="/about" className="text-sm text-white/80 hover:text-white transition-colors">
-                  About
-                </a>
-                <a href="/careers" className="text-sm text-white/80 hover:text-white transition-colors">
-                  Careers
-                </a>
-                <a href="/contact" className="text-sm text-white/80 hover:text-white transition-colors">
-                  Contact
-                </a>
-              </div>
-            </div>
-
-            {/* WhatsApp Contact */}
-            <div className="flex flex-col gap-4">
-              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Contact Us</div>
-              <p className="text-xs text-white/80 mb-3">Send us a direct message on WhatsApp.</p>
-              <div className="flex flex-col gap-2">
-                <input
-                  type="text"
-                  placeholder="Type your message"
-                  id="whatsapp-message"
-                  className="px-4 py-1.5 bg-white/20 border-0 rounded-[5px] text-xs text-white placeholder-white/60 focus:outline-none transition-all"
-                />
-                <button 
-                  onClick={() => {
-                    const message = (document.getElementById('whatsapp-message') as HTMLInputElement)?.value || '';
-                    window.open(`https://wa.me/250788715075?text=${encodeURIComponent(message)}`, '_blank');
-                  }}
-                  className="px-4 py-1.5 border rounded-[5px] text-xs font-medium hover:bg-white/90 transition-all bg-white border-white text-blue-600"
-                >
-                  Send WhatsApp
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer Bottom */}
-          <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/80">
-            <div>© {new Date().getFullYear()} Pryro. All rights reserved.</div>
-            <div className="flex gap-6">
-              <a href="/privacy" className="hover:text-white transition-colors">
-                Privacy Policy
-              </a>
-              <a href="/terms" className="hover:text-white transition-colors">
-                Terms of Service
-              </a>
-              <a href="/cookies" className="hover:text-white transition-colors">
-                Cookie Settings
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
       </div>
+
+      <SimpleFooter />
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 import { styleSettingModel, activityLogModel } from '@/lib/db/models'
 import { revalidatePath } from 'next/cache'
+import { clearCMSCache } from '@/lib/cms'
 
 export async function GET() {
   const session = await getSession()
@@ -20,6 +21,8 @@ export async function PUT(req: NextRequest) {
   }
 
   await activityLogModel.logActivity({ user_id: session.id, action: 'Updated theme styles', entity_type: 'theme' })
+  // Bust in-process CMS cache so the next page load gets fresh styles immediately
+  clearCMSCache()
   revalidatePath('/', 'layout')
   return NextResponse.json({ success: true })
 }

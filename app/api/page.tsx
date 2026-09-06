@@ -345,30 +345,30 @@ export default function APIPage() {
               <div className="grid md:grid-cols-3 gap-6 mb-12">
             <div className="bg-white border border-gray-200 p-6" style={{borderRadius: '5px'}}>
               <h3 className="text-lg font-medium mb-3 text-gray-900">Python SDK</h3>
-              <div className="bg-gray-50 p-4 font-mono text-xs mb-3" style={{borderRadius: '5px'}}">
+              <div className="bg-gray-50 p-4 font-mono text-xs mb-3" style={{borderRadius: '5px'}}>
                 <div className="text-gray-600">pip install pryro-sdk</div>
               </div>
-              <div className="bg-gray-900 p-8 font-mono text-xs" style={{borderRadius: '5px'}}">
+              <div className="bg-gray-900 p-8 font-mono text-xs" style={{borderRadius: '5px'}}>
                 <div className="text-blue-400">from</div> <span className="text-white">pryro </span><span className="text-blue-400">import</span> <span className="text-white">Client</span>
                 <div className="text-white mt-2">client = Client(api_key)</div>
               </div>
             </div>
             <div className="bg-white border border-gray-200 p-6" style={{borderRadius: '5px'}}>
               <h3 className="text-lg font-medium mb-3 text-gray-900">JavaScript SDK</h3>
-              <div className="bg-gray-50 p-4 font-mono text-xs mb-3" style={{borderRadius: '5px'}}">
+              <div className="bg-gray-50 p-4 font-mono text-xs mb-3" style={{borderRadius: '5px'}}>
                 <div className="text-gray-600">npm install @pryro/sdk</div>
               </div>
-              <div className="bg-gray-900 p-8 font-mono text-xs" style={{borderRadius: '5px'}}">
+              <div className="bg-gray-900 p-8 font-mono text-xs" style={{borderRadius: '5px'}}>
                 <div className="text-blue-400">import</div> <span className="text-white">Pryro </span><span className="text-blue-400">from</span> <span className="text-green-400">'@pryro/sdk'</span>
                 <div className="text-white mt-2">const pryro = new Pryro()</div>
               </div>
             </div>
             <div className="bg-white border border-gray-200 p-6" style={{borderRadius: '5px'}}>
               <h3 className="text-lg font-medium mb-3 text-gray-900">Ruby SDK</h3>
-              <div className="bg-gray-50 p-4 font-mono text-xs mb-3" style={{borderRadius: '5px'}}">
+              <div className="bg-gray-50 p-4 font-mono text-xs mb-3" style={{borderRadius: '5px'}}>
                 <div className="text-gray-600">gem install pryro</div>
               </div>
-              <div className="bg-gray-900 p-8 font-mono text-xs" style={{borderRadius: '5px'}}">
+              <div className="bg-gray-900 p-8 font-mono text-xs" style={{borderRadius: '5px'}}>
                 <div className="text-blue-400">require</div> <span className="text-green-400">'pryro'</span>
                 <div className="text-white mt-2">client = Pryro::Client.new</div>
               </div>
@@ -456,7 +456,7 @@ export default function APIPage() {
 
               <div id="errors" className="bg-gray-900 p-8 mb-12" style={{borderRadius: '5px'}}>
             <h2 className="text-2xl font-normal mb-6 text-white">Error Handling</h2>
-            <div className="bg-gray-800 p-6 font-mono text-sm overflow-x-auto" style={{borderRadius: '5px'}}">
+            <div className="bg-gray-800 p-6 font-mono text-sm overflow-x-auto" style={{borderRadius: '5px'}}>
               <div className="text-gray-400 mb-2">// Error Response Format</div>
               <div className="text-white">{`{`}</div>
               <div className="ml-4 text-purple-400">"error": {`{`}</div>

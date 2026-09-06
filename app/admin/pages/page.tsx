@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import {
   Save, Eye, EyeOff, Upload, ChevronRight, ExternalLink,
   RefreshCw, Plus, Trash2, Edit2, Check, X, FileText, Layout,
-  Search
+  Search, Layers, Globe
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -24,6 +24,7 @@ interface PageDef {
   label: string
   icon: string
   group: string
+  layout?: string
   sections: { id: string; label: string; fields: Field[] }[]
 }
 
@@ -82,11 +83,147 @@ const PAGE_DEFS: PageDef[] = [
         id: 'pricing_section', label: 'Pricing Section', fields: [
           { key: 'pricing_tag',      label: 'Tag Label',          type: 'text' },
           { key: 'pricing_title',    label: 'Section Title',      type: 'text' },
-          { key: 'plan_basic_price', label: 'Basic Plan Price',   type: 'text',  hint: '$0' },
-          { key: 'plan_premium_price_annual',   label: 'Premium Annual Price',   type: 'text', hint: '$29' },
-          { key: 'plan_premium_price_monthly',  label: 'Premium Monthly Price',  type: 'text', hint: '$50' },
-          { key: 'plan_business_price_annual',  label: 'Business Annual Price',  type: 'text', hint: '$79' },
-          { key: 'plan_business_price_monthly', label: 'Business Monthly Price', type: 'text', hint: '$99' },
+          { key: 'pricing_compare_title',    label: 'Compare Heading',        type: 'text',     hint: 'Compare plans' },
+          { key: 'pricing_compare_subtitle', label: 'Compare Sub-heading',    type: 'text',     hint: 'Pick the right plan for your team.' },
+          { key: 'pricing_trust_line',       label: 'Trust Line',             type: 'text',     hint: 'Trusted by 64,000+ businesses…' },
+          { key: 'pricing_save_badge',       label: '"Save" Badge Text',      type: 'text',     hint: 'Save 20%' },
+          { key: 'pricing_cta_heading',      label: 'CTA Row Heading',        type: 'text',     hint: 'Ready to get started?' },
+          { key: 'pricing_cta_subtext',      label: 'CTA Row Sub-text',       type: 'text',     hint: 'No credit card required for Basic.' },
+          // Basic plan
+          { key: 'plan_basic_name',          label: 'Basic — Plan Name',      type: 'text',     hint: 'Basic' },
+          { key: 'plan_basic_price',         label: 'Basic — Price',          type: 'text',     hint: '$0' },
+          { key: 'plan_basic_period',        label: 'Basic — Period',         type: 'text',     hint: 'Free forever' },
+          { key: 'plan_basic_users',         label: 'Basic — Users',          type: 'text',     hint: '2' },
+          { key: 'plan_basic_invoices',      label: 'Basic — Invoices',       type: 'text',     hint: '100/mo' },
+          { key: 'plan_basic_cta',           label: 'Basic — Button Text',    type: 'text',     hint: 'Get started' },
+          { key: 'plan_basic_url',           label: 'Basic — Button URL',     type: 'url',      hint: 'https://login.pryro.com' },
+          // Premium plan
+          { key: 'plan_premium_name',              label: 'Premium — Plan Name',    type: 'text',   hint: 'Premium' },
+          { key: 'plan_premium_price_annual',      label: 'Premium — Annual Price', type: 'text',   hint: '$29' },
+          { key: 'plan_premium_price_monthly',     label: 'Premium — Monthly Price',type: 'text',   hint: '$50' },
+          { key: 'plan_premium_period',            label: 'Premium — Period',       type: 'text',   hint: 'Per workspace' },
+          { key: 'plan_premium_users',             label: 'Premium — Users',        type: 'text',   hint: '20' },
+          { key: 'plan_premium_cta',               label: 'Premium — Button Text',  type: 'text',   hint: 'Upgrade' },
+          { key: 'plan_premium_url',               label: 'Premium — Button URL',   type: 'url',    hint: 'https://login.pryro.com' },
+          // Business plan
+          { key: 'plan_business_name',             label: 'Business — Plan Name',    type: 'text',   hint: 'Business' },
+          { key: 'plan_business_price_annual',     label: 'Business — Annual Price', type: 'text',   hint: '$79' },
+          { key: 'plan_business_price_monthly',    label: 'Business — Monthly Price',type: 'text',   hint: '$99' },
+          { key: 'plan_business_period',           label: 'Business — Period',       type: 'text',   hint: 'Up to 100 users' },
+          { key: 'plan_business_users',            label: 'Business — Users',        type: 'text',   hint: '100' },
+          { key: 'plan_business_cta',              label: 'Business — Button Text',  type: 'text',   hint: 'Get Business' },
+          { key: 'plan_business_url',              label: 'Business — Button URL',   type: 'url',    hint: 'https://login.pryro.com' },
+          // Enterprise plan
+          { key: 'plan_enterprise_name',           label: 'Enterprise — Plan Name',  type: 'text',   hint: 'Enterprise' },
+          { key: 'plan_enterprise_price',          label: 'Enterprise — Price',      type: 'text',   hint: 'Custom' },
+          { key: 'plan_enterprise_period',         label: 'Enterprise — Period',     type: 'text',   hint: 'Contact sales' },
+          { key: 'plan_enterprise_users',          label: 'Enterprise — Users',      type: 'text',   hint: 'Unlimited' },
+          { key: 'plan_enterprise_cta',            label: 'Enterprise — Button Text',type: 'text',   hint: 'Contact sales' },
+          { key: 'plan_enterprise_url',            label: 'Enterprise — Button URL', type: 'url',    hint: '/contact' },
+          // Plan feature bullets (shown on mobile cards)
+          { key: 'plan_basic_feat1',      label: 'Basic — Feature 1',       type: 'text', hint: 'Time Tracking' },
+          { key: 'plan_basic_feat2',      label: 'Basic — Feature 2',       type: 'text', hint: 'CRM' },
+          { key: 'plan_premium_feat1',    label: 'Premium — Feature 1',     type: 'text', hint: 'Time Tracking' },
+          { key: 'plan_premium_feat2',    label: 'Premium — Feature 2',     type: 'text', hint: 'CRM' },
+          { key: 'plan_premium_feat3',    label: 'Premium — Feature 3',     type: 'text', hint: 'HR Management' },
+          { key: 'plan_premium_feat4',    label: 'Premium — Feature 4',     type: 'text', hint: 'POS' },
+          { key: 'plan_premium_feat5',    label: 'Premium — Feature 5',     type: 'text', hint: 'AI Reports' },
+          { key: 'plan_premium_feat6',    label: 'Premium — Feature 6',     type: 'text', hint: 'Invoice Link' },
+          { key: 'plan_business_feat1',   label: 'Business — Feature 1',    type: 'text', hint: 'Everything in Premium' },
+          { key: 'plan_business_feat2',   label: 'Business — Feature 2',    type: 'text', hint: 'Advanced Security' },
+          { key: 'plan_business_feat3',   label: 'Business — Feature 3',    type: 'text', hint: 'Phone & Chat Support' },
+          { key: 'plan_enterprise_feat1', label: 'Enterprise — Feature 1',  type: 'text', hint: 'Everything in Business' },
+          { key: 'plan_enterprise_feat2', label: 'Enterprise — Feature 2',  type: 'text', hint: 'Custom Webhooks' },
+          { key: 'plan_enterprise_feat3', label: 'Enterprise — Feature 3',  type: 'text', hint: 'Dedicated Support' },
+          // Comparison table row names & descriptions
+          { key: 'cmp_row1_name',  label: 'Table Row 1 — Name', type: 'text', hint: 'Users' },
+          { key: 'cmp_row1_desc',  label: 'Table Row 1 — Desc', type: 'text', hint: 'Team members with full access' },
+          { key: 'cmp_row2_name',  label: 'Table Row 2 — Name', type: 'text', hint: 'Projects' },
+          { key: 'cmp_row2_desc',  label: 'Table Row 2 — Desc', type: 'text', hint: 'Active projects you can manage' },
+          { key: 'cmp_row3_name',  label: 'Table Row 3 — Name', type: 'text', hint: 'Invoices' },
+          { key: 'cmp_row3_desc',  label: 'Table Row 3 — Desc', type: 'text', hint: 'Professional invoices per month' },
+          { key: 'cmp_row4_name',  label: 'Table Row 4 — Name', type: 'text', hint: 'Time Tracking' },
+          { key: 'cmp_row4_desc',  label: 'Table Row 4 — Desc', type: 'text', hint: 'Log hours and track billable time' },
+          { key: 'cmp_row5_name',  label: 'Table Row 5 — Name', type: 'text', hint: 'CRM' },
+          { key: 'cmp_row5_desc',  label: 'Table Row 5 — Desc', type: 'text', hint: 'Manage clients and deal pipelines' },
+          { key: 'cmp_row6_name',  label: 'Table Row 6 — Name', type: 'text', hint: 'HR Management' },
+          { key: 'cmp_row6_desc',  label: 'Table Row 6 — Desc', type: 'text', hint: 'Payroll, leaves, employee records' },
+          { key: 'cmp_row7_name',  label: 'Table Row 7 — Name', type: 'text', hint: 'POS' },
+          { key: 'cmp_row7_desc',  label: 'Table Row 7 — Desc', type: 'text', hint: 'Point-of-sale for retail & hospitality' },
+          { key: 'cmp_row8_name',  label: 'Table Row 8 — Name', type: 'text', hint: 'AI Reports' },
+          { key: 'cmp_row8_desc',  label: 'Table Row 8 — Desc', type: 'text', hint: 'Smart insights generated automatically' },
+          { key: 'cmp_row9_name',  label: 'Table Row 9 — Name', type: 'text', hint: 'Invoice Link' },
+          { key: 'cmp_row9_desc',  label: 'Table Row 9 — Desc', type: 'text', hint: 'Share payment links with clients' },
+          { key: 'cmp_row10_name', label: 'Table Row 10 — Name', type: 'text', hint: 'Custom Webhooks' },
+          { key: 'cmp_row10_desc', label: 'Table Row 10 — Desc', type: 'text', hint: 'Connect to external apps via webhooks' },
+          { key: 'cmp_row11_name', label: 'Table Row 11 — Name', type: 'text', hint: 'Advanced Security' },
+          { key: 'cmp_row11_desc', label: 'Table Row 11 — Desc', type: 'text', hint: 'SSO, audit logs and access controls' },
+          { key: 'cmp_row12_name', label: 'Table Row 12 — Name', type: 'text', hint: 'Support' },
+          { key: 'cmp_row12_desc', label: 'Table Row 12 — Desc', type: 'text', hint: 'How we help when you need us' },
+          { key: 'cmp_row12_basic',      label: 'Support — Basic value',      type: 'text', hint: 'Email' },
+          { key: 'cmp_row12_premium',    label: 'Support — Premium value',    type: 'text', hint: 'Priority' },
+          { key: 'cmp_row12_business',   label: 'Support — Business value',   type: 'text', hint: 'Phone & Chat' },
+          { key: 'cmp_row12_enterprise', label: 'Support — Enterprise value', type: 'text', hint: 'Dedicated' },
+        ]
+      },
+      {
+        id: 'project', label: 'Project Management Section', fields: [
+          { key: 'project_tag',      label: 'Tag Label',       type: 'text',     hint: 'PROJECT MANAGEMENT' },
+          { key: 'project_title',    label: 'Section Title',   type: 'text',     hint: 'Keep every project moving forward' },
+          { key: 'project_body',     label: 'Description',     type: 'textarea' },
+          { key: 'project_cta',      label: 'Button Text',     type: 'text',     hint: 'Get Started' },
+          { key: 'project_cta_url',  label: 'Button URL',      type: 'url',      hint: 'https://login.pryro.com' },
+          { key: 'project_feat1',    label: 'Feature 1 Label', type: 'text',     hint: 'Tasks' },
+          { key: 'project_feat2',    label: 'Feature 2 Label', type: 'text',     hint: 'Time tracking' },
+          { key: 'project_feat3',    label: 'Feature 3 Label', type: 'text',     hint: 'Timesheets' },
+          { key: 'project_feat4',    label: 'Feature 4 Label', type: 'text',     hint: 'Reports' },
+        ]
+      },
+      {
+        id: 'financial', label: 'Financial Management Section', fields: [
+          { key: 'financial_tag',      label: 'Tag Label',       type: 'text',     hint: 'FINANCIAL MANAGEMENT' },
+          { key: 'financial_title',    label: 'Section Title',   type: 'text',     hint: 'Track income, get paid, stress less' },
+          { key: 'financial_body',     label: 'Description',     type: 'textarea' },
+          { key: 'financial_cta',      label: 'Button Text',     type: 'text',     hint: 'Get Started' },
+          { key: 'financial_cta_url',  label: 'Button URL',      type: 'url',      hint: 'https://login.pryro.com' },
+          { key: 'financial_feat1',    label: 'Feature 1 Label', type: 'text',     hint: 'Invoicing' },
+          { key: 'financial_feat2',    label: 'Feature 2 Label', type: 'text',     hint: 'Budgets' },
+          { key: 'financial_feat3',    label: 'Feature 3 Label', type: 'text',     hint: 'Forecasting' },
+          { key: 'financial_feat4',    label: 'Feature 4 Label', type: 'text',     hint: 'Integrations' },
+        ]
+      },
+      {
+        id: 'meet', label: 'Meet Pryro Section', fields: [
+          { key: 'meet_title',           label: 'Headline',               type: 'textarea', hint: 'Meet Pryro, business\nmanagement, finally simple.' },
+          { key: 'business_cards_title', label: 'Business Cards Heading', type: 'text',     hint: 'Built for every part of your business' },
+        ]
+      },
+      {
+        id: 'testimonials', label: 'Testimonials Section', fields: [
+          { key: 'testimonials_title',   label: 'Section Headline',  type: 'textarea', hint: 'Finally, one platform that actually\nruns our whole operation' },
+          { key: 'testimonials_name',    label: 'Featured Name',     type: 'text',     hint: 'Kofi' },
+          { key: 'testimonials_role',    label: 'Featured Role',     type: 'text',     hint: 'CEO, Accra Fresh Foods' },
+          { key: 'testimonial_1_text',   label: 'Testimonial 1 Text', type: 'textarea' },
+          { key: 'testimonial_1_name',   label: 'Testimonial 1 Name', type: 'text',     hint: 'Amara' },
+          { key: 'testimonial_1_role',   label: 'Testimonial 1 Role', type: 'text',     hint: 'Founder, Dakar Studio Co.' },
+          { key: 'testimonial_2_text',   label: 'Testimonial 2 Text', type: 'textarea' },
+          { key: 'testimonial_2_name',   label: 'Testimonial 2 Name', type: 'text',     hint: 'Ngozi' },
+          { key: 'testimonial_2_role',   label: 'Testimonial 2 Role', type: 'text',     hint: 'MD, Eze Logistics Ltd.' },
+          { key: 'testimonial_3_text',   label: 'Testimonial 3 Text', type: 'textarea' },
+          { key: 'testimonial_3_name',   label: 'Testimonial 3 Name', type: 'text',     hint: 'Kwame' },
+          { key: 'testimonial_3_role',   label: 'Testimonial 3 Role', type: 'text',     hint: 'Director, Asante Build Group' },
+          { key: 'testimonial_4_text',   label: 'Testimonial 4 Text', type: 'textarea' },
+          { key: 'testimonial_4_name',   label: 'Testimonial 4 Name', type: 'text',     hint: 'Fatou' },
+          { key: 'testimonial_4_role',   label: 'Testimonial 4 Role', type: 'text',     hint: 'Finance Lead, Camara Trading' },
+          { key: 'testimonial_5_text',   label: 'Testimonial 5 Text', type: 'textarea' },
+          { key: 'testimonial_5_name',   label: 'Testimonial 5 Name', type: 'text',     hint: 'James' },
+          { key: 'testimonial_5_role',   label: 'Testimonial 5 Role', type: 'text',     hint: 'COO, Okonkwo & Partners' },
+          { key: 'testimonial_6_text',   label: 'Testimonial 6 Text', type: 'textarea' },
+          { key: 'testimonial_6_name',   label: 'Testimonial 6 Name', type: 'text',     hint: 'Aissatou' },
+          { key: 'testimonial_6_role',   label: 'Testimonial 6 Role', type: 'text',     hint: 'Operations Manager, Bah Retail' },
+          { key: 'testimonial_7_text',   label: 'Testimonial 7 Text', type: 'textarea' },
+          { key: 'testimonial_7_name',   label: 'Testimonial 7 Name', type: 'text',     hint: 'Emmanuel' },
+          { key: 'testimonial_7_role',   label: 'Testimonial 7 Role', type: 'text',     hint: 'Executive Director, Hope Forward NGO' },
         ]
       },
       {
@@ -314,10 +451,147 @@ const PAGE_DEFS: PageDef[] = [
 const PAGE_GROUPS = ['Main', 'Solutions']
 
 // ─────────────────────────────────────────────────────────────────────────────
+// LAYOUT TEMPLATES — used when creating a new custom page
+// ─────────────────────────────────────────────────────────────────────────────
+type LayoutTemplate = 'solution' | 'about-style' | 'custom'
+
+const LAYOUT_OPTIONS: { id: LayoutTemplate; label: string; description: string }[] = [
+  { id: 'solution',    label: 'Solution Page',   description: 'Hero · Features · Content · CTA — same layout as solution pages' },
+  { id: 'about-style', label: 'About-style Page', description: 'Hero · Story sections · Values · CTA' },
+  { id: 'custom',      label: 'Custom Page',      description: 'Hero · Rich body text · CTA — flexible general-purpose layout' },
+]
+
+function buildPageDef(slug: string, title: string, layout: LayoutTemplate): PageDef {
+  const s = slug  // shorthand
+  const label = title
+
+  if (layout === 'solution') {
+    return {
+      slug, label, icon: '/icon/dashboard icon.png', group: 'Custom', layout: 'solution',
+      sections: [
+        { id: 'hero', label: 'Hero Section', fields: [
+          { key: `${s}_hero_badge`,    label: 'Badge Text',    type: 'text' },
+          { key: `${s}_hero_title`,    label: 'Page Title',    type: 'text' },
+          { key: `${s}_hero_subtitle`, label: 'Sub-title',     type: 'textarea' },
+          { key: `${s}_hero_cta1`,     label: 'Button 1 Text', type: 'text', hint: 'Get Started' },
+          { key: `${s}_hero_cta1_url`, label: 'Button 1 URL',  type: 'url' },
+          { key: `${s}_hero_cta2`,     label: 'Button 2 Text', type: 'text', hint: 'Contact Sales' },
+          { key: `${s}_hero_cta2_url`, label: 'Button 2 URL',  type: 'url' },
+          { key: `${s}_hero_image`,    label: 'Hero Image',    type: 'image' },
+        ]},
+        { id: 'features', label: 'Features Section', fields: [
+          { key: `${s}_features_title`,    label: 'Section Title', type: 'text' },
+          { key: `${s}_features_subtitle`, label: 'Sub-title',     type: 'textarea' },
+          { key: `${s}_features_image`,    label: 'Image',         type: 'image' },
+          { key: `${s}_feat1_title`,       label: 'Feature 1',     type: 'text' },
+          { key: `${s}_feat1_desc`,        label: 'Feature 1 Desc',type: 'textarea' },
+          { key: `${s}_feat2_title`,       label: 'Feature 2',     type: 'text' },
+          { key: `${s}_feat2_desc`,        label: 'Feature 2 Desc',type: 'textarea' },
+          { key: `${s}_feat3_title`,       label: 'Feature 3',     type: 'text' },
+          { key: `${s}_feat3_desc`,        label: 'Feature 3 Desc',type: 'textarea' },
+          { key: `${s}_feat4_title`,       label: 'Feature 4',     type: 'text' },
+          { key: `${s}_feat4_desc`,        label: 'Feature 4 Desc',type: 'textarea' },
+        ]},
+        { id: 'content', label: 'Content Section', fields: [
+          { key: `${s}_content_title`,     label: 'Section Title',    type: 'text' },
+          { key: `${s}_content_highlight`, label: 'Highlighted Text', type: 'textarea' },
+          { key: `${s}_content_body`,      label: 'Body Text',        type: 'textarea' },
+          { key: `${s}_content_image`,     label: 'Image',            type: 'image' },
+          { key: `${s}_card1_title`,       label: 'Card 1 Title',     type: 'text' },
+          { key: `${s}_card1_body`,        label: 'Card 1 Body',      type: 'textarea' },
+          { key: `${s}_card2_title`,       label: 'Card 2 Title',     type: 'text' },
+          { key: `${s}_card2_body`,        label: 'Card 2 Body',      type: 'textarea' },
+        ]},
+        { id: 'cta', label: 'CTA Section', fields: [
+          { key: `${s}_cta_badge`, label: 'Badge',      type: 'text' },
+          { key: `${s}_cta_title`, label: 'Title',      type: 'text' },
+          { key: `${s}_cta_body`,  label: 'Body',       type: 'textarea' },
+          { key: `${s}_cta_btn`,   label: 'Button',     type: 'text', hint: 'Get Started' },
+          { key: `${s}_cta_url`,   label: 'Button URL', type: 'url' },
+        ]},
+      ],
+    }
+  }
+
+  if (layout === 'about-style') {
+    return {
+      slug, label, icon: '/icon/business coach icon.png', group: 'Custom', layout: 'about-style',
+      sections: [
+        { id: 'hero', label: 'Hero', fields: [
+          { key: `${s}_hero_title`,    label: 'Page Title', type: 'text' },
+          { key: `${s}_hero_subtitle`, label: 'Sub-title',  type: 'textarea' },
+          { key: `${s}_hero_image`,    label: 'Hero Image', type: 'image' },
+        ]},
+        { id: 'story', label: 'Story / Introduction', fields: [
+          { key: `${s}_story_title`, label: 'Section Title', type: 'text' },
+          { key: `${s}_story_p1`,    label: 'Paragraph 1',   type: 'textarea' },
+          { key: `${s}_story_p2`,    label: 'Paragraph 2',   type: 'textarea' },
+          { key: `${s}_story_p3`,    label: 'Paragraph 3',   type: 'textarea' },
+          { key: `${s}_story_image`, label: 'Section Image', type: 'image' },
+        ]},
+        { id: 'values', label: 'Values / Highlights', fields: [
+          { key: `${s}_values_title`,   label: 'Section Title',  type: 'text' },
+          { key: `${s}_value1_title`,   label: 'Item 1 Title',   type: 'text' },
+          { key: `${s}_value1_desc`,    label: 'Item 1 Desc',    type: 'textarea' },
+          { key: `${s}_value2_title`,   label: 'Item 2 Title',   type: 'text' },
+          { key: `${s}_value2_desc`,    label: 'Item 2 Desc',    type: 'textarea' },
+          { key: `${s}_value3_title`,   label: 'Item 3 Title',   type: 'text' },
+          { key: `${s}_value3_desc`,    label: 'Item 3 Desc',    type: 'textarea' },
+          { key: `${s}_value4_title`,   label: 'Item 4 Title',   type: 'text' },
+          { key: `${s}_value4_desc`,    label: 'Item 4 Desc',    type: 'textarea' },
+        ]},
+        { id: 'cta', label: 'CTA', fields: [
+          { key: `${s}_cta_badge`, label: 'Badge',      type: 'text' },
+          { key: `${s}_cta_title`, label: 'Title',      type: 'text' },
+          { key: `${s}_cta_body`,  label: 'Body',       type: 'textarea' },
+          { key: `${s}_cta_btn`,   label: 'Button',     type: 'text' },
+          { key: `${s}_cta_url`,   label: 'Button URL', type: 'url' },
+        ]},
+      ],
+    }
+  }
+
+  // custom
+  return {
+    slug, label, icon: '/icon/document icon.png', group: 'Custom', layout: 'custom',
+    sections: [
+      { id: 'hero', label: 'Hero', fields: [
+        { key: `${s}_hero_title`,    label: 'Page Title',   type: 'text' },
+        { key: `${s}_hero_subtitle`, label: 'Sub-title',    type: 'textarea' },
+        { key: `${s}_hero_badge`,    label: 'Badge / Tag',  type: 'text' },
+        { key: `${s}_hero_image`,    label: 'Hero Image',   type: 'image' },
+        { key: `${s}_hero_cta_text`, label: 'CTA Text',     type: 'text' },
+        { key: `${s}_hero_cta_url`,  label: 'CTA URL',      type: 'url' },
+      ]},
+      { id: 'body', label: 'Body Content', fields: [
+        { key: `${s}_body_title`,  label: 'Section Title', type: 'text' },
+        { key: `${s}_body_text1`,  label: 'Body Block 1',  type: 'textarea' },
+        { key: `${s}_body_text2`,  label: 'Body Block 2',  type: 'textarea' },
+        { key: `${s}_body_text3`,  label: 'Body Block 3',  type: 'textarea' },
+        { key: `${s}_body_image1`, label: 'Image 1',       type: 'image' },
+        { key: `${s}_body_image2`, label: 'Image 2',       type: 'image' },
+      ]},
+      { id: 'cta', label: 'CTA', fields: [
+        { key: `${s}_cta_title`, label: 'CTA Title',  type: 'text' },
+        { key: `${s}_cta_body`,  label: 'CTA Body',   type: 'textarea' },
+        { key: `${s}_cta_btn`,   label: 'Button',     type: 'text' },
+        { key: `${s}_cta_url`,   label: 'Button URL', type: 'url' },
+      ]},
+    ],
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // DEFAULT EXPORT — tab switcher
 // ─────────────────────────────────────────────────────────────────────────────
 export default function PagesPage() {
   const [tab, setTab] = useState<'list' | 'editor'>('list')
+  const [editorRefreshKey, setEditorRefreshKey] = useState(0)
+
+  function openEditorWithRefresh() {
+    setEditorRefreshKey(k => k + 1)
+    setTab('editor')
+  }
 
   return (
     <div className="max-w-7xl mx-auto space-y-4">
@@ -338,7 +612,7 @@ export default function PagesPage() {
         </div>
       </div>
 
-      {tab === 'list' ? <PagesList /> : <PageEditor />}
+      {tab === 'list' ? <PagesList onPageCreated={openEditorWithRefresh} /> : <PageEditor key={editorRefreshKey} />}
     </div>
   )
 }
@@ -351,13 +625,14 @@ interface Page {
   meta_description: string | null; is_published: boolean; updated_at: string
 }
 
-function PagesList() {
+function PagesList({ onPageCreated }: { onPageCreated: () => void }) {
   const [pages, setPages] = useState<Page[]>([])
   const [loading, setLoading] = useState(true)
   const [msg, setMsg] = useState('')
   const [showAdd, setShowAdd] = useState(false)
   const [newTitle, setNewTitle] = useState('')
   const [newSlug, setNewSlug] = useState('')
+  const [newLayout, setNewLayout] = useState<LayoutTemplate>('solution')
   const [saving, setSaving] = useState(false)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editTitle, setEditTitle] = useState('')
@@ -381,8 +656,22 @@ function PagesList() {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: newTitle, slug: newSlug }),
     }).then(r => r.json())
-    if (d.success) { flash('✓ Page created'); setShowAdd(false); setNewTitle(''); setNewSlug(''); load() }
-    else flash('✗ ' + d.error)
+    if (d.success) {
+      // Persist the page definition (layout template) to dynamic_content so
+      // the editor can show it without any code changes.
+      const pageDef = buildPageDef(newSlug, newTitle, newLayout)
+      await fetch('/api/admin/page-content', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ values: { [`_page_def__${newSlug}`]: JSON.stringify(pageDef) } }),
+      })
+      flash('✓ Page created — go to "Edit Page Content" to fill in content')
+      setShowAdd(false); setNewTitle(''); setNewSlug(''); setNewLayout('solution')
+      load()
+      onPageCreated()
+    } else {
+      flash('✗ ' + d.error)
+    }
     setSaving(false)
   }
 
@@ -432,25 +721,51 @@ function PagesList() {
       </div>
 
       {showAdd && (
-        <div className="bg-white border border-blue-200 rounded-lg p-5 space-y-3">
-          <h2 className="font-medium text-gray-800 text-sm">New Page</h2>
+        <div className="bg-white border border-blue-200 rounded-lg p-5 space-y-4">
+          <div className="flex items-center gap-2">
+            <Layers className="w-4 h-4 text-blue-600" />
+            <h2 className="font-semibold text-gray-800 text-sm">New Page</h2>
+          </div>
+
+          {/* Title + Slug */}
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="text-xs text-gray-500 mb-1 block">Title</label>
               <input value={newTitle}
                 onChange={e => { setNewTitle(e.target.value); setNewSlug(e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')) }}
-                placeholder="About Us" className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                placeholder="Services" className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
             </div>
             <div>
               <label className="text-xs text-gray-500 mb-1 block">URL Slug</label>
-              <div className="flex items-center gap-1">
-                <span className="text-xs text-gray-400">/</span>
-                <input value={newSlug} onChange={e => setNewSlug(e.target.value)} placeholder="about-us"
-                  className="flex-1 border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+              <div className="flex items-center gap-1 border border-gray-200 rounded-md px-3 py-2">
+                <span className="text-xs text-gray-400 flex-shrink-0">/</span>
+                <input value={newSlug} onChange={e => setNewSlug(e.target.value)} placeholder="services"
+                  className="flex-1 text-sm focus:outline-none" />
               </div>
             </div>
           </div>
-          <div className="flex gap-2">
+
+          {/* Layout picker */}
+          <div>
+            <label className="text-xs text-gray-500 mb-2 block">Page Layout</label>
+            <div className="grid grid-cols-3 gap-2">
+              {LAYOUT_OPTIONS.map(opt => (
+                <button
+                  key={opt.id}
+                  type="button"
+                  onClick={() => setNewLayout(opt.id)}
+                  className={`text-left p-3 rounded-lg border-2 transition-colors ${newLayout === opt.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300 bg-white'}`}
+                >
+                  <p className={`text-xs font-semibold mb-1 ${newLayout === opt.id ? 'text-blue-700' : 'text-gray-700'}`}>
+                    {opt.label}
+                  </p>
+                  <p className="text-[11px] text-gray-500 leading-snug">{opt.description}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex gap-2 pt-1">
             <button onClick={create} disabled={saving || !newTitle || !newSlug}
               className="text-sm bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 disabled:opacity-50">
               {saving ? 'Creating…' : 'Create'}
@@ -555,6 +870,7 @@ function PagesList() {
 // ─────────────────────────────────────────────────────────────────────────────
 function PageEditor() {
   const [values, setValues] = useState<Record<string, string>>({})
+  const [allPageDefs, setAllPageDefs] = useState<PageDef[]>(PAGE_DEFS)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState('')
@@ -570,8 +886,24 @@ function PageEditor() {
     const d = await fetch('/api/admin/page-content').then(r => r.json())
     if (d.success) {
       const map: Record<string, string> = {}
-      for (const row of (d.data || [])) map[row.key_name] = row.value ?? ''
+      const customDefs: PageDef[] = []
+      for (const row of (d.data || [])) {
+        map[row.key_name] = row.value ?? ''
+        // Detect saved page definitions (keys like _page_def__my-slug)
+        if (row.key_name.startsWith('_page_def__') && row.value) {
+          try {
+            const def = JSON.parse(row.value) as PageDef
+            // Only add if not already in built-in PAGE_DEFS
+            if (!PAGE_DEFS.find(p => p.slug === def.slug)) {
+              customDefs.push(def)
+            }
+          } catch { /* skip malformed */ }
+        }
+      }
       setValues(map)
+      if (customDefs.length > 0) {
+        setAllPageDefs([...PAGE_DEFS, ...customDefs])
+      }
     }
     setLoading(false)
   }
@@ -581,10 +913,19 @@ function PageEditor() {
 
   async function save() {
     setSaving(true)
+    // Collect only the keys that belong to the currently active page so we
+    // don't blast the entire values map (which includes _page_def__ blobs and
+    // every other page's fields) on every click.
+    const pageKeys = currentPageDef
+      ? new Set(currentPageDef.sections.flatMap(s => s.fields.map(f => f.key)))
+      : null
+    const payload = pageKeys
+      ? Object.fromEntries(Object.entries(values).filter(([k]) => pageKeys.has(k)))
+      : values
     const d = await fetch('/api/admin/page-content', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ values }),
+      body: JSON.stringify({ values: payload, slug: activePage }),
     }).then(r => r.json())
     flash(d.success ? '✓ Saved — refresh site to see changes' : '✗ ' + d.error)
     setSaving(false)
@@ -599,19 +940,22 @@ function PageEditor() {
     setUploading(null)
   }
 
-  const filteredPages = PAGE_DEFS.filter(p =>
+  const filteredPages = allPageDefs.filter(p =>
     !search || p.label.toLowerCase().includes(search.toLowerCase()) || p.slug.includes(search.toLowerCase())
   )
 
-  const currentPageDef = PAGE_DEFS.find(p => p.slug === activePage)
+  const currentPageDef = allPageDefs.find(p => p.slug === activePage)
   const currentSection = currentPageDef?.sections.find(s => s.id === activeSection)
 
   // When switching page, reset to first section
   function switchPage(slug: string) {
     setActivePage(slug)
-    const def = PAGE_DEFS.find(p => p.slug === slug)
+    const def = allPageDefs.find(p => p.slug === slug)
     if (def?.sections.length) setActiveSection(def.sections[0].id)
   }
+
+  // All groups present in the merged defs
+  const allGroups = Array.from(new Set(allPageDefs.map(p => p.group)))
 
   return (
     <div className="flex gap-4" style={{ height: 'calc(100vh - 13rem)' }}>
@@ -626,7 +970,7 @@ function PageEditor() {
           </div>
         </div>
         <div className="flex-1 overflow-y-auto py-1">
-          {PAGE_GROUPS.map(group => {
+          {allGroups.map(group => {
             const groupPages = filteredPages.filter(p => p.group === group)
             if (!groupPages.length) return null
             return (
@@ -635,7 +979,9 @@ function PageEditor() {
                 {groupPages.map(p => (
                   <button key={p.slug} onClick={() => switchPage(p.slug)}
                     className={`w-full flex items-center gap-2 px-3 py-2 text-left transition-colors ${activePage === p.slug ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`}>
-                    <img src={p.icon} alt="" className="w-4 h-4 object-contain flex-shrink-0" />
+                    {p.group === 'Custom'
+                      ? <Globe className="w-4 h-4 flex-shrink-0 text-purple-400" />
+                      : <img src={p.icon} alt="" className="w-4 h-4 object-contain flex-shrink-0" />}
                     <span className="text-xs font-medium truncate">{p.label}</span>
                   </button>
                 ))}
@@ -668,7 +1014,9 @@ function PageEditor() {
           <div className="flex items-center gap-2 min-w-0">
             {currentPageDef && (
               <>
-                <img src={currentPageDef.icon} alt="" className="w-4 h-4 object-contain flex-shrink-0" />
+                {currentPageDef.group === 'Custom'
+                  ? <Globe className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                  : <img src={currentPageDef.icon} alt="" className="w-4 h-4 object-contain flex-shrink-0" />}
                 <span className="text-sm font-semibold text-gray-700 truncate">{currentPageDef.label}</span>
                 <span className="text-gray-300 flex-shrink-0">›</span>
                 <span className="text-sm text-gray-500 truncate">{currentSection?.label}</span>

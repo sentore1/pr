@@ -35,10 +35,11 @@ export function getPool(): mysql.Pool {
       namedPlaceholders: true,
     })
 
-    // Handle pool errors
-    pool.on('error', (err) => {
+    // Handle pool-level errors gracefully (mysql2 typings only expose 'enqueue')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(pool as any).on('error', (err: any) => {
       console.error('MySQL pool error:', err)
-      if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      if (err?.code === 'PROTOCOL_CONNECTION_LOST') {
         console.error('Database connection lost. Reconnecting...')
         pool = null
       }

@@ -5,7 +5,11 @@ import { Save, RotateCcw } from 'lucide-react'
 
 interface StyleMap { [category: string]: { [property: string]: string } }
 
-const STYLE_SCHEMA = [
+type SchemaField =
+  | { key: string; label: string; type: 'color' | 'text'; hint?: string }
+  | { key: string; label: string; type: 'select'; options: string[]; hint?: string }
+
+const STYLE_SCHEMA: { category: string; label: string; fields: SchemaField[] }[] = [
   {
     category: 'colors',
     label: 'Colors',

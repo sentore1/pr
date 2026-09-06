@@ -16,16 +16,22 @@ interface Props {
 }
 
 export function CMSProvider({ data, children }: Props) {
-  // Inject CSS variables into :root so all components can use them
+  // Update CSS variables on the client when styles change.
+  // The SSR pass already injected a <style id="cms-vars-ssr"> tag before paint,
+  // so border radius is correct from the very first frame — no flash.
+  // Here we just keep it in sync if data changes (e.g. hot-reload in dev).
   useEffect(() => {
     const vars = buildCSSVars(data.styles)
-    if (vars) {
-      const existing = document.getElementById('cms-vars')
-      const tag = existing || document.createElement('style')
-      tag.id = 'cms-vars'
-      tag.textContent = `:root { ${vars} }`
-      if (!existing) document.head.appendChild(tag)
+    if (!vars) return
+    // Reuse the SSR tag if present, otherwise create one
+    const id = 'cms-vars-ssr'
+    let tag = document.getElementById(id) as HTMLStyleElement | null
+    if (!tag) {
+      tag = document.createElement('style')
+      tag.id = id
+      document.head.insertBefore(tag, document.head.firstChild)
     }
+    tag.textContent = `:root { ${vars} }`
   }, [data.styles])
 
   // Track page view

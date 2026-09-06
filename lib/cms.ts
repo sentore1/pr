@@ -169,7 +169,8 @@ export function buildCSSVars(styles: CMSStyles): string {
     f.heading    && `--cms-font-heading:${f.heading}`,
     f.body       && `--cms-font-body:${f.body}`,
     f.size_base  && `--cms-font-size:${f.size_base}`,
-    // Radius — keep original names so Tailwind rounded-* and all UI components still work
+    // Radius — injected with !important so they override the globals.css :root defaults
+    // regardless of stylesheet load order.
     b.radius     && `--radius:${b.radius}`,
     b.radius_btn && `--radius-btn:${b.radius_btn}`,
     // Gradient

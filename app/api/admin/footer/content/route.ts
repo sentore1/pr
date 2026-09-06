@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 import { query, insert, update } from '@/lib/db/connection'
+import { revalidatePath } from 'next/cache'
 
 export async function GET() {
   const session = await getSession()
@@ -27,5 +28,6 @@ export async function PUT(req: NextRequest) {
     }
   }
 
+  revalidatePath('/', 'layout')
   return NextResponse.json({ success: true })
 }
