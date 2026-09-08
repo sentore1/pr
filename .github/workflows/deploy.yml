@@ -1,0 +1,43 @@
+name: Deploy to Contabo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: SSH Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.CONTABO_HOST }}
+          username: ${{ secrets.CONTABO_USER }}
+          key: ${{ secrets.CONTABO_SSH_KEY }}
+          port: ${{ secrets.CONTABO_SSH_PORT }}
+          script: |
+            set -e
+
+            # Go to project directory
+            cd /var/www/pryro
+
+            # Pull latest code
+            git pull origin main
+
+            # Install dependencies (skip devDeps in production)
+            npm ci --omit=dev
+
+            # Run database migrations if any
+            # npm run db:migrate
+
+            # Build the Next.js app
+            npm run build
+
+            # Restart PM2 gracefully (zero-downtime reload)
+            pm2 reload pryro-cms --update-env || pm2 start ecosystem.config.js --env production
+
+            # Save PM2 process list so it survives reboots
+            pm2 save
