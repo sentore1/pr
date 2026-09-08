@@ -34,7 +34,7 @@ export default function HumanResourcePage() {
       <FeaturesSection variant="hr" />
       
       <ContentSection variant="hr" />
-
+      <CmsBlocks slug="human-resource" />
       <SimpleFooter />
     </div>
   )

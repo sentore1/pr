@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+.footer-gradient {
+  background: linear-gradient(to bottom, #F9FAFB 0%, #80C2FF 25%, #40A3FF 40%, #2094FF 55%, #108CFF 70%, #0084FF 100%);
+  margin-top: 40px;
+  padding-top: 120px;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

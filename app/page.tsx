@@ -2,17 +2,17 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { PawPrint, Zap, Package, ShoppingCart, DollarSign, Calendar, Users, Trees, Satellite, Menu, X, ChevronDown, ListTodo, Clock, FileText, BarChart3, Receipt, Wallet, TrendingUp, Plug, Building2, Briefcase, UserCircle, Boxes, HeartHandshake, Hammer, Truck, Mail, Phone, Bot, Check, Minus, ArrowRight } from "lucide-react"
+import { PawPrint, Zap, Package, ShoppingCart, DollarSign, Calendar, Users, Trees, Satellite, Menu, X, Youtube, Instagram, ChevronDown, ListTodo, Clock, FileText, BarChart3, Receipt, Wallet, TrendingUp, Plug, Building2, Briefcase, UserCircle, Boxes, HeartHandshake, Hammer, Truck, Mail, Phone, Bot, Check, Minus, ArrowRight } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AnimatedText } from "@/components/animated-text"
 import { CustomDroneIcon } from "@/components/drone-icon"
 import { WorldMap } from "@/components/world-map"
 import { Header } from "@/components/header"
-import { SimpleFooter } from "@/components/simple-footer"
 import { useCMS } from "@/components/cms-provider"
 import { DEFAULTS } from "@/lib/page-content"
 import { experiences } from "@/lib/experience-data"
 import type { Experience } from "@/lib/experience-data"
+import { CmsBlocks } from "@/components/cms-blocks"
 
 // Fallback carousel icons used when DB has no icons seeded yet
 const FALLBACK_CAROUSEL = [
@@ -2632,112 +2632,8 @@ export default function PryroPage() {
         </div>
       </section>
 
-      {/* ── CMS Content Blocks (from /admin/content) ── */}
-      {(cms?.contentBlocks ?? []).filter(b => b.is_active).sort((a, b) => a.sort_order - b.sort_order).map(block => (
-        <section key={block.id} className="relative px-4 py-12 md:py-16 animate-on-scroll"
-          style={{ background: block.settings?.background || undefined }}>
-          <div className="max-w-[1120px] w-full mx-auto">
-
-            {/* HERO block */}
-            {block.block_type === 'hero' && (
-              <div className="text-center py-12" style={{ color: block.settings?.textColor || 'inherit' }}>
-                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-16 h-16 object-contain mx-auto mb-6" />}
-                <h2 className="font-serif text-4xl md:text-6xl font-medium mb-6">{block.title}</h2>
-                {block.content && <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 opacity-80">{block.content}</p>}
-                {block.settings?.buttonText && (
-                  <a href={block.settings.buttonUrl || '#'}>
-                    <Button className="px-8 py-6 text-base rounded-[5px]">{block.settings.buttonText}</Button>
-                  </a>
-                )}
-              </div>
-            )}
-
-            {/* TEXT block */}
-            {block.block_type === 'text' && (
-              <div className={`max-w-3xl mx-auto text-${block.settings?.alignment || 'left'}`}>
-                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-10 h-10 object-contain mb-4" />}
-                {block.title && <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">{block.title}</h2>}
-                <p className={`text-${block.settings?.fontSize || 'base'} text-gray-600 leading-relaxed`}>{block.content}</p>
-              </div>
-            )}
-
-            {/* IMAGE block */}
-            {block.block_type === 'image' && block.settings?.src && (
-              <div className="text-center">
-                {block.title && <h2 className="text-2xl font-bold mb-6 text-gray-900">{block.title}</h2>}
-                <img
-                  src={block.settings.src}
-                  alt={block.settings.alt || block.title}
-                  className={`mx-auto ${block.settings.rounded !== false ? 'rounded-[5px]' : ''}`}
-                  style={{ width: block.settings.width || '100%', maxWidth: '100%' }}
-                />
-                {block.content && <p className="text-sm text-gray-500 mt-3">{block.content}</p>}
-              </div>
-            )}
-
-            {/* CTA block */}
-            {block.block_type === 'cta' && (
-              <div className="text-center py-8 rounded-[5px] px-8"
-                style={{ background: block.settings?.background || '#0072FD', color: block.settings?.textColor || '#ffffff' }}>
-                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-12 h-12 object-contain mx-auto mb-4" />}
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">{block.title}</h2>
-                {block.content && <p className="text-lg mb-8 opacity-80 max-w-2xl mx-auto">{block.content}</p>}
-                {block.settings?.buttonText && (
-                  <a href={block.settings.buttonUrl || '#'}>
-                    <Button className="bg-white text-blue-600 hover:bg-white/90 px-8 py-6 text-base rounded-[5px]">
-                      {block.settings.buttonText}
-                    </Button>
-                  </a>
-                )}
-              </div>
-            )}
-
-            {/* FEATURES block */}
-            {block.block_type === 'features' && (
-              <div>
-                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-10 h-10 object-contain mb-4" />}
-                {block.title && <h2 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900">{block.title}</h2>}
-                {block.content && <p className="text-gray-600 mb-8">{block.content}</p>}
-                {Array.isArray(block.settings?.items) && block.settings.items.length > 0 && (
-                  <div className={`grid grid-cols-1 md:grid-cols-${block.settings?.columns || 3} gap-6`}>
-                    {block.settings.items.map((item: any, i: number) => (
-                      <div key={i} className="border border-gray-200 rounded-[5px] p-5">
-                        {item.icon && <img src={item.icon} alt="" className="w-8 h-8 object-contain mb-3" />}
-                        <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
-                        <p className="text-sm text-gray-600">{item.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* TESTIMONIALS block */}
-            {block.block_type === 'testimonials' && (
-              <div className="text-center">
-                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-10 h-10 object-contain mx-auto mb-4" />}
-                {block.title && <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900">{block.title}</h2>}
-                {block.content && <p className="text-gray-600 italic text-lg max-w-2xl mx-auto">&ldquo;{block.content}&rdquo;</p>}
-              </div>
-            )}
-
-            {/* PRICING block */}
-            {block.block_type === 'pricing' && (
-              <div>
-                {block.settings?.icon && <img src={block.settings.icon} alt="" className="w-10 h-10 object-contain mb-4" />}
-                {block.title && <h2 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900">{block.title}</h2>}
-                {block.content && <p className="text-gray-600 mb-8">{block.content}</p>}
-              </div>
-            )}
-
-            {/* CUSTOM HTML block */}
-            {block.block_type === 'custom' && block.content && (
-              <div dangerouslySetInnerHTML={{ __html: block.content }} />
-            )}
-
-          </div>
-        </section>
-      ))}
+      {/* ── CMS Content Blocks (from Admin → Pages → Extra Sections) ── */}
+      <CmsBlocks slug="home" />
 
       <div style={{ background: "linear-gradient(to bottom, #F9FAFB 0%, #FFFFFF 30%, #80C2FF 50%, #40A3FF 65%, #2094FF 75%, #108CFF 85%, #0084FF 100%)" }}>
       <section
@@ -2767,9 +2663,128 @@ export default function PryroPage() {
         </div>
       </section>
 
-      </div>
+      <footer className="relative px-4 py-8 pt-16 bg-transparent">
+        <div className="max-w-[1120px] w-full mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-8 mb-12">
+            {/* Brand Column */}
+            <div className="flex flex-col gap-4">
+              <div className="w-fit">
+                <img src="/pryro logo.png" alt="Pryro" className="h-8 w-auto" />
+              </div>
+              <p className="text-xs text-white/80 leading-relaxed">
+                Empowering businesses worldwide with intelligent ERP solutions and automation.
+              </p>
+              <div className="flex items-center gap-4 mt-2">
+                <a
+                  href="https://twitter.com/pryro.co"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/80 hover:text-white transition-colors"
+                  aria-label="X (Twitter)"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
+                <a
+                  href="https://youtube.com/pryroo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/80 hover:text-white transition-colors"
+                  aria-label="YouTube"
+                >
+                  <Youtube className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://instagram.com/pryro.co"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/80 hover:text-white transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
 
-      <SimpleFooter />
+            {/* Solutions Menu */}
+            <div className="flex flex-col gap-4">
+              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Solutions</div>
+              <div className="flex flex-col gap-3">
+                <a href="/small-business" className="text-sm text-white/80 hover:text-white transition-colors">Small Business</a>
+                <a href="/accountants-bookkeepers" className="text-sm text-white/80 hover:text-white transition-colors">Accountants & Bookkeepers</a>
+                <a href="/project" className="text-sm text-white/80 hover:text-white transition-colors">Project</a>
+                <a href="/human-resource" className="text-sm text-white/80 hover:text-white transition-colors">Human Resource</a>
+                <a href="/stock-management" className="text-sm text-white/80 hover:text-white transition-colors">Stock Management</a>
+                <a href="/customer-relation" className="text-sm text-white/80 hover:text-white transition-colors">Customer Relation</a>
+                <a href="/self-employed" className="text-sm text-white/80 hover:text-white transition-colors">Self-employed</a>
+                <a href="/non-profit" className="text-sm text-white/80 hover:text-white transition-colors">Non-profit</a>
+                <a href="/hospitality" className="text-sm text-white/80 hover:text-white transition-colors">Hospitality</a>
+                <a href="/construction" className="text-sm text-white/80 hover:text-white transition-colors">Construction</a>
+                <a href="/logistic" className="text-sm text-white/80 hover:text-white transition-colors">Logistic</a>
+                <a href="/marketing-mail" className="text-sm text-white/80 hover:text-white transition-colors">Marketing (Mail)</a>
+                <a href="/marketing-call" className="text-sm text-white/80 hover:text-white transition-colors">Marketing (Call)</a>
+                <a href="/ai-enterprise" className="text-sm text-white/80 hover:text-white transition-colors">AI for Enterprise</a>
+              </div>
+            </div>
+
+            {/* Product Menu */}
+            <div className="flex flex-col gap-4">
+              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Product</div>
+              <div className="flex flex-col gap-3">
+                <a href="/features" className="text-sm text-white/80 hover:text-white transition-colors">Features</a>
+                <a href="/pricing" className="text-sm text-white/80 hover:text-white transition-colors">Pricing</a>
+                <a href="/documentation" className="text-sm text-white/80 hover:text-white transition-colors">Documentation</a>
+                <a href="/api" className="text-sm text-white/80 hover:text-white transition-colors">API</a>
+              </div>
+            </div>
+
+            {/* Company Menu */}
+            <div className="flex flex-col gap-4">
+              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Company</div>
+              <div className="flex flex-col gap-3">
+                <a href="/about" className="text-sm text-white/80 hover:text-white transition-colors">About</a>
+                <a href="/careers" className="text-sm text-white/80 hover:text-white transition-colors">Careers</a>
+                <a href="/contact" className="text-sm text-white/80 hover:text-white transition-colors">Contact</a>
+              </div>
+            </div>
+
+            {/* WhatsApp Contact */}
+            <div className="flex flex-col gap-4">
+              <div className="text-xs uppercase tracking-[0.15em] text-white font-semibold mb-2">Contact Us</div>
+              <p className="text-xs text-white/80 mb-3">Send us a direct message on WhatsApp.</p>
+              <div className="flex flex-col gap-2">
+                <input
+                  type="text"
+                  placeholder="Type your message"
+                  id="whatsapp-message"
+                  className="px-4 py-1.5 bg-white/20 border-0 rounded-[5px] text-xs text-white placeholder-white/60 focus:outline-none transition-all"
+                />
+                <button
+                  onClick={() => {
+                    const message = (document.getElementById('whatsapp-message') as HTMLInputElement)?.value || '';
+                    window.open(`https://wa.me/250788715075?text=${encodeURIComponent(message)}`, '_blank');
+                  }}
+                  className="px-4 py-1.5 border rounded-[5px] text-xs font-medium hover:bg-white/90 transition-all bg-white border-white text-blue-600"
+                >
+                  Send WhatsApp
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Bottom */}
+          <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/80">
+            <div>© {new Date().getFullYear()} Pryro. All rights reserved.</div>
+            <div className="flex gap-6">
+              <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="/cookies" className="hover:text-white transition-colors">Cookie Settings</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+      </div>
     </div>
   )
 }

@@ -95,16 +95,17 @@ export function Header() {
 
               {/* CTA pill */}
               {ctaItems.length > 0 && (
-                <div className="flex items-center gap-1 bg-black/5 rounded-[9px] p-1 ml-2">
+                <div suppressHydrationWarning className="flex items-center gap-1 bg-black/5 rounded-[3px] p-1 ml-2">
                   {ctaItems.map((item, i) => (
                     <a
+                      suppressHydrationWarning
                       key={item.id}
                       href={item.url || '#'}
                       target={item.target}
-                      className={`text-sm font-medium px-3 py-1.5 rounded-[4px] transition-all duration-200 ${
+                      className={`text-sm font-medium px-3 py-1.5 rounded-[3px] transition-all duration-200 ${
                         i === ctaItems.length - 1
                           ? 'bg-white text-[#0f1117] shadow-sm hover:bg-white/90'
-                          : 'text-[#0f1117] hover:bg-white/60'
+                          : 'text-[#0f1117] hover:bg-white'
                       }`}
                     >
                       {item.label}

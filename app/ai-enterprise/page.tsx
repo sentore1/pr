@@ -5,24 +5,27 @@ import { SimpleFooter } from "@/components/simple-footer"
 import { Cpu, Lock, Sparkles, Zap, Package, ShoppingCart, DollarSign, Calendar, BarChart3, Users } from 'lucide-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import Link from 'next/link'
+import { CmsBlocks } from "@/components/cms-blocks"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function AIEnterprisePage() {
+  const p = usePageContent('ai-enterprise')
   return (
     <div className="min-h-screen bg-white">
       <Header />
 
       <section className="pt-32 pb-24 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-6xl md:text-7xl font-bold mb-6 text-gray-900 tracking-tight">AI-Powered Infrastructure</h1>
-          <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">Building intelligent systems that power the future of enterprise software</p>
-          <a href="https://login.pryro.com" className="inline-flex px-8 py-3.5 bg-blue-600 text-white rounded-[5px] hover:bg-blue-700 transition-colors font-medium">Get started</a>
+          <h1 className="text-6xl md:text-7xl font-bold mb-6 text-gray-900 tracking-tight">{p('hero_title', 'AI-Powered Infrastructure')}</h1>
+          <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">{p('hero_description', 'Building intelligent systems that power the future of enterprise software')}</p>
+          <a href="https://login.pryro.com" className="inline-flex px-8 py-3.5 bg-blue-600 text-white rounded-[5px] hover:bg-blue-700 transition-colors font-medium">{p('hero_cta', 'Get started')}</a>
         </div>
       </section>
 
       <section className="px-4">
         <div className="mx-auto max-w-5xl space-y-8 md:space-y-12">
           <div className="mx-auto max-w-xl space-y-6 text-center md:space-y-12">
-            <p className="text-gray-600">Our AI automation design infrastructure seamlessly integrates across your entire company technology stack — from edge computing to cloud platforms, enabling real-time intelligence and automated decision-making at every layer of your operations.</p>
+            <p className="text-gray-600">{p('intro_description', 'Our AI automation design infrastructure seamlessly integrates across your entire company technology stack — from edge computing to cloud platforms, enabling real-time intelligence and automated decision-making at every layer of your operations.')}</p>
           </div>
           <div className="relative rounded-[5px] overflow-hidden">
             <img className="w-full" src="/109919.jpg" alt="team image" loading="lazy" />
@@ -33,30 +36,30 @@ export default function AIEnterprisePage() {
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Zap className="size-4 text-gray-900" />
-                <h3 className="text-sm font-medium text-gray-900">Fast</h3>
+                <h3 className="text-sm font-medium text-gray-900">{p('pillar1_title', 'Fast')}</h3>
               </div>
-              <p className="text-gray-600 text-sm">Lightning-fast processing and real-time responses for your infrastructure needs.</p>
+              <p className="text-gray-600 text-sm">{p('pillar1_description', 'Lightning-fast processing and real-time responses for your infrastructure needs.')}</p>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Cpu className="size-4 text-gray-900" />
-                <h3 className="text-sm font-medium text-gray-900">Powerful</h3>
+                <h3 className="text-sm font-medium text-gray-900">{p('pillar2_title', 'Powerful')}</h3>
               </div>
-              <p className="text-gray-600 text-sm">Enterprise-grade AI models built for complex infrastructure management.</p>
+              <p className="text-gray-600 text-sm">{p('pillar2_description', 'Enterprise-grade AI models built for complex infrastructure management.')}</p>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Lock className="size-4 text-gray-900" />
-                <h3 className="text-sm font-medium text-gray-900">Security</h3>
+                <h3 className="text-sm font-medium text-gray-900">{p('pillar3_title', 'Security')}</h3>
               </div>
-              <p className="text-gray-600 text-sm">Bank-level security with AI-powered threat detection and prevention.</p>
+              <p className="text-gray-600 text-sm">{p('pillar3_description', 'Bank-level security with AI-powered threat detection and prevention.')}</p>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Sparkles className="size-4 text-gray-900" />
-                <h3 className="text-sm font-medium text-gray-900">AI Powered</h3>
+                <h3 className="text-sm font-medium text-gray-900">{p('pillar4_title', 'AI Powered')}</h3>
               </div>
-              <p className="text-gray-600 text-sm">Intelligent automation that learns and adapts to your business.</p>
+              <p className="text-gray-600 text-sm">{p('pillar4_description', 'Intelligent automation that learns and adapts to your business.')}</p>
             </div>
           </div>
         </div>
@@ -64,7 +67,7 @@ export default function AIEnterprisePage() {
 
       <section className="py-24 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-16 text-center text-gray-900">Why AI matters</h2>
+          <h2 className="text-3xl font-bold mb-16 text-center text-gray-900">{p('comparison_title', 'Why AI matters')}</h2>
           
           <div className="w-full overflow-auto lg:overflow-visible">
             <table className="w-full border-separate border-spacing-y-2">
@@ -99,8 +102,8 @@ export default function AIEnterprisePage() {
 
       <section className="py-24 px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">Building AI for infrastructure</h2>
-          <p className="text-lg text-gray-600 mb-16 text-center max-w-2xl mx-auto">Pioneering the next generation of intelligent infrastructure systems.</p>
+          <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">{p('building_title', 'Building AI for infrastructure')}</h2>
+          <p className="text-lg text-gray-600 mb-16 text-center max-w-2xl mx-auto">{p('building_description', 'Pioneering the next generation of intelligent infrastructure systems.')}</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="border border-gray-200 rounded-[5px] px-6 py-4 hover:border-blue-600 transition-colors">
               <div className="flex items-center gap-3">
@@ -248,15 +251,15 @@ export default function AIEnterprisePage() {
 
       <section className="py-24 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to get started?</h2>
-          <p className="text-lg text-gray-600 mb-8">Transform your operations with AI-powered infrastructure.</p>
+          <h2 className="text-3xl font-bold mb-4 text-gray-900">{p('cta_title', 'Ready to get started?')}</h2>
+          <p className="text-lg text-gray-600 mb-8">{p('cta_description', 'Transform your operations with AI-powered infrastructure.')}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/demo" className="inline-flex px-8 py-3.5 bg-blue-600 text-white rounded-[5px] hover:bg-blue-700 transition-colors font-medium">Schedule a demo</a>
             <a href="/contact" className="inline-flex px-8 py-3.5 bg-white border border-gray-300 text-gray-700 rounded-[5px] hover:border-gray-400 transition-colors font-medium">Contact sales</a>
           </div>
         </div>
       </section>
-
+      <CmsBlocks slug="ai-enterprise" />
       <SimpleFooter />
     </div>
   )

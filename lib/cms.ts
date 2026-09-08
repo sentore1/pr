@@ -62,7 +62,8 @@ export interface CMSData {
   logos: CMSLogo[]
   footerSections: CMSFooterSection[]
   footerContent: Record<string, string>
-  contentBlocks: CMSBlock[]
+  /** @deprecated contentBlocks are now per-page — use <CmsBlocks slug="..." /> instead */
+  contentBlocks?: CMSBlock[]
   styles: CMSStyles
   seo: Record<string, string> | null
   settings: Record<string, string>
@@ -88,7 +89,7 @@ const FALLBACK: CMSData = {
     copyright_text: `© ${new Date().getFullYear()} Pryro. All rights reserved.`,
     whatsapp_number: '250788715075',
   },
-  contentBlocks: [],
+  contentBlocks: [], // kept in FALLBACK for backwards-compat; not returned by API any more
   styles: {
     colors:  { primary: '#0072FD', secondary: '#4a5568', background: '#ffffff', text: '#0f1117' },
     gradient: { hero_from: '#0072FD', hero_to: '#E5EDFC', hero_full: '' },

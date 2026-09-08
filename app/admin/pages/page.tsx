@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 import {
   Save, Eye, EyeOff, Upload, ChevronRight, ExternalLink,
   RefreshCw, Plus, Trash2, Edit2, Check, X, FileText, Layout,
-  Search, Layers, Globe
+  Search, Layers, Globe, GripVertical, ChevronDown, ChevronUp,
+  Blocks
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -164,6 +165,16 @@ const PAGE_DEFS: PageDef[] = [
           { key: 'cmp_row12_premium',    label: 'Support — Premium value',    type: 'text', hint: 'Priority' },
           { key: 'cmp_row12_business',   label: 'Support — Business value',   type: 'text', hint: 'Phone & Chat' },
           { key: 'cmp_row12_enterprise', label: 'Support — Enterprise value', type: 'text', hint: 'Dedicated' },
+        ]
+      },
+      {
+        id: 'devices', label: 'Work from Anywhere Section', fields: [
+          { key: 'devices_label',        label: 'Section Tag',          type: 'text',  hint: 'SEAMLESS ACROSS DEVICES' },
+          { key: 'devices_title',        label: 'Headline',             type: 'textarea', hint: 'Work from anywhere,\nstay in sync' },
+          { key: 'devices_btn_mobile',   label: 'Mobile Button Label',  type: 'text',  hint: 'Mobile App' },
+          { key: 'devices_btn_web',      label: 'Web Button Label',     type: 'text',  hint: 'Web App' },
+          { key: 'devices_image_mobile', label: 'Mobile App Image',     type: 'image', hint: '/image switch 1.png' },
+          { key: 'devices_image_web',    label: 'Web App Image',        type: 'image', hint: '/image switch 2.png' },
         ]
       },
       {
@@ -342,11 +353,72 @@ const PAGE_DEFS: PageDef[] = [
         ]
       },
       {
-        id: 'plans', label: 'Plans', fields: [
-          { key: 'pricing_free_price',    label: 'Free Plan Price',     type: 'text', hint: '$0' },
-          { key: 'pricing_pro_monthly',   label: 'Pro Monthly Price',   type: 'text', hint: '$50' },
-          { key: 'pricing_pro_annual',    label: 'Pro Annual Price',    type: 'text', hint: '$29' },
-          { key: 'pricing_cta_url',       label: 'CTA Button URL',      type: 'url',  hint: 'https://login.pryro.com' },
+        id: 'header', label: 'Page Header', fields: [
+          { key: 'pricing_tag',          label: 'Tag Label',       type: 'text',     hint: 'PRICING' },
+          { key: 'pricing_title',        label: 'Main Headline',   type: 'textarea', hint: 'Simple plans\nfor serious work' },
+          { key: 'pricing_save_badge',   label: '"Save" Badge',    type: 'text',     hint: 'Save 20%' },
+          { key: 'pricing_trust_line',   label: 'Trust Line',      type: 'text',     hint: 'Trusted by 64,000+ businesses…' },
+          { key: 'pricing_compare_title',    label: 'Compare Heading',     type: 'text', hint: 'Compare plans' },
+          { key: 'pricing_compare_subtitle', label: 'Compare Sub-heading', type: 'text', hint: 'Pick the right plan for your team.' },
+          { key: 'pricing_cta_heading',      label: 'CTA Row Heading',     type: 'text', hint: 'Ready to get started?' },
+          { key: 'pricing_cta_subtext',      label: 'CTA Row Sub-text',    type: 'text', hint: 'No credit card required for Basic.' },
+        ]
+      },
+      {
+        id: 'plan_basic', label: 'Basic Plan', fields: [
+          { key: 'plan_basic_name',     label: 'Plan Name',    type: 'text', hint: 'Basic' },
+          { key: 'plan_basic_price',    label: 'Price',        type: 'text', hint: '$0' },
+          { key: 'plan_basic_period',   label: 'Period Label', type: 'text', hint: 'Free forever' },
+          { key: 'plan_basic_users',    label: 'Users',        type: 'text', hint: '2' },
+          { key: 'plan_basic_invoices', label: 'Invoices',     type: 'text', hint: '100/mo' },
+          { key: 'plan_basic_cta',      label: 'Button Text',  type: 'text', hint: 'Get started' },
+          { key: 'plan_basic_url',      label: 'Button URL',   type: 'url',  hint: 'https://login.pryro.com' },
+          { key: 'plan_basic_feat1',    label: 'Feature 1',    type: 'text', hint: 'Time Tracking' },
+          { key: 'plan_basic_feat2',    label: 'Feature 2',    type: 'text', hint: 'CRM' },
+        ]
+      },
+      {
+        id: 'plan_premium', label: 'Premium Plan', fields: [
+          { key: 'plan_premium_name',          label: 'Plan Name',       type: 'text', hint: 'Premium' },
+          { key: 'plan_premium_price_annual',  label: 'Annual Price',    type: 'text', hint: '$29' },
+          { key: 'plan_premium_price_monthly', label: 'Monthly Price',   type: 'text', hint: '$50' },
+          { key: 'plan_premium_period',        label: 'Period Label',    type: 'text', hint: 'Per workspace' },
+          { key: 'plan_premium_users',         label: 'Users',           type: 'text', hint: '20' },
+          { key: 'plan_premium_cta',           label: 'Button Text',     type: 'text', hint: 'Upgrade' },
+          { key: 'plan_premium_url',           label: 'Button URL',      type: 'url',  hint: 'https://login.pryro.com' },
+          { key: 'plan_premium_feat1',         label: 'Feature 1',       type: 'text', hint: 'Time Tracking' },
+          { key: 'plan_premium_feat2',         label: 'Feature 2',       type: 'text', hint: 'CRM' },
+          { key: 'plan_premium_feat3',         label: 'Feature 3',       type: 'text', hint: 'HR Management' },
+          { key: 'plan_premium_feat4',         label: 'Feature 4',       type: 'text', hint: 'POS' },
+          { key: 'plan_premium_feat5',         label: 'Feature 5',       type: 'text', hint: 'AI Reports' },
+          { key: 'plan_premium_feat6',         label: 'Feature 6',       type: 'text', hint: 'Invoice Link' },
+        ]
+      },
+      {
+        id: 'plan_business', label: 'Business Plan', fields: [
+          { key: 'plan_business_name',          label: 'Plan Name',     type: 'text', hint: 'Business' },
+          { key: 'plan_business_price_annual',  label: 'Annual Price',  type: 'text', hint: '$79' },
+          { key: 'plan_business_price_monthly', label: 'Monthly Price', type: 'text', hint: '$99' },
+          { key: 'plan_business_period',        label: 'Period Label',  type: 'text', hint: 'Up to 100 users' },
+          { key: 'plan_business_users',         label: 'Users',         type: 'text', hint: '100' },
+          { key: 'plan_business_cta',           label: 'Button Text',   type: 'text', hint: 'Get Business' },
+          { key: 'plan_business_url',           label: 'Button URL',    type: 'url',  hint: 'https://login.pryro.com' },
+          { key: 'plan_business_feat1',         label: 'Feature 1',     type: 'text', hint: 'Everything in Premium' },
+          { key: 'plan_business_feat2',         label: 'Feature 2',     type: 'text', hint: 'Advanced Security' },
+          { key: 'plan_business_feat3',         label: 'Feature 3',     type: 'text', hint: 'Phone & Chat Support' },
+        ]
+      },
+      {
+        id: 'plan_enterprise', label: 'Enterprise Plan', fields: [
+          { key: 'plan_enterprise_name',   label: 'Plan Name',    type: 'text', hint: 'Enterprise' },
+          { key: 'plan_enterprise_price',  label: 'Price',        type: 'text', hint: 'Custom' },
+          { key: 'plan_enterprise_period', label: 'Period Label', type: 'text', hint: 'Contact sales' },
+          { key: 'plan_enterprise_users',  label: 'Users',        type: 'text', hint: 'Unlimited' },
+          { key: 'plan_enterprise_cta',    label: 'Button Text',  type: 'text', hint: 'Contact sales' },
+          { key: 'plan_enterprise_url',    label: 'Button URL',   type: 'url',  hint: '/contact' },
+          { key: 'plan_enterprise_feat1',  label: 'Feature 1',    type: 'text', hint: 'Everything in Business' },
+          { key: 'plan_enterprise_feat2',  label: 'Feature 2',    type: 'text', hint: 'Custom Webhooks' },
+          { key: 'plan_enterprise_feat3',  label: 'Feature 3',    type: 'text', hint: 'Dedicated Support' },
         ]
       },
     ]
@@ -866,6 +938,406 @@ function PagesList({ onPageCreated }: { onPageCreated: () => void }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// BLOCK EDITOR TYPES & HELPERS (used inside PageEditor)
+// ─────────────────────────────────────────────────────────────────────────────
+type BlockType = 'hero' | 'text' | 'image' | 'cta' | 'features' | 'testimonials' | 'pricing' | 'custom'
+
+interface Block {
+  id?: number
+  block_type: BlockType
+  title: string
+  content: string
+  settings: Record<string, any>
+  sort_order: number
+  is_active: boolean
+  _open?: boolean
+}
+
+const BLOCK_LABELS: Record<BlockType, { label: string; icon: string }> = {
+  hero:         { label: 'Hero Section',    icon: '/icon/dashboard icon.png' },
+  text:         { label: 'Text Block',      icon: '/icon/document icon.png' },
+  image:        { label: 'Image Block',     icon: '/icon/inventory icon 2.png' },
+  cta:          { label: 'Call to Action',  icon: '/icon/sales icon.png' },
+  features:     { label: 'Features',        icon: '/icon/budget icon.png' },
+  testimonials: { label: 'Testimonials',    icon: '/icon/disccuss icon.png' },
+  pricing:      { label: 'Pricing',         icon: '/icon/subscription icon.png' },
+  custom:       { label: 'Custom HTML',     icon: '/icon/0code icon.png' },
+}
+
+function blockDefaultSettings(type: BlockType): Record<string, any> {
+  switch (type) {
+    case 'hero':     return { background: 'linear-gradient(to bottom, #0072FD, #E5EDFC)', textColor: '#ffffff', buttonText: 'Get Started', buttonUrl: '#' }
+    case 'cta':      return { background: '#0072FD', textColor: '#ffffff', buttonText: 'Start Free Trial', buttonUrl: 'https://login.pryro.com' }
+    case 'features': return { columns: 3, items: [] }
+    case 'image':    return { src: '', alt: '', width: '100%' }
+    case 'text':     return { alignment: 'left', fontSize: 'base' }
+    default:         return {}
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTIONS BLOCK EDITOR — add/edit/reorder content_blocks for any page
+// ─────────────────────────────────────────────────────────────────────────────
+function SectionsEditor({ slug }: { slug: string }) {
+  const [blocks, setBlocks] = useState<Block[]>([])
+  const [pageId, setPageId] = useState<number | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [msg, setMsg] = useState('')
+  const [activeType, setActiveType] = useState<BlockType>('text')
+  const [uploadingIdx, setUploadingIdx] = useState<number | null>(null)
+
+  useEffect(() => { load() }, [slug])
+
+  async function load() {
+    setLoading(true)
+    const d = await fetch(`/api/admin/content?slug=${slug}`).then(r => r.json())
+    if (d.success) {
+      setPageId(d.page_id)
+      setBlocks((d.data || []).map((b: Block) => ({ ...b, _open: false })))
+    }
+    setLoading(false)
+  }
+
+  function flash(m: string) { setMsg(m); setTimeout(() => setMsg(''), 3500) }
+
+  function addBlock() {
+    setBlocks(prev => [...prev, {
+      block_type: activeType,
+      title: `New ${BLOCK_LABELS[activeType].label}`,
+      content: '',
+      settings: blockDefaultSettings(activeType),
+      sort_order: prev.length,
+      is_active: true,
+      _open: true,
+    }])
+  }
+
+  function update(idx: number, key: keyof Block, val: any) {
+    setBlocks(prev => prev.map((b, i) => i === idx ? { ...b, [key]: val } : b))
+  }
+
+  function updateSetting(idx: number, key: string, val: any) {
+    setBlocks(prev => prev.map((b, i) => i === idx ? { ...b, settings: { ...b.settings, [key]: val } } : b))
+  }
+
+  function move(idx: number, dir: -1 | 1) {
+    setBlocks(prev => {
+      const next = [...prev]; const t = idx + dir
+      if (t < 0 || t >= next.length) return prev
+      ;[next[idx], next[t]] = [next[t], next[idx]]
+      return next
+    })
+  }
+
+  async function save() {
+    setSaving(true)
+    const res = await fetch('/api/admin/content', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug, blocks: blocks.map(({ _open, ...b }) => b) }),
+    })
+    const d = await res.json()
+    if (d.success && d.page_id) setPageId(d.page_id)
+    flash(d.success ? '✓ Sections saved' : '✗ ' + d.error)
+    setSaving(false)
+  }
+
+  async function uploadImage(idx: number, settingKey: string, file: File) {
+    setUploadingIdx(idx)
+    const form = new FormData()
+    form.append('file', file)
+    form.append('folder', 'content')
+    const d = await fetch('/api/admin/media/upload', { method: 'POST', body: form }).then(r => r.json())
+    if (d.success) updateSetting(idx, settingKey, d.data.file_url)
+    setUploadingIdx(null)
+  }
+
+  if (loading) {
+    return (
+      <div className="space-y-3 p-5">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="h-14 bg-gray-100 rounded-lg animate-pulse" />
+        ))}
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Toolbar */}
+      <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 flex-shrink-0">
+        <div className="flex items-center gap-2 min-w-0">
+          <Blocks className="w-4 h-4 text-purple-500 flex-shrink-0" />
+          <span className="text-sm font-semibold text-gray-700">Extra Sections</span>
+          <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{blocks.length} block{blocks.length !== 1 ? 's' : ''}</span>
+          {pageId && <span className="text-xs text-gray-300">page #{pageId}</span>}
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          {msg && <span className={`text-xs px-2 py-1 rounded-full ${msg.startsWith('✓') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>{msg}</span>}
+          <a href={`/${slug === 'home' ? '' : slug}`} target="_blank"
+            className="flex items-center gap-1 text-xs border border-gray-200 px-2.5 py-1.5 rounded hover:bg-gray-50">
+            <ExternalLink className="w-3 h-3" /> View
+          </a>
+          <button onClick={save} disabled={saving}
+            className="flex items-center gap-1.5 text-xs bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 disabled:opacity-50">
+            <Save className="w-3 h-3" /> {saving ? 'Saving…' : 'Save All'}
+          </button>
+        </div>
+      </div>
+
+      {/* Add block bar */}
+      <div className="flex items-center gap-2 flex-wrap px-5 py-3 border-b border-gray-100 bg-gray-50 flex-shrink-0">
+        <span className="text-xs text-gray-500 font-medium flex-shrink-0">Add:</span>
+        {(Object.entries(BLOCK_LABELS) as [BlockType, { label: string; icon: string }][]).map(([type, { label, icon }]) => (
+          <button key={type} onClick={() => setActiveType(type)}
+            className={`flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
+              activeType === type
+                ? 'bg-blue-600 text-white border-blue-600'
+                : 'border-gray-200 text-gray-600 hover:border-blue-300 bg-white'
+            }`}>
+            <img src={icon} alt="" className="w-3.5 h-3.5 object-contain" />
+            {label}
+          </button>
+        ))}
+        <button onClick={addBlock}
+          className="ml-auto flex items-center gap-1 text-xs bg-gray-900 text-white px-3 py-1.5 rounded-lg hover:bg-gray-800">
+          <Plus className="w-3.5 h-3.5" /> Add Block
+        </button>
+      </div>
+
+      {/* Block list */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        {blocks.length === 0 && (
+          <div className="border-2 border-dashed border-gray-200 rounded-xl p-10 text-center">
+            <Blocks className="w-8 h-8 text-gray-200 mx-auto mb-3" />
+            <p className="text-sm text-gray-400 font-medium">No extra sections yet</p>
+            <p className="text-xs text-gray-400 mt-1">These blocks appear after the page's built-in sections. Pick a type above and click Add Block.</p>
+          </div>
+        )}
+
+        {blocks.map((block, idx) => (
+          <div key={idx} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+            {/* Block header row */}
+            <div
+              className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 select-none"
+              onClick={() => update(idx, '_open', !block._open)}
+            >
+              {/* Reorder buttons */}
+              <div className="flex flex-col gap-0.5" onClick={e => e.stopPropagation()}>
+                <button onClick={() => move(idx, -1)} className="text-gray-300 hover:text-gray-600 text-[10px] leading-none">▲</button>
+                <button onClick={() => move(idx, 1)} className="text-gray-300 hover:text-gray-600 text-[10px] leading-none">▼</button>
+              </div>
+              <GripVertical className="w-4 h-4 text-gray-300 flex-shrink-0" />
+              <img src={BLOCK_LABELS[block.block_type]?.icon} alt="" className="w-5 h-5 object-contain flex-shrink-0" />
+              <span className="text-sm font-medium text-gray-800 flex-1 truncate">
+                {BLOCK_LABELS[block.block_type]?.label} — {block.title}
+              </span>
+              <span className="text-xs text-gray-400 flex-shrink-0">#{idx + 1}</span>
+              <button onClick={e => { e.stopPropagation(); update(idx, 'is_active', !block.is_active) }}
+                className={`flex-shrink-0 ${block.is_active ? 'text-green-500' : 'text-gray-300'}`}
+                title={block.is_active ? 'Visible' : 'Hidden'}>
+                {block.is_active ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+              </button>
+              <button onClick={e => { e.stopPropagation(); setBlocks(prev => prev.filter((_, i) => i !== idx)) }}
+                className="text-red-400 hover:text-red-600 flex-shrink-0">
+                <Trash2 className="w-4 h-4" />
+              </button>
+              {block._open
+                ? <ChevronUp className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                : <ChevronDown className="w-4 h-4 text-gray-400 flex-shrink-0" />}
+            </div>
+
+            {/* Block edit panel */}
+            {block._open && (
+              <div className="border-t border-gray-100 p-5 space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">Title</label>
+                    <input value={block.title ?? ''} onChange={e => update(idx, 'title', e.target.value)}
+                      className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">Block Type</label>
+                    <select value={block.block_type}
+                      onChange={e => { update(idx, 'block_type', e.target.value as BlockType); update(idx, 'settings', blockDefaultSettings(e.target.value as BlockType)) }}
+                      className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none">
+                      {Object.entries(BLOCK_LABELS).map(([v, { label }]) => (
+                        <option key={v} value={v}>{label}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">
+                    {block.block_type === 'custom' ? 'Custom HTML' : 'Content / Description'}
+                  </label>
+                  <textarea value={block.content ?? ''} onChange={e => update(idx, 'content', e.target.value)} rows={4}
+                    className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 font-mono resize-none" />
+                </div>
+
+                {/* Type-specific settings */}
+                <div className="border border-gray-100 rounded-lg p-4 bg-gray-50 space-y-3">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Settings</p>
+
+                  {/* ── Section background — available on ALL block types ── */}
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">Section Background <span className="text-gray-300">(outer wrapper)</span></label>
+                    <div className="flex gap-2 items-center">
+                      <input type="color" value={block.settings.sectionBg || '#ffffff'}
+                        onChange={e => updateSetting(idx, 'sectionBg', e.target.value)}
+                        className="w-10 h-9 border border-gray-200 rounded cursor-pointer p-0.5 flex-shrink-0" />
+                      <input value={block.settings.sectionBg ?? ''} onChange={e => updateSetting(idx, 'sectionBg', e.target.value)}
+                        placeholder="e.g. #f9fafb or linear-gradient(…)"
+                        className="flex-1 border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                    </div>
+                  </div>
+
+                  {(block.block_type === 'hero' || block.block_type === 'cta') && (
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="col-span-2">
+                        <label className="text-xs text-gray-500 mb-1 block">
+                          {block.block_type === 'cta' ? 'CTA Box Background' : 'Hero Background'}
+                        </label>
+                        <input value={block.settings.ctaBg ?? block.settings.background ?? ''} onChange={e => updateSetting(idx, 'ctaBg', e.target.value)}
+                          placeholder="e.g. linear-gradient(to bottom, #0072FD, #E5EDFC)"
+                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-500 mb-1 block">Text Color</label>
+                        <div className="flex gap-2">
+                          <input type="color" value={block.settings.textColor || '#000000'}
+                            onChange={e => updateSetting(idx, 'textColor', e.target.value)}
+                            className="w-10 h-9 border border-gray-200 rounded cursor-pointer p-0.5" />
+                          <input value={block.settings.textColor ?? ''} onChange={e => updateSetting(idx, 'textColor', e.target.value)}
+                            className="flex-1 border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none" />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-500 mb-1 block">Button Text</label>
+                        <input value={block.settings.buttonText ?? ''} onChange={e => updateSetting(idx, 'buttonText', e.target.value)}
+                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                      </div>
+                      <div className="col-span-2">
+                        <label className="text-xs text-gray-500 mb-1 block">Button URL</label>
+                        <input value={block.settings.buttonUrl ?? ''} onChange={e => updateSetting(idx, 'buttonUrl', e.target.value)}
+                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                      </div>
+                    </div>
+                  )}
+
+                  {block.block_type === 'image' && (
+                    <div className="space-y-3">
+                      <div>
+                        <label className="text-xs text-gray-500 mb-1 block">Image</label>
+                        <div className="flex gap-3 items-center mb-2">
+                          {block.settings.src && (
+                            <img src={block.settings.src} alt="" className="h-14 rounded border border-gray-200 object-cover flex-shrink-0" />
+                          )}
+                          <label className="flex items-center gap-2 cursor-pointer text-xs text-blue-600 border border-blue-200 rounded px-3 py-2 hover:bg-blue-50">
+                            <Upload className="w-3.5 h-3.5" />
+                            {uploadingIdx === idx ? 'Uploading…' : 'Upload Image'}
+                            <input type="file" accept="image/*" className="hidden" disabled={uploadingIdx !== null}
+                              onChange={e => { const f = e.target.files?.[0]; if (f) uploadImage(idx, 'src', f) }} />
+                          </label>
+                        </div>
+                        <input value={block.settings.src ?? ''} onChange={e => updateSetting(idx, 'src', e.target.value)}
+                          placeholder="Or paste image URL (e.g. /images/photo.jpg)"
+                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none" />
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-xs text-gray-500 mb-1 block">Alt Text</label>
+                          <input value={block.settings.alt ?? ''} onChange={e => updateSetting(idx, 'alt', e.target.value)}
+                            className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none" />
+                        </div>
+                        <div>
+                          <label className="text-xs text-gray-500 mb-1 block">Width</label>
+                          <input value={block.settings.width ?? '100%'} onChange={e => updateSetting(idx, 'width', e.target.value)}
+                            className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {block.block_type === 'text' && (
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-gray-500 mb-1 block">Alignment</label>
+                        <select value={block.settings.alignment ?? 'left'} onChange={e => updateSetting(idx, 'alignment', e.target.value)}
+                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none">
+                          <option value="left">Left</option>
+                          <option value="center">Center</option>
+                          <option value="right">Right</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-500 mb-1 block">Font Size</label>
+                        <select value={block.settings.fontSize ?? 'base'} onChange={e => updateSetting(idx, 'fontSize', e.target.value)}
+                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none">
+                          <option value="sm">Small</option>
+                          <option value="base">Base</option>
+                          <option value="lg">Large</option>
+                          <option value="xl">XL</option>
+                          <option value="2xl">2XL</option>
+                        </select>
+                      </div>
+                    </div>
+                  )}
+
+                  {block.block_type === 'features' && (
+                    <div className="space-y-3">
+                      <div>
+                        <label className="text-xs text-gray-500 mb-1 block">Columns</label>
+                        <select value={String(block.settings.columns ?? 3)} onChange={e => updateSetting(idx, 'columns', parseInt(e.target.value))}
+                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none">
+                          <option value="1">1 column</option>
+                          <option value="2">2 columns</option>
+                          <option value="3">3 columns</option>
+                          <option value="4">4 columns</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-500 mb-1 block">Feature Items (one per line: Icon URL | Title | Description)</label>
+                        <textarea
+                          value={(block.settings.items as any[] || []).map((it: any) => `${it.icon || ''}|${it.title || ''}|${it.desc || ''}`).join('\n')}
+                          onChange={e => {
+                            const items = e.target.value.split('\n').filter(Boolean).map(line => {
+                              const [icon, title, desc] = line.split('|')
+                              return { icon: icon?.trim() || '', title: title?.trim() || '', desc: desc?.trim() || '' }
+                            })
+                            updateSetting(idx, 'items', items)
+                          }}
+                          rows={4}
+                          placeholder="/icon/HR icon.png|HR Management|Manage payroll and leaves"
+                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+
+        {blocks.length > 0 && (
+          <div className="pt-2">
+            <button onClick={save} disabled={saving}
+              className="flex items-center gap-2 bg-blue-600 text-white text-sm px-5 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50">
+              <Save className="w-3.5 h-3.5" />
+              {saving ? 'Saving…' : 'Save All Sections'}
+            </button>
+            <p className="text-xs text-gray-400 mt-1.5">These blocks are appended after the page's fixed sections.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // PAGE CONTENT EDITOR — every page, every section, every field
 // ─────────────────────────────────────────────────────────────────────────────
 function PageEditor() {
@@ -877,6 +1349,7 @@ function PageEditor() {
   const [uploading, setUploading] = useState<string | null>(null)
   const [activePage, setActivePage] = useState('home')
   const [activeSection, setActiveSection] = useState('hero')
+  const [activeTab, setActiveTab] = useState<'fields' | 'sections'>('fields')
   const [search, setSearch] = useState('')
 
   useEffect(() => { load() }, [])
@@ -889,11 +1362,9 @@ function PageEditor() {
       const customDefs: PageDef[] = []
       for (const row of (d.data || [])) {
         map[row.key_name] = row.value ?? ''
-        // Detect saved page definitions (keys like _page_def__my-slug)
         if (row.key_name.startsWith('_page_def__') && row.value) {
           try {
             const def = JSON.parse(row.value) as PageDef
-            // Only add if not already in built-in PAGE_DEFS
             if (!PAGE_DEFS.find(p => p.slug === def.slug)) {
               customDefs.push(def)
             }
@@ -913,9 +1384,6 @@ function PageEditor() {
 
   async function save() {
     setSaving(true)
-    // Collect only the keys that belong to the currently active page so we
-    // don't blast the entire values map (which includes _page_def__ blobs and
-    // every other page's fields) on every click.
     const pageKeys = currentPageDef
       ? new Set(currentPageDef.sections.flatMap(s => s.fields.map(f => f.key)))
       : null
@@ -947,14 +1415,12 @@ function PageEditor() {
   const currentPageDef = allPageDefs.find(p => p.slug === activePage)
   const currentSection = currentPageDef?.sections.find(s => s.id === activeSection)
 
-  // When switching page, reset to first section
   function switchPage(slug: string) {
     setActivePage(slug)
     const def = allPageDefs.find(p => p.slug === slug)
     if (def?.sections.length) setActiveSection(def.sections[0].id)
   }
 
-  // All groups present in the merged defs
   const allGroups = Array.from(new Set(allPageDefs.map(p => p.group)))
 
   return (
@@ -991,120 +1457,153 @@ function PageEditor() {
         </div>
       </aside>
 
-      {/* ── Column 2: Section list ── */}
-      <aside className="w-44 flex-shrink-0 bg-white border border-gray-200 rounded-lg flex flex-col overflow-hidden">
-        <div className="px-3 py-2.5 border-b border-gray-100">
-          <p className="text-xs font-semibold text-gray-500">Sections</p>
-        </div>
-        <div className="flex-1 overflow-y-auto py-1">
-          {currentPageDef?.sections.map(s => (
-            <button key={s.id} onClick={() => setActiveSection(s.id)}
-              className={`w-full flex items-center gap-2 px-3 py-2 text-left transition-colors ${activeSection === s.id ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-600' : 'text-gray-600 hover:bg-gray-50'}`}>
-              <span className="text-xs font-medium truncate">{s.label}</span>
-              {activeSection === s.id && <ChevronRight className="w-3 h-3 ml-auto flex-shrink-0" />}
-            </button>
-          ))}
-        </div>
-      </aside>
+      {/* ── Main panel (tabs: Fields / Sections) ── */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden gap-0">
 
-      {/* ── Column 3: Field editor ── */}
-      <div className="flex-1 bg-white border border-gray-200 rounded-lg flex flex-col overflow-hidden min-w-0">
-        {/* Toolbar */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 flex-shrink-0">
-          <div className="flex items-center gap-2 min-w-0">
-            {currentPageDef && (
-              <>
-                {currentPageDef.group === 'Custom'
-                  ? <Globe className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                  : <img src={currentPageDef.icon} alt="" className="w-4 h-4 object-contain flex-shrink-0" />}
-                <span className="text-sm font-semibold text-gray-700 truncate">{currentPageDef.label}</span>
-                <span className="text-gray-300 flex-shrink-0">›</span>
-                <span className="text-sm text-gray-500 truncate">{currentSection?.label}</span>
-              </>
-            )}
-          </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            {msg && <span className={`text-xs px-2 py-1 rounded-full ${msg.startsWith('✓') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>{msg}</span>}
-            <a href={`/${activePage === 'home' ? '' : activePage}`} target="_blank"
-              className="flex items-center gap-1 text-xs border border-gray-200 px-2.5 py-1.5 rounded hover:bg-gray-50">
-              <ExternalLink className="w-3 h-3" /> View
-            </a>
-            <button onClick={save} disabled={saving}
-              className="flex items-center gap-1.5 text-xs bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 disabled:opacity-50">
-              <Save className="w-3 h-3" /> {saving ? 'Saving…' : 'Save'}
+        {/* Tab bar */}
+        <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-t-lg px-4 py-2 border-b-0 flex-shrink-0">
+          <div className="flex gap-1 bg-gray-100 p-0.5 rounded-md mr-auto">
+            <button
+              onClick={() => setActiveTab('fields')}
+              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded transition-colors ${activeTab === 'fields' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
+              <Layout className="w-3 h-3" /> Text Fields
+            </button>
+            <button
+              onClick={() => setActiveTab('sections')}
+              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded transition-colors ${activeTab === 'sections' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
+              <Blocks className="w-3 h-3" /> Extra Sections
             </button>
           </div>
+          <a href={`/${activePage === 'home' ? '' : activePage}`} target="_blank"
+            className="flex items-center gap-1 text-xs text-gray-400 hover:text-blue-600 px-2 py-1 rounded hover:bg-gray-50">
+            <ExternalLink className="w-3 h-3" /> View page
+          </a>
         </div>
 
-        {/* Fields */}
-        <div className="flex-1 overflow-y-auto p-5">
-          {loading ? (
-            <div className="space-y-4">
-              {[...Array(5)].map((_, i) => (
-                <div key={i} className="space-y-1.5">
-                  <div className="h-3.5 w-24 bg-gray-100 rounded animate-pulse" />
-                  <div className="h-9 bg-gray-100 rounded animate-pulse" />
-                </div>
-              ))}
-            </div>
-          ) : currentSection ? (
-            <div className="space-y-5 max-w-2xl">
-              {currentSection.fields.map(field => (
-                <div key={field.key}>
-                  <div className="flex items-baseline gap-2 mb-1">
-                    <label className="text-sm font-medium text-gray-700">{field.label}</label>
-                    {field.hint && <span className="text-xs text-gray-400">{field.hint}</span>}
-                  </div>
-
-                  {field.type === 'image' && (
-                    <div className="space-y-2">
-                      {values[field.key] && (
-                        <img src={values[field.key]} alt="" className="h-20 rounded-lg border border-gray-200 object-cover" />
-                      )}
-                      <div className="flex gap-2">
-                        <label className={`flex items-center gap-2 cursor-pointer text-xs px-3 py-2 rounded border transition-colors ${uploading === field.key ? 'bg-gray-100 text-gray-400 border-gray-200' : 'text-blue-600 border-blue-200 hover:bg-blue-50'}`}>
-                          <Upload className="w-3.5 h-3.5" />
-                          {uploading === field.key ? 'Uploading…' : 'Upload'}
-                          <input type="file" accept="image/*" className="hidden" disabled={!!uploading}
-                            onChange={e => { const f = e.target.files?.[0]; if (f) uploadImage(field.key, f) }} />
-                        </label>
-                        <input value={values[field.key] ?? ''} onChange={e => set(field.key, e.target.value)}
-                          placeholder="Or paste URL"
-                          className="flex-1 border border-gray-200 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-400" />
-                      </div>
-                    </div>
-                  )}
-
-                  {field.type === 'textarea' && (
-                    <textarea value={values[field.key] ?? ''} onChange={e => set(field.key, e.target.value)} rows={3}
-                      className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none" />
-                  )}
-
-                  {(field.type === 'text' || field.type === 'url' || field.type === 'color') && (
-                    <div className="flex gap-2">
-                      {field.type === 'color' && (
-                        <input type="color" value={values[field.key] || '#000000'} onChange={e => set(field.key, e.target.value)}
-                          className="w-10 h-9 border border-gray-200 rounded p-0.5 cursor-pointer flex-shrink-0" />
-                      )}
-                      <input type={field.type === 'url' ? 'url' : 'text'} value={values[field.key] ?? ''}
-                        onChange={e => set(field.key, e.target.value)}
-                        className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              <div className="pt-4 border-t border-gray-100">
-                <button onClick={save} disabled={saving}
-                  className="flex items-center gap-2 bg-blue-600 text-white text-sm px-5 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50">
-                  <Save className="w-3.5 h-3.5" />
-                  {saving ? 'Saving…' : `Save ${currentSection.label}`}
-                </button>
-                <p className="text-xs text-gray-400 mt-1.5">Saved values override the defaults on the live site.</p>
-              </div>
+        {/* Tab content */}
+        <div className="flex-1 flex min-h-0 overflow-hidden border border-gray-200 rounded-b-lg border-t-0">
+          {activeTab === 'sections' ? (
+            /* ── Sections (blocks) tab ── */
+            <div className="flex-1 flex flex-col overflow-hidden bg-white">
+              <SectionsEditor key={activePage} slug={activePage} />
             </div>
           ) : (
-            <p className="text-sm text-gray-400">Select a page and section to edit.</p>
+            /* ── Text Fields tab (original two-column layout) ── */
+            <>
+              {/* Section list */}
+              <aside className="w-44 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
+                <div className="px-3 py-2.5 border-b border-gray-100">
+                  <p className="text-xs font-semibold text-gray-500">Sections</p>
+                </div>
+                <div className="flex-1 overflow-y-auto py-1">
+                  {currentPageDef?.sections.map(s => (
+                    <button key={s.id} onClick={() => setActiveSection(s.id)}
+                      className={`w-full flex items-center gap-2 px-3 py-2 text-left transition-colors ${activeSection === s.id ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-600' : 'text-gray-600 hover:bg-gray-50'}`}>
+                      <span className="text-xs font-medium truncate">{s.label}</span>
+                      {activeSection === s.id && <ChevronRight className="w-3 h-3 ml-auto flex-shrink-0" />}
+                    </button>
+                  ))}
+                </div>
+              </aside>
+
+              {/* Field editor */}
+              <div className="flex-1 bg-white flex flex-col overflow-hidden min-w-0">
+                {/* Toolbar */}
+                <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 flex-shrink-0">
+                  <div className="flex items-center gap-2 min-w-0">
+                    {currentPageDef && (
+                      <>
+                        {currentPageDef.group === 'Custom'
+                          ? <Globe className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                          : <img src={currentPageDef.icon} alt="" className="w-4 h-4 object-contain flex-shrink-0" />}
+                        <span className="text-sm font-semibold text-gray-700 truncate">{currentPageDef.label}</span>
+                        <span className="text-gray-300 flex-shrink-0">›</span>
+                        <span className="text-sm text-gray-500 truncate">{currentSection?.label}</span>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    {msg && <span className={`text-xs px-2 py-1 rounded-full ${msg.startsWith('✓') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>{msg}</span>}
+                    <button onClick={save} disabled={saving}
+                      className="flex items-center gap-1.5 text-xs bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 disabled:opacity-50">
+                      <Save className="w-3 h-3" /> {saving ? 'Saving…' : 'Save'}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Fields */}
+                <div className="flex-1 overflow-y-auto p-5">
+                  {loading ? (
+                    <div className="space-y-4">
+                      {[...Array(5)].map((_, i) => (
+                        <div key={i} className="space-y-1.5">
+                          <div className="h-3.5 w-24 bg-gray-100 rounded animate-pulse" />
+                          <div className="h-9 bg-gray-100 rounded animate-pulse" />
+                        </div>
+                      ))}
+                    </div>
+                  ) : currentSection ? (
+                    <div className="space-y-5 max-w-2xl">
+                      {currentSection.fields.map(field => (
+                        <div key={field.key}>
+                          <div className="flex items-baseline gap-2 mb-1">
+                            <label className="text-sm font-medium text-gray-700">{field.label}</label>
+                            {field.hint && <span className="text-xs text-gray-400">{field.hint}</span>}
+                          </div>
+
+                          {field.type === 'image' && (
+                            <div className="space-y-2">
+                              {values[field.key] && (
+                                <img src={values[field.key]} alt="" className="h-20 rounded-lg border border-gray-200 object-cover" />
+                              )}
+                              <div className="flex gap-2">
+                                <label className={`flex items-center gap-2 cursor-pointer text-xs px-3 py-2 rounded border transition-colors ${uploading === field.key ? 'bg-gray-100 text-gray-400 border-gray-200' : 'text-blue-600 border-blue-200 hover:bg-blue-50'}`}>
+                                  <Upload className="w-3.5 h-3.5" />
+                                  {uploading === field.key ? 'Uploading…' : 'Upload'}
+                                  <input type="file" accept="image/*" className="hidden" disabled={!!uploading}
+                                    onChange={e => { const f = e.target.files?.[0]; if (f) uploadImage(field.key, f) }} />
+                                </label>
+                                <input value={values[field.key] ?? ''} onChange={e => set(field.key, e.target.value)}
+                                  placeholder="Or paste URL"
+                                  className="flex-1 border border-gray-200 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                              </div>
+                            </div>
+                          )}
+
+                          {field.type === 'textarea' && (
+                            <textarea value={values[field.key] ?? ''} onChange={e => set(field.key, e.target.value)} rows={3}
+                              className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none" />
+                          )}
+
+                          {(field.type === 'text' || field.type === 'url' || field.type === 'color') && (
+                            <div className="flex gap-2">
+                              {field.type === 'color' && (
+                                <input type="color" value={values[field.key] || '#000000'} onChange={e => set(field.key, e.target.value)}
+                                  className="w-10 h-9 border border-gray-200 rounded p-0.5 cursor-pointer flex-shrink-0" />
+                              )}
+                              <input type={field.type === 'url' ? 'url' : 'text'} value={values[field.key] ?? ''}
+                                onChange={e => set(field.key, e.target.value)}
+                                className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+
+                      <div className="pt-4 border-t border-gray-100">
+                        <button onClick={save} disabled={saving}
+                          className="flex items-center gap-2 bg-blue-600 text-white text-sm px-5 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50">
+                          <Save className="w-3.5 h-3.5" />
+                          {saving ? 'Saving…' : `Save ${currentSection.label}`}
+                        </button>
+                        <p className="text-xs text-gray-400 mt-1.5">Saved values override the defaults on the live site.</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-400">Select a page and section to edit.</p>
+                  )}
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>

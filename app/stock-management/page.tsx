@@ -7,8 +7,11 @@ import ContentSection from "@/components/content-2"
 import { Button } from '@/components/ui/button'
 import { ChevronRight, Check } from 'lucide-react'
 import Link from 'next/link'
+import { CmsBlocks } from "@/components/cms-blocks"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function StockManagementPage() {
+  const p = usePageContent('stock-management')
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -17,11 +20,11 @@ export default function StockManagementPage() {
         <div className="max-w-6xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-700 border border-blue-100 rounded-[5px] mb-6">
             <span className="w-2 h-2 bg-white rounded-[5px]"></span>
-            <span className="text-sm text-white font-medium">Trusted by 6,500+ inventory teams</span>
+            <span className="text-sm text-white font-medium">{p('hero_badge', 'Trusted by 6,500+ inventory teams')}</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">Pryro for<br />Stock Management</h1>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">{p('hero_title', 'Pryro for Stock Management')}</h1>
           <p className="text-l text-gray-600 max-w-3xl leading-relaxed mb-8">
-            Take control of your inventory with real-time tracking, automated reordering, and comprehensive stock analytics.
+            {p('hero_description', 'Take control of your inventory with real-time tracking, automated reordering, and comprehensive stock analytics.')}
           </p>
           <div className="flex flex-wrap gap-3">
             <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">Real-time tracking</span>
@@ -42,7 +45,7 @@ export default function StockManagementPage() {
               <div className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-[5px] mb-4">
                 Inventory Platform
               </div>
-              <h2 className="text-4xl font-medium text-gray-900 mb-6">The Pryro ecosystem brings together powerful tools for inventory management.</h2>
+              <h2 className="text-4xl font-medium text-gray-900 mb-6">{p('ecosystem_title', 'The Pryro ecosystem brings together powerful tools for inventory management.')}</h2>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <Check className="w-5 h-5 text-blue-600" />
@@ -90,7 +93,7 @@ export default function StockManagementPage() {
           </div>
         </div>
       </section>
-
+      <CmsBlocks slug="stock-management" />
       <SimpleFooter />
     </div>
   )

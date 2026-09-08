@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { ChevronRight, Check, Users, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
 import { usePageContent } from "@/lib/use-page-content"
+import { CmsBlocks } from "@/components/cms-blocks"
 
 export default function SmallBusinessPage() {
   const p = usePageContent('small-business')
@@ -27,9 +28,9 @@ export default function SmallBusinessPage() {
             {p('small-business_hero_subtitle', 'Everything you need to run your small business efficiently. Manage finances, inventory, customers, and employees from one powerful platform.')}
           </p>
           <div className="flex flex-wrap gap-3">
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">No credit card required</span>
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">14-day free trial</span>
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">Cancel anytime</span>
+            <span className="px-3 py-1 bg-gray-100 text-black text-sm rounded-[5px]">No credit card required</span>
+            <span className="px-3 py-1 bg-gray-100 text-black text-sm rounded-[5px]">14-day free trial</span>
+            <span className="px-3 py-1 bg-gray-100 text-black text-sm rounded-[5px]">Cancel anytime</span>
           </div>
         </div>
       </section>
@@ -87,7 +88,7 @@ export default function SmallBusinessPage() {
             </div>
             <div className="space-y-6">
               <div className="flex gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-[#0084FF] rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <Users className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -96,7 +97,7 @@ export default function SmallBusinessPage() {
                 </div>
               </div>
               <div className="flex gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-[#0084FF] rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -128,25 +129,25 @@ export default function SmallBusinessPage() {
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <Check className="w-5 h-5 text-blue-600" />
-                  <span className="text-gray-700">Financial management & reporting</span>
+                  <span className="text-black">Financial management & reporting</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="w-5 h-5 text-blue-600" />
-                  <span className="text-gray-700">Customer relationship tools</span>
+                  <span className="text-black">Customer relationship tools</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="w-5 h-5 text-blue-600" />
-                  <span className="text-gray-700">Inventory & stock control</span>
+                  <span className="text-black">Inventory & stock control</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="w-5 h-5 text-blue-600" />
-                  <span className="text-gray-700">Employee management</span>
+                  <span className="text-black">Employee management</span>
                 </div>
               </div>
             </div>
             <div className="space-y-6">
               <div className="flex gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-[#0084FF] rounded-[5px] flex items-center justify-center flex-shrink-0">
                   <Users className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -169,9 +170,8 @@ export default function SmallBusinessPage() {
                 </Button>
                 <Button
                   asChild
-                  variant="outline"
                   size="sm"
-                  className="gap-1">
+                  className="gap-1 bg-[#0084FF] text-white hover:bg-[#0073e6]">
                   <Link href="/demo">
                     <span>Learn More</span>
                     <ChevronRight className="size-3" />
@@ -182,6 +182,7 @@ export default function SmallBusinessPage() {
           </div>
         </div>
       </section>
+      <CmsBlocks slug="small-business" />
       <SimpleFooter />
     </div>
   )

@@ -4,18 +4,21 @@ import { Header } from "@/components/header"
 import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { Truck, MapPin, Package, BarChart, TrendingUp } from 'lucide-react'
+import { CmsBlocks } from "@/components/cms-blocks"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function LogisticPage() {
+  const p = usePageContent('logistic')
   return (
     <div className="min-h-screen bg-white">
       <Header />
 
       <section className="pt-40 pb-20 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900">Explore Everything Pryro Can Do<br/>For Logistics</h1>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">From shipment tracking to fleet management, Pryro gives logistics teams complete visibility over operations, routes, and deliveries.</p>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900">{p('hero_title', 'Explore Everything Pryro Can Do For Logistics')}</h1>
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">{p('hero_description', 'From shipment tracking to fleet management, Pryro gives logistics teams complete visibility over operations, routes, and deliveries.')}</p>
           <Button size="lg" className="rounded-[5px]" asChild>
-            <a href="https://login.pryro.com">Get Started Free</a>
+            <a href="https://login.pryro.com">{p('hero_cta', 'Get Started Free')}</a>
           </Button>
         </div>
       </section>
@@ -27,22 +30,22 @@ export default function LogisticPage() {
               <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center mb-4">
                 <Truck className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900">Fleet Management</h3>
-              <p className="text-gray-600">Track vehicles, drivers, and maintenance schedules to optimize your fleet operations.</p>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">{p('card1_title', 'Fleet Management')}</h3>
+              <p className="text-gray-600">{p('card1_description', 'Track vehicles, drivers, and maintenance schedules to optimize your fleet operations.')}</p>
             </div>
             <div className="bg-white rounded-[5px] p-8">
               <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center mb-4">
                 <MapPin className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900">Route Optimization</h3>
-              <p className="text-gray-600">Plan efficient delivery routes to reduce costs and ensure on-time deliveries.</p>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">{p('card2_title', 'Route Optimization')}</h3>
+              <p className="text-gray-600">{p('card2_description', 'Plan efficient delivery routes to reduce costs and ensure on-time deliveries.')}</p>
             </div>
             <div className="bg-blue-500 rounded-[5px] p-8">
               <div className="w-10 h-10 bg-white rounded-[5px] flex items-center justify-center mb-4">
                 <Package className="w-5 h-5 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Shipment Tracking</h3>
-              <p className="text-white">Real-time visibility into every shipment from warehouse to final destination.</p>
+              <h3 className="text-xl font-semibold mb-3 text-white">{p('card3_title', 'Shipment Tracking')}</h3>
+              <p className="text-white">{p('card3_description', 'Real-time visibility into every shipment from warehouse to final destination.')}</p>
             </div>
           </div>
         </div>
@@ -52,8 +55,8 @@ export default function LogisticPage() {
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold mb-6 text-gray-900">Built for Logistics Operations</h2>
-              <p className="text-gray-600 mb-6">Pryro streamlines your entire supply chain with powerful tools for tracking, planning, and optimizing logistics operations.</p>
+              <h2 className="text-4xl font-bold mb-6 text-gray-900">{p('built_title', 'Built for Logistics Operations')}</h2>
+              <p className="text-gray-600 mb-6">{p('built_description', 'Pryro streamlines your entire supply chain with powerful tools for tracking, planning, and optimizing logistics operations.')}</p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <BarChart className="w-5 h-5 text-blue-600 mt-1" />
@@ -157,8 +160,8 @@ export default function LogisticPage() {
 
       <section className="py-20 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-semibold mb-4 text-gray-900">Streamline Your Logistics Operations</h2>
-          <p className="text-gray-600 mb-10">Join thousands of logistics companies using Pryro to optimize deliveries and reduce costs.</p>
+          <h2 className="text-3xl font-semibold mb-4 text-gray-900">{p('cta_title', 'Streamline Your Logistics Operations')}</h2>
+          <p className="text-gray-600 mb-10">{p('cta_description', 'Join thousands of logistics companies using Pryro to optimize deliveries and reduce costs.')}</p>
           <div className="grid md:grid-cols-3 gap-8 mb-10">
             <div>
               <div className="text-4xl font-bold text-blue-600 mb-1">98%</div>
@@ -178,7 +181,7 @@ export default function LogisticPage() {
           </Button>
         </div>
       </section>
-
+      <CmsBlocks slug="logistic" />
       <SimpleFooter />
     </div>
   )

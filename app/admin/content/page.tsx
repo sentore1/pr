@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import { Plus, Trash2, GripVertical, Save, ChevronDown, ChevronUp, Eye, EyeOff, Upload, X, Check } from 'lucide-react'
+import { Plus, Trash2, GripVertical, Save, ChevronDown, ChevronUp, Eye, EyeOff, Upload, X, Check, Loader2 } from 'lucide-react'
 
 type BlockType = 'hero' | 'text' | 'image' | 'cta' | 'features' | 'testimonials' | 'pricing' | 'custom'
 
@@ -67,6 +67,32 @@ const BLOCK_LABELS: Record<BlockType, { label: string; icon: string }> = {
   custom:       { label: 'Custom HTML',     icon: '/icon/0code icon.png' },
 }
 
+// Known page slugs that map to existing routes
+const PAGE_SLUGS: { slug: string; label: string }[] = [
+  { slug: 'home',                    label: 'Home' },
+  { slug: 'about',                   label: 'About' },
+  { slug: 'products',                label: 'Products' },
+  { slug: 'pricing',                 label: 'Pricing' },
+  { slug: 'contact',                 label: 'Contact' },
+  { slug: 'features',                label: 'Features' },
+  { slug: 'careers',                 label: 'Careers' },
+  { slug: 'non-profit',              label: 'Non-Profit' },
+  { slug: 'small-business',          label: 'Small Business' },
+  { slug: 'human-resource',          label: 'Human Resource' },
+  { slug: 'hospitality',             label: 'Hospitality' },
+  { slug: 'construction',            label: 'Construction' },
+  { slug: 'logistic',                label: 'Logistics' },
+  { slug: 'customer-relation',       label: 'Customer Relation' },
+  { slug: 'project',                 label: 'Project' },
+  { slug: 'stock-management',        label: 'Stock Management' },
+  { slug: 'self-employed',           label: 'Self Employed' },
+  { slug: 'ai-enterprise',           label: 'AI Enterprise' },
+  { slug: 'marketing-call',          label: 'Marketing Call' },
+  { slug: 'marketing-mail',          label: 'Marketing Mail' },
+  { slug: 'accountants-bookkeepers', label: 'Accountants & Bookkeepers' },
+  { slug: 'ai-calculator',           label: 'AI Calculator' },
+]
+
 // ── Icon picker popup ──────────────────────────────────────────────────────
 function IconPicker({ value, onChange, onClose }: {
   value: string
@@ -81,12 +107,10 @@ function IconPicker({ value, onChange, onClose }: {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
       <div className="bg-white rounded-xl shadow-2xl w-[480px] max-h-[520px] flex flex-col" onClick={e => e.stopPropagation()}>
-        {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <h3 className="font-semibold text-gray-800 text-sm">Choose Icon</h3>
           <button onClick={onClose}><X className="w-4 h-4 text-gray-400 hover:text-gray-600" /></button>
         </div>
-        {/* Search */}
         <div className="px-4 pt-3 pb-2">
           <input
             autoFocus
@@ -96,20 +120,15 @@ function IconPicker({ value, onChange, onClose }: {
             className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
           />
         </div>
-        {/* Grid */}
         <div className="flex-1 overflow-y-auto px-4 pb-4">
           <div className="grid grid-cols-6 gap-2 mt-1">
-            {/* Clear / none option */}
             <button
               onClick={() => { onChange(''); onClose() }}
               className={`flex flex-col items-center gap-1 p-2 rounded-lg border transition-colors hover:border-blue-300 ${!value ? 'border-blue-500 bg-blue-50' : 'border-gray-100 hover:bg-gray-50'}`}
             >
-              <div className="w-8 h-8 flex items-center justify-center text-gray-300 text-xs border border-dashed border-gray-300 rounded">
-                ✕
-              </div>
+              <div className="w-8 h-8 flex items-center justify-center text-gray-300 text-xs border border-dashed border-gray-300 rounded">✕</div>
               <span className="text-[9px] text-gray-400 text-center leading-tight truncate w-full">None</span>
             </button>
-
             {filtered.map(icon => (
               <button
                 key={icon.path}
@@ -118,9 +137,7 @@ function IconPicker({ value, onChange, onClose }: {
               >
                 <img src={icon.path} alt={icon.name} className="w-8 h-8 object-contain" />
                 <span className="text-[9px] text-gray-500 text-center leading-tight truncate w-full">{icon.name}</span>
-                {value === icon.path && (
-                  <Check className="w-2.5 h-2.5 text-blue-600 absolute" />
-                )}
+                {value === icon.path && <Check className="w-2.5 h-2.5 text-blue-600 absolute" />}
               </button>
             ))}
           </div>
@@ -166,22 +183,62 @@ function IconSelector({ value, onChange, label = 'Icon' }: {
   )
 }
 
+// ── Background color + gradient field ─────────────────────────────────────
+function BgField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  // Derive a solid color preview: if value is a plain #hex or rgb(...) use it directly,
+  // otherwise fall back to transparent so the swatch still shows.
+  const isPlainColor = /^#[0-9a-f]{3,8}$/i.test((value || '').trim()) || (value || '').trim().startsWith('rgb')
+  const swatchColor = isPlainColor ? value.trim() : '#ffffff'
+
+  return (
+    <div>
+      <label className="text-xs text-gray-500 mb-1 block">Section Background Color / Gradient</label>
+      <div className="flex gap-2 items-center">
+        {/* Color swatch — only useful for solid colors */}
+        <input
+          type="color"
+          value={isPlainColor ? swatchColor : '#ffffff'}
+          onChange={e => onChange(e.target.value)}
+          title="Pick a solid color (for gradients type in the field)"
+          className="w-10 h-9 border border-gray-200 rounded cursor-pointer p-0.5 flex-shrink-0"
+        />
+        <input
+          value={value ?? ''}
+          onChange={e => onChange(e.target.value)}
+          placeholder="e.g. #f0f4ff or linear-gradient(to bottom, #0072FD, #E5EDFC)"
+          className="flex-1 border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+        />
+      </div>
+      {value && (
+        <div
+          className="mt-1.5 h-5 rounded border border-gray-200 w-full"
+          style={{ background: value }}
+          title="Background preview"
+        />
+      )}
+    </div>
+  )
+}
+
 // ── Main Page ──────────────────────────────────────────────────────────────
 export default function ContentPage() {
   const [blocks, setBlocks] = useState<Block[]>([])
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState('')
   const [activeType, setActiveType] = useState<BlockType>('text')
+  const [currentSlug, setCurrentSlug] = useState('home')
+  const [uploading, setUploading] = useState<number | null>(null)
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load(currentSlug) }, [currentSlug])
 
-  async function load() {
-    const res = await fetch('/api/admin/content?page_id=1')
+  async function load(slug: string) {
+    const res = await fetch(`/api/admin/content?slug=${encodeURIComponent(slug)}`)
     const d = await res.json()
     if (d.success) setBlocks((d.data || []).map((b: Block) => ({ ...b, _open: false })))
+    else setBlocks([])
   }
 
-  function flash(m: string) { setMsg(m); setTimeout(() => setMsg(''), 3000) }
+  function flash(m: string) { setMsg(m); setTimeout(() => setMsg(''), 4000) }
 
   function addBlock() {
     setBlocks(prev => [...prev, {
@@ -197,12 +254,14 @@ export default function ContentPage() {
 
   function getDefaultSettings(type: BlockType): Record<string, any> {
     switch (type) {
-      case 'hero':     return { background: 'linear-gradient(to bottom, #0072FD, #E5EDFC)', textColor: '#ffffff', buttonText: 'Get Started', buttonUrl: '#', icon: '' }
-      case 'cta':      return { background: '#0072FD', textColor: '#ffffff', buttonText: 'Start Free Trial', buttonUrl: 'https://login.pryro.com', icon: '' }
-      case 'features': return { columns: 3, items: [], icon: '' }
-      case 'image':    return { src: '', alt: '', width: '100%', rounded: true }
-      case 'text':     return { alignment: 'left', fontSize: 'base' }
-      default:         return {}
+      case 'hero':     return { sectionBg: 'linear-gradient(to bottom, #0072FD, #E5EDFC)', textColor: '#ffffff', buttonText: 'Get Started', buttonUrl: '#', icon: '' }
+      case 'cta':      return { sectionBg: '#0072FD', textColor: '#ffffff', buttonText: 'Start Free Trial', buttonUrl: 'https://login.pryro.com', icon: '' }
+      case 'features': return { sectionBg: '', columns: 3, items: [], icon: '' }
+      case 'image':    return { sectionBg: '', src: '', alt: '', width: '100%', rounded: true }
+      case 'text':     return { sectionBg: '', alignment: 'left', fontSize: 'base' }
+      case 'testimonials': return { sectionBg: '' }
+      case 'pricing':  return { sectionBg: '' }
+      default:         return { sectionBg: '' }
     }
   }
 
@@ -225,31 +284,53 @@ export default function ContentPage() {
 
   async function save() {
     setSaving(true)
-    const res = await fetch('/api/admin/content', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ page_id: 1, blocks: blocks.map(({ _open, ...b }) => b) }),
-    })
-    const d = await res.json()
-    flash(d.success ? '✓ Content saved' : '✗ ' + d.error)
+    try {
+      const res = await fetch('/api/admin/content', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: currentSlug, blocks: blocks.map(({ _open, ...b }) => b) }),
+      })
+      const d = await res.json()
+      flash(d.success ? '✓ Content saved' : '✗ ' + (d.error || 'Save failed'))
+    } catch (err) {
+      flash('✗ Network error — could not save')
+    }
     setSaving(false)
   }
 
   async function uploadImage(idx: number, file: File) {
-    const form = new FormData()
-    form.append('file', file)
-    form.append('folder', 'content')
-    const res = await fetch('/api/admin/media/upload', { method: 'POST', body: form })
-    const d = await res.json()
-    if (d.success) updateSetting(idx, 'src', d.data.file_url)
+    setUploading(idx)
+    try {
+      const form = new FormData()
+      form.append('file', file)
+      form.append('folder', 'content')
+      const res = await fetch('/api/admin/media/upload', {
+        method: 'POST',
+        credentials: 'include',
+        body: form,
+      })
+      const d = await res.json()
+      if (d.success && d.data?.file_url) {
+        updateSetting(idx, 'src', d.data.file_url)
+        flash('✓ Image uploaded')
+      } else {
+        flash('✗ Upload failed: ' + (d.error || `HTTP ${res.status}`))
+      }
+    } catch (err) {
+      flash('✗ Upload error — check your connection')
+    }
+    setUploading(null)
   }
+
+  const currentPageLabel = PAGE_SLUGS.find(p => p.slug === currentSlug)?.label || currentSlug
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">Content Editor</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage homepage sections and content blocks</p>
+          <p className="text-sm text-gray-500 mt-1">Manage extra sections for each page</p>
         </div>
         <div className="flex items-center gap-3">
           {msg && (
@@ -264,9 +345,29 @@ export default function ContentPage() {
         </div>
       </div>
 
+      {/* Page selector */}
+      <div className="bg-white border border-gray-200 rounded-lg p-4">
+        <p className="text-xs text-gray-500 font-medium mb-2">Editing sections for page:</p>
+        <div className="flex flex-wrap gap-2">
+          {PAGE_SLUGS.map(({ slug, label }) => (
+            <button
+              key={slug}
+              onClick={() => { setCurrentSlug(slug); setBlocks([]) }}
+              className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+                currentSlug === slug
+                  ? 'bg-gray-900 text-white border-gray-900'
+                  : 'border-gray-200 text-gray-600 hover:border-gray-400 bg-white'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Add block toolbar */}
       <div className="bg-white border border-gray-200 rounded-lg p-4">
-        <p className="text-xs text-gray-500 font-medium mb-3">Add block:</p>
+        <p className="text-xs text-gray-500 font-medium mb-3">Add block to <span className="text-gray-800 font-semibold">{currentPageLabel}</span>:</p>
         <div className="flex flex-wrap gap-2">
           {(Object.entries(BLOCK_LABELS) as [BlockType, { label: string; icon: string }][]).map(([type, { label, icon }]) => (
             <button key={type} onClick={() => setActiveType(type)}
@@ -291,7 +392,7 @@ export default function ContentPage() {
       <div className="space-y-3">
         {blocks.length === 0 && (
           <div className="bg-white border border-dashed border-gray-200 rounded-lg p-12 text-center">
-            <p className="text-gray-400 text-sm">No content blocks yet. Select a type above and click Add.</p>
+            <p className="text-gray-400 text-sm">No content blocks yet for <strong>{currentPageLabel}</strong>. Select a type above and click Add.</p>
           </div>
         )}
 
@@ -307,19 +408,23 @@ export default function ContentPage() {
                 <button onClick={() => move(idx, 1)} className="text-gray-300 hover:text-gray-600 text-xs leading-none">▼</button>
               </div>
               <GripVertical className="w-4 h-4 text-gray-300 flex-shrink-0" />
-
-              {/* Block type icon from public icons */}
               <img
                 src={block.settings?.icon || BLOCK_LABELS[block.block_type]?.icon}
                 alt={block.block_type}
                 className="w-5 h-5 object-contain flex-shrink-0"
               />
-
               <span className="text-sm font-medium text-gray-800 flex-1 truncate">
                 {BLOCK_LABELS[block.block_type]?.label} — {block.title}
               </span>
+              {/* Background preview chip */}
+              {block.settings?.sectionBg && (
+                <div
+                  className="w-5 h-5 rounded border border-gray-300 flex-shrink-0"
+                  style={{ background: block.settings.sectionBg }}
+                  title={`Background: ${block.settings.sectionBg}`}
+                />
+              )}
               <span className="text-xs text-gray-400 mr-2">#{idx + 1}</span>
-
               <button onClick={e => { e.stopPropagation(); update(idx, 'is_active', !block.is_active) }}
                 className={block.is_active ? 'text-green-500' : 'text-gray-300'}>
                 {block.is_active ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
@@ -344,7 +449,7 @@ export default function ContentPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">Block Type</label>
-                    <select value={block.block_type} onChange={e => update(idx, 'block_type', e.target.value)}
+                    <select value={block.block_type} onChange={e => update(idx, 'block_type', e.target.value as BlockType)}
                       className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none">
                       {Object.entries(BLOCK_LABELS).map(([v, { label }]) => (
                         <option key={v} value={v}>{label}</option>
@@ -365,6 +470,25 @@ export default function ContentPage() {
                 <div className="border border-gray-100 rounded-lg p-4 bg-gray-50 space-y-4">
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Settings</p>
 
+                  {/* ── Section background — available for ALL block types ── */}
+                  <BgField
+                    value={block.settings?.sectionBg ?? ''}
+                    onChange={v => updateSetting(idx, 'sectionBg', v)}
+                  />
+
+                  {/* ── Text color — available for ALL block types ── */}
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">Text Color</label>
+                    <div className="flex gap-2">
+                      <input type="color" value={block.settings?.textColor || '#111111'}
+                        onChange={e => updateSetting(idx, 'textColor', e.target.value)}
+                        className="w-10 h-9 border border-gray-200 rounded cursor-pointer p-0.5 flex-shrink-0" />
+                      <input value={block.settings?.textColor ?? ''} onChange={e => updateSetting(idx, 'textColor', e.target.value)}
+                        placeholder="e.g. #111111 or inherit"
+                        className="flex-1 border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                    </div>
+                  </div>
+
                   {/* Icon picker — available for all block types */}
                   <IconSelector
                     value={block.settings?.icon || ''}
@@ -372,31 +496,15 @@ export default function ContentPage() {
                     label="Block Icon (from /icon folder)"
                   />
 
-                  {/* Hero & CTA settings */}
+                  {/* Hero & CTA extra settings */}
                   {(block.block_type === 'hero' || block.block_type === 'cta') && (
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="col-span-2">
-                        <label className="text-xs text-gray-500 mb-1 block">Background</label>
-                        <input value={block.settings.background ?? ''} onChange={e => updateSetting(idx, 'background', e.target.value)}
-                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
-                          placeholder="e.g. linear-gradient(to bottom, #0072FD, #E5EDFC) or #0072FD" />
-                      </div>
-                      <div>
-                        <label className="text-xs text-gray-500 mb-1 block">Text Color</label>
-                        <div className="flex gap-2">
-                          <input type="color" value={block.settings.textColor || '#000000'}
-                            onChange={e => updateSetting(idx, 'textColor', e.target.value)}
-                            className="w-10 h-9 border border-gray-200 rounded cursor-pointer p-0.5" />
-                          <input value={block.settings.textColor ?? ''} onChange={e => updateSetting(idx, 'textColor', e.target.value)}
-                            className="flex-1 border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none" />
-                        </div>
-                      </div>
                       <div>
                         <label className="text-xs text-gray-500 mb-1 block">Button Text</label>
                         <input value={block.settings.buttonText ?? ''} onChange={e => updateSetting(idx, 'buttonText', e.target.value)}
                           className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
                       </div>
-                      <div className="col-span-2">
+                      <div>
                         <label className="text-xs text-gray-500 mb-1 block">Button URL</label>
                         <input value={block.settings.buttonUrl ?? ''} onChange={e => updateSetting(idx, 'buttonUrl', e.target.value)}
                           className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
@@ -404,24 +512,36 @@ export default function ContentPage() {
                     </div>
                   )}
 
-                  {/* Image settings */}
+                  {/* Image block settings */}
                   {block.block_type === 'image' && (
                     <div className="grid grid-cols-2 gap-3">
                       <div className="col-span-2">
                         <label className="text-xs text-gray-500 mb-1 block">Image</label>
-                        <div className="flex gap-3 items-center">
+                        <div className="flex gap-3 items-center mb-2">
                           {block.settings.src && (
                             <img src={block.settings.src} alt="" className="h-16 rounded border border-gray-200 object-cover" />
                           )}
-                          <label className="flex items-center gap-2 cursor-pointer text-sm text-blue-600 hover:underline border border-blue-200 rounded px-3 py-2">
-                            <Upload className="w-4 h-4" /> Upload Image
-                            <input type="file" accept="image/*" className="hidden"
-                              onChange={e => { const f = e.target.files?.[0]; if (f) uploadImage(idx, f) }} />
+                          <label className={`flex items-center gap-2 cursor-pointer text-sm border rounded px-3 py-2 transition-colors ${
+                            uploading === idx
+                              ? 'text-gray-400 border-gray-200 cursor-not-allowed'
+                              : 'text-blue-600 hover:underline border-blue-200'
+                          }`}>
+                            {uploading === idx
+                              ? <><Loader2 className="w-4 h-4 animate-spin" /> Uploading…</>
+                              : <><Upload className="w-4 h-4" /> Upload Image</>
+                            }
+                            <input
+                              type="file"
+                              accept="image/*"
+                              disabled={uploading === idx}
+                              className="hidden"
+                              onChange={e => { const f = e.target.files?.[0]; if (f) uploadImage(idx, f) }}
+                            />
                           </label>
                         </div>
                         <input value={block.settings.src ?? ''} onChange={e => updateSetting(idx, 'src', e.target.value)}
                           placeholder="Or paste image URL directly"
-                          className="mt-2 w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none" />
+                          className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none" />
                       </div>
                       <div>
                         <label className="text-xs text-gray-500 mb-1 block">Alt Text</label>
@@ -436,7 +556,7 @@ export default function ContentPage() {
                     </div>
                   )}
 
-                  {/* Text settings */}
+                  {/* Text block settings */}
                   {block.block_type === 'text' && (
                     <div className="grid grid-cols-2 gap-3">
                       <div>
@@ -459,6 +579,19 @@ export default function ContentPage() {
                           <option value="2xl">2XL</option>
                         </select>
                       </div>
+                    </div>
+                  )}
+
+                  {/* Features block settings */}
+                  {block.block_type === 'features' && (
+                    <div>
+                      <label className="text-xs text-gray-500 mb-1 block">Columns</label>
+                      <select value={block.settings.columns ?? 3} onChange={e => updateSetting(idx, 'columns', Number(e.target.value))}
+                        className="w-full border border-gray-200 rounded px-2 py-1.5 text-sm focus:outline-none mb-3">
+                        <option value={2}>2 columns</option>
+                        <option value={3}>3 columns</option>
+                        <option value={4}>4 columns</option>
+                      </select>
                     </div>
                   )}
 

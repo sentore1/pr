@@ -4,8 +4,11 @@ import { Header } from "@/components/header"
 import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { Mail, Users, Target, TrendingUp } from 'lucide-react'
+import { CmsBlocks } from "@/components/cms-blocks"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function MarketingMailPage() {
+  const p = usePageContent('marketing-mail')
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -13,12 +16,12 @@ export default function MarketingMailPage() {
       <section className="pt-32 pb-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500 rounded-[5px] mb-6">
-            <span className="text-sm text-white font-medium">Authentic Reach Out Tool</span>
+            <span className="text-sm text-white font-medium">{p('hero_badge', 'Authentic Reach Out Tool')}</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">Email Marketing Made Simple</h1>
-          <p className="text-gray-600 mb-6 max-w-xl mx-auto">Reach the right contacts with AI-powered tools that identify high-engagement emails.</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">{p('hero_title', 'Email Marketing Made Simple')}</h1>
+          <p className="text-gray-600 mb-6 max-w-xl mx-auto">{p('hero_description', 'Reach the right contacts with AI-powered tools that identify high-engagement emails.')}</p>
           <Button size="lg" className="rounded-[5px] bg-blue-500 hover:bg-blue-600 text-white" asChild>
-            <a href="https://login.pryro.com">Get Started Free</a>
+            <a href="https://login.pryro.com">{p('hero_cta', 'Get Started Free')}</a>
           </Button>
         </div>
       </section>
@@ -28,18 +31,18 @@ export default function MarketingMailPage() {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-6">
               <Mail className="w-5 h-5 text-blue-600 mb-3" />
-              <h3 className="font-semibold mb-2 text-gray-900">Authentic Reach Out</h3>
-              <p className="text-sm text-gray-600">Identify emails with high opening rates.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card1_title', 'Authentic Reach Out')}</h3>
+              <p className="text-sm text-gray-600">{p('card1_description', 'Identify emails with high opening rates.')}</p>
             </div>
             <div className="p-6">
               <Users className="w-5 h-5 text-blue-600 mb-3" />
-              <h3 className="font-semibold mb-2 text-gray-900">List Segmentation</h3>
-              <p className="text-sm text-gray-600">Target the right audience.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card2_title', 'List Segmentation')}</h3>
+              <p className="text-sm text-gray-600">{p('card2_description', 'Target the right audience.')}</p>
             </div>
             <div className="p-6">
               <Target className="w-5 h-5 text-blue-600 mb-3" />
-              <h3 className="font-semibold mb-2 text-gray-900">Automation</h3>
-              <p className="text-sm text-gray-600">Automated email workflows.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card3_title', 'Automation')}</h3>
+              <p className="text-sm text-gray-600">{p('card3_description', 'Automated email workflows.')}</p>
             </div>
           </div>
         </div>
@@ -48,29 +51,29 @@ export default function MarketingMailPage() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-2 text-gray-900">How It Works</h2>
-            <p className="text-gray-600">4 simple steps</p>
+            <h2 className="text-3xl font-bold mb-2 text-gray-900">{p('how_title', 'How It Works')}</h2>
+            <p className="text-gray-600">{p('how_subtitle', '4 simple steps')}</p>
           </div>
           <div className="grid md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center text-white font-semibold mx-auto mb-3">1</div>
-              <h3 className="font-semibold mb-1 text-gray-900">Upload Contacts</h3>
-              <p className="text-sm text-gray-600">Import your list</p>
+              <h3 className="font-semibold mb-1 text-gray-900">{p('step1_title', 'Upload Contacts')}</h3>
+              <p className="text-sm text-gray-600">{p('step1_description', 'Import your list')}</p>
             </div>
             <div className="text-center">
               <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center text-white font-semibold mx-auto mb-3">2</div>
-              <h3 className="font-semibold mb-1 text-gray-900">AI Analysis</h3>
-              <p className="text-sm text-gray-600">Identify high openers</p>
+              <h3 className="font-semibold mb-1 text-gray-900">{p('step2_title', 'AI Analysis')}</h3>
+              <p className="text-sm text-gray-600">{p('step2_description', 'Identify high openers')}</p>
             </div>
             <div className="text-center">
               <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center text-white font-semibold mx-auto mb-3">3</div>
-              <h3 className="font-semibold mb-1 text-gray-900">Send Emails</h3>
-              <p className="text-sm text-gray-600">Reach best contacts</p>
+              <h3 className="font-semibold mb-1 text-gray-900">{p('step3_title', 'Send Emails')}</h3>
+              <p className="text-sm text-gray-600">{p('step3_description', 'Reach best contacts')}</p>
             </div>
             <div className="text-center">
               <div className="w-10 h-10 bg-blue-600 rounded-[5px] flex items-center justify-center text-white font-semibold mx-auto mb-3">4</div>
-              <h3 className="font-semibold mb-1 text-gray-900">Track Results</h3>
-              <p className="text-sm text-gray-600">Monitor engagement</p>
+              <h3 className="font-semibold mb-1 text-gray-900">{p('step4_title', 'Track Results')}</h3>
+              <p className="text-sm text-gray-600">{p('step4_description', 'Monitor engagement')}</p>
             </div>
           </div>
         </div>
@@ -80,8 +83,8 @@ export default function MarketingMailPage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900">Built for Marketing Teams</h2>
-              <p className="text-gray-600 mb-4">Powerful tools to drive conversions and grow your business.</p>
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">{p('built_title', 'Built for Marketing Teams')}</h2>
+              <p className="text-gray-600 mb-4">{p('built_description', 'Powerful tools to drive conversions and grow your business.')}</p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <TrendingUp className="w-4 h-4 text-blue-600 mt-1" />
@@ -103,7 +106,7 @@ export default function MarketingMailPage() {
           </div>
         </div>
       </section>
-
+      <CmsBlocks slug="marketing-mail" />
       <SimpleFooter />
     </div>
   )

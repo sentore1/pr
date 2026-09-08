@@ -1,12 +1,16 @@
 /**
  * Public CMS data endpoint
- * Returns all data needed to render the landing page dynamically
+ * Returns all data needed to render the site dynamically (nav, styles, pageContent, etc.)
+ *
+ * NOTE: contentBlocks are per-page and are NOT included here.
+ * Each page fetches its own blocks via /api/admin/content?slug=<slug>
+ * through the <CmsBlocks slug="..." /> component.
  */
 import { NextResponse } from 'next/server'
 import { 
   navigationItemModel, logoModel,
   footerSectionModel, footerLinkModel,
-  contentBlockModel, styleSettingModel,
+  styleSettingModel,
   seoSettingModel, systemSettingModel,
 } from '@/lib/db/models'
 import { query } from '@/lib/db/connection'
@@ -17,7 +21,7 @@ export async function GET() {
   try {
     const [
       navItems, logos, footerSections,
-      contentBlocks, styles, seoData, systemSettings, footerContent, dynamicContent, carouselIcons
+      styles, seoData, systemSettings, footerContent, dynamicContent, carouselIcons
     ] = await Promise.all([
       // Header nav with children
       (async () => {
@@ -35,7 +39,6 @@ export async function GET() {
           links: await footerLinkModel.getLinksBySection(s.id),
         })))
       })(),
-      contentBlockModel.getBlocksByPage(1),
       styleSettingModel.findAll(),
       seoSettingModel.getGlobalSEO(),
       systemSettingModel.getPublicSettings(),
@@ -76,7 +79,6 @@ export async function GET() {
         logos,
         footerSections,
         footerContent: footerContentMap,
-        contentBlocks,
         styles: styleMap,
         seo: seoData,
         settings,

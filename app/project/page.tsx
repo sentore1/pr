@@ -7,8 +7,11 @@ import ContentSection from "@/components/content-2"
 import { Button } from '@/components/ui/button'
 import { ChevronRight, Check, Users, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
+import { CmsBlocks } from "@/components/cms-blocks"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function ProjectPage() {
+  const p = usePageContent('project')
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -17,11 +20,11 @@ export default function ProjectPage() {
         <div className="max-w-6xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500 border border-blue-100 rounded-[5px] mb-6">
             <span className="w-2 h-2 bg-white rounded-[5px]"></span>
-            <span className="text-sm text-white font-medium">Used by 12,000+ project teams</span>
+            <span className="text-sm text-white font-medium">{p('hero_badge', 'Used by 12,000+ project teams')}</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">Pryro for<br />Project Management</h1>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900">{p('hero_title', 'Pryro for Project Management')}</h1>
           <p className="text-l text-gray-600 max-w-3xl leading-relaxed mb-8">
-            Plan, track, and deliver projects on time. Collaborate with your team and keep stakeholders informed with powerful project management tools.
+            {p('hero_description', 'Plan, track, and deliver projects on time. Collaborate with your team and keep stakeholders informed with powerful project management tools.')}
           </p>
           <div className="flex flex-wrap gap-3">
             <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-[5px]">Free for small teams</span>
@@ -88,8 +91,8 @@ export default function ProjectPage() {
                   <Users className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1 text-gray-900">Team Collaboration</h3>
-                  <p className="text-sm text-gray-600">Manage team tasks and deadlines. Pryro provides collaboration tools for project teams.</p>
+                  <h3 className="font-semibold mb-1 text-gray-900">{p('feature1_title', 'Team Collaboration')}</h3>
+                  <p className="text-sm text-gray-600">{p('feature1_description', 'Manage team tasks and deadlines. Pryro provides collaboration tools for project teams.')}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -97,8 +100,8 @@ export default function ProjectPage() {
                   <TrendingUp className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1 text-gray-900">Progress Tracking</h3>
-                  <p className="text-sm text-gray-600">Track project milestones and deliverables. Pryro provides real-time progress insights.</p>
+                  <h3 className="font-semibold mb-1 text-gray-900">{p('feature2_title', 'Progress Tracking')}</h3>
+                  <p className="text-sm text-gray-600">{p('feature2_description', 'Track project milestones and deliverables. Pryro provides real-time progress insights.')}</p>
                 </div>
               </div>
               <div className="space-y-2 pt-4">
@@ -121,7 +124,7 @@ export default function ProjectPage() {
               <div className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-[5px] mb-4">
                 Project Platform
               </div>
-              <h2 className="text-4xl font-medium text-gray-900 mb-6">The Pryro ecosystem brings together powerful tools for project teams.</h2>
+              <h2 className="text-4xl font-medium text-gray-900 mb-6">{p('ecosystem_title', 'The Pryro ecosystem brings together powerful tools for project teams.')}</h2>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <Check className="w-5 h-5 text-blue-600" />
@@ -168,7 +171,7 @@ export default function ProjectPage() {
           </div>
         </div>
       </section>
-
+      <CmsBlocks slug="project" />
       <SimpleFooter />
     </div>
   )

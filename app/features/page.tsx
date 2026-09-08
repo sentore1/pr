@@ -5,8 +5,11 @@ import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Header } from "@/components/header"
 import { SimpleFooter } from "@/components/simple-footer"
+import { CmsBlocks } from "@/components/cms-blocks"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function FeaturesPage() {
+  const p = usePageContent('features')
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -14,8 +17,8 @@ export default function FeaturesPage() {
       <section className="py-16 md:py-32">
         <div className="mx-auto max-w-5xl space-y-12 px-6">
           <div className="relative z-10 grid items-center gap-4 md:grid-cols-2 md:gap-12">
-            <h2 className="text-4xl font-semibold text-gray-900">The Pryro ecosystem brings together powerful tools</h2>
-            <p className="max-w-sm sm:ml-auto text-gray-600">Empower your team with workflows that adapt to your needs, whether you prefer git synchronization or a AI Agents interface.</p>
+            <h2 className="text-4xl font-semibold text-gray-900">{p('hero_title', 'The Pryro ecosystem brings together powerful tools')}</h2>
+            <p className="max-w-sm sm:ml-auto text-gray-600">{p('hero_description', 'Empower your team with workflows that adapt to your needs, whether you prefer git synchronization or a AI Agents interface.')}</p>
           </div>
           <div className="px-3 pt-3 md:-mx-8">
             <div className="aspect-88/36 mask-b-from-75% mask-b-to-95% relative">
@@ -65,8 +68,8 @@ export default function FeaturesPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-start mb-32">
             <div className="pt-8">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Create Plans & Manage Payments</h2>
-              <p className="text-gray-600 mb-8 leading-relaxed">Every business to exist always must have a plan to correct payment and grow so our system do so helps you plan fast than before</p>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">{p('payments_title', 'Create Plans & Manage Payments')}</h2>
+              <p className="text-gray-600 mb-8 leading-relaxed">{p('payments_description', 'Every business to exist always must have a plan to correct payment and grow so our system do so helps you plan fast than before')}</p>
               <ul className="space-y-3 text-sm text-gray-700 mb-8">
                 {["Multi-services architecture", "Subscription and customer management", "Multiple integration", "Automatic handling"].map((item, i) => (
                   <li key={i} className="flex items-center gap-3">
@@ -212,8 +215,8 @@ export default function FeaturesPage() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Integrations & Communication</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Stay connected with your favorite tools and platforms</p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">{p('integrations_title', 'Integrations & Communication')}</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">{p('integrations_description', 'Stay connected with your favorite tools and platforms')}</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -237,8 +240,8 @@ export default function FeaturesPage() {
 
       <section className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Ready to streamline your business?</h2>
-          <p className="text-xl text-gray-600 mb-8">Join thousands of businesses using Pryro to manage their operations</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">{p('final_cta_title', 'Ready to streamline your business?')}</h2>
+          <p className="text-xl text-gray-600 mb-8">{p('final_cta_description', 'Join thousands of businesses using Pryro to manage their operations')}</p>
           <a href="/demo" className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-full text-lg hover:bg-blue-700 transition-colors">
             Start Free Trial
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -248,6 +251,7 @@ export default function FeaturesPage() {
         </div>
       </section>
 
+      <CmsBlocks slug="features" />
       <SimpleFooter />
     </div>
   )

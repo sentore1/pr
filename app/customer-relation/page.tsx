@@ -5,22 +5,25 @@ import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { Users, Mail, TrendingUp, Target, Phone, MessageSquare, BarChart3, Zap } from 'lucide-react'
 import Link from 'next/link'
+import { CmsBlocks } from "@/components/cms-blocks"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function CustomerRelationPage() {
+  const p = usePageContent('customer-relation')
   return (
     <div className="min-h-screen bg-white">
       <Header />
 
       <section className="pt-40 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-medium mb-6 text-gray-900">Explore Everything Pryro Can Do</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-8">From lead management to customer insights, Pryro gives sales teams complete control over relationships, pipelines, and revenue growth.</p>
+          <h1 className="text-5xl md:text-6xl font-medium mb-6 text-gray-900">{p('hero_title', 'Explore Everything Pryro Can Do')}</h1>
+          <p className="text-gray-600 max-w-2xl mx-auto mb-8">{p('hero_description', 'From lead management to customer insights, Pryro gives sales teams complete control over relationships, pipelines, and revenue growth.')}</p>
           <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
             <Button asChild size="lg" className="rounded-[4px] bg-black text-white hover:bg-black/90">
-              <Link href="/demo">Get Started</Link>
+              <Link href="/demo">{p('hero_cta_primary', 'Get Started')}</Link>
             </Button>
             <Button asChild size="lg" className="rounded-[4px] bg-white text-black hover:bg-white/80">
-              <Link href="/contact">Contact Sales</Link>
+              <Link href="/contact">{p('hero_cta_secondary', 'Contact Sales')}</Link>
             </Button>
           </div>
         </div>
@@ -78,29 +81,29 @@ export default function CustomerRelationPage() {
                 <Users className="w-6 h-6 text-white" />
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 text-white text-xs rounded-[5px] flex items-center justify-center">✓</span>
               </div>
-              <h3 className="font-semibold mb-2 text-gray-900">Contact Management</h3>
-              <p className="text-sm text-gray-600">Organize all customer information in one place with detailed profiles and interaction history.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card1_title', 'Contact Management')}</h3>
+              <p className="text-sm text-gray-600">{p('card1_description', 'Organize all customer information in one place with detailed profiles and interaction history.')}</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-[5px] p-6">
               <div className="w-12 h-12 bg-blue-600 rounded-[5px] flex items-center justify-center mb-4">
                 <Target className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold mb-2 text-gray-900">Pipeline Management</h3>
-              <p className="text-sm text-gray-600">Track deals through every stage with visual pipelines and automated workflows.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card2_title', 'Pipeline Management')}</h3>
+              <p className="text-sm text-gray-600">{p('card2_description', 'Track deals through every stage with visual pipelines and automated workflows.')}</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-[5px] p-6">
               <div className="w-12 h-12 bg-blue-600 rounded-[5px] flex items-center justify-center mb-4">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold mb-2 text-gray-900">Sales Analytics</h3>
-              <p className="text-sm text-gray-600">Get real-time insights into sales performance and customer behavior patterns.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card3_title', 'Sales Analytics')}</h3>
+              <p className="text-sm text-gray-600">{p('card3_description', 'Get real-time insights into sales performance and customer behavior patterns.')}</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-[5px] p-6">
               <div className="w-12 h-12 bg-blue-600 rounded-[5px] flex items-center justify-center mb-4">
                 <Mail className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold mb-2 text-gray-900">Email Integration</h3>
-              <p className="text-sm text-gray-600">Sync emails automatically and track all customer communications in one place.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card4_title', 'Email Integration')}</h3>
+              <p className="text-sm text-gray-600">{p('card4_description', 'Sync emails automatically and track all customer communications in one place.')}</p>
             </div>
           </div>
 
@@ -119,8 +122,8 @@ export default function CustomerRelationPage() {
                   <Phone className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1 text-gray-900">Call Tracking</h3>
-                  <p className="text-sm text-gray-600">Log calls, record conversations, and track follow-ups with built-in telephony.</p>
+                  <h3 className="font-semibold mb-1 text-gray-900">{p('feature1_title', 'Call Tracking')}</h3>
+                  <p className="text-sm text-gray-600">{p('feature1_description', 'Log calls, record conversations, and track follow-ups with built-in telephony.')}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -128,8 +131,8 @@ export default function CustomerRelationPage() {
                   <MessageSquare className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1 text-gray-900">Live Chat Support</h3>
-                  <p className="text-sm text-gray-600">Engage customers in real-time with integrated chat and support ticketing.</p>
+                  <h3 className="font-semibold mb-1 text-gray-900">{p('feature2_title', 'Live Chat Support')}</h3>
+                  <p className="text-sm text-gray-600">{p('feature2_description', 'Engage customers in real-time with integrated chat and support ticketing.')}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -137,8 +140,8 @@ export default function CustomerRelationPage() {
                   <BarChart3 className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1 text-gray-900">Revenue Forecasting</h3>
-                  <p className="text-sm text-gray-600">Predict future revenue with AI-powered forecasting based on pipeline data.</p>
+                  <h3 className="font-semibold mb-1 text-gray-900">{p('feature3_title', 'Revenue Forecasting')}</h3>
+                  <p className="text-sm text-gray-600">{p('feature3_description', 'Predict future revenue with AI-powered forecasting based on pipeline data.')}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -146,8 +149,8 @@ export default function CustomerRelationPage() {
                   <Zap className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1 text-gray-900">Workflow Automation</h3>
-                  <p className="text-sm text-gray-600">Automate repetitive tasks and focus on building customer relationships.</p>
+                  <h3 className="font-semibold mb-1 text-gray-900">{p('feature4_title', 'Workflow Automation')}</h3>
+                  <p className="text-sm text-gray-600">{p('feature4_description', 'Automate repetitive tasks and focus on building customer relationships.')}</p>
                 </div>
               </div>
             </div>
@@ -202,8 +205,8 @@ export default function CustomerRelationPage() {
 
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-semibold mb-4 text-gray-900">Trusted By Sales Teams Worldwide</h2>
-          <p className="text-gray-600 mb-10">See how businesses use Pryro to close more deals and grow revenue.</p>
+          <h2 className="text-3xl font-semibold mb-4 text-gray-900">{p('cta_title', 'Trusted By Sales Teams Worldwide')}</h2>
+          <p className="text-gray-600 mb-10">{p('cta_description', 'See how businesses use Pryro to close more deals and grow revenue.')}</p>
           <div className="bg-gray-50 rounded-[5px] p-8 mb-8 text-left">
             <p className="text-gray-700 mb-4">"Pryro transformed our sales process. We now have complete visibility into our pipeline, and our team closes 40% more deals with automated workflows and better customer insights."</p>
             <div>
@@ -218,7 +221,7 @@ export default function CustomerRelationPage() {
           </div>
         </div>
       </section>
-
+      <CmsBlocks slug="customer-relation" />
       <SimpleFooter />
     </div>
   )

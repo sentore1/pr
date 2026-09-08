@@ -6,6 +6,7 @@ import { Mail, Phone, MapPin } from "lucide-react"
 import { SimpleFooter } from "@/components/simple-footer"
 import { Header } from "@/components/header"
 import { usePageContent } from "@/lib/use-page-content"
+import { CmsBlocks } from "@/components/cms-blocks"
 
 export default function ContactPage() {
   const p = usePageContent('contact')
@@ -139,6 +140,7 @@ export default function ContactPage() {
         </div>
       </section>
 
+      <CmsBlocks slug="contact" />
       <SimpleFooter />
     </div>
   )

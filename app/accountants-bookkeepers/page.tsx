@@ -114,7 +114,7 @@ export default function AccountantsBookkeepersPage() {
           </div>
         </div>
       </section>
-
+      <CmsBlocks slug="accountants-bookkeepers" />
       <SimpleFooter />
     </div>
   )

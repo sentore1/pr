@@ -21,7 +21,7 @@ export const config = {
     url: process.env.NEXTAUTH_URL || 'http://localhost:3000',
     jwtSecret: process.env.JWT_SECRET || 'jwt-secret-change-in-production',
     jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
-    sessionMaxAge: 30 * 24 * 60 * 60, // 30 days in seconds
+    sessionMaxAge: 7 * 24 * 60 * 60, // 7 days — matches JWT expiry ('7d')
   },
 
   // Application

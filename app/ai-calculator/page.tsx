@@ -191,7 +191,7 @@ export default function AICalculatorPage() {
           </div>
         </div>
       </section>
-
+      <CmsBlocks slug="ai-calculator" />
       <SimpleFooter />
     </div>
   )

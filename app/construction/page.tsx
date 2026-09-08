@@ -5,22 +5,25 @@ import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from '@/components/ui/button'
 import { HardHat, Truck, Calendar, DollarSign, FileText, Users, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
+import { CmsBlocks } from "@/components/cms-blocks"
+import { usePageContent } from "@/lib/use-page-content"
 
 export default function ConstructionPage() {
+  const p = usePageContent('construction')
   return (
     <div className="min-h-screen bg-white">
       <Header />
 
       <section className="pt-40 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-medium mb-6 text-gray-900">Explore Everything Pryro Can Do</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-8">From project management to cost tracking, Pryro gives construction teams complete control over budgets, jobs, and timelines.</p>
+          <h1 className="text-5xl md:text-6xl font-medium mb-6 text-gray-900">{p('hero_title', 'Explore Everything Pryro Can Do')}</h1>
+          <p className="text-gray-600 max-w-2xl mx-auto mb-8">{p('hero_description', 'From project management to cost tracking, Pryro gives construction teams complete control over budgets, jobs, and timelines.')}</p>
           <div className="inline-flex items-center gap-1 bg-black/5 rounded-[9px] p-1">
             <Button asChild size="lg" className="rounded-[4px] bg-black text-white hover:bg-black/90">
-              <Link href="https://login.pryro.com">Get Started</Link>
+              <Link href="https://login.pryro.com">{p('hero_cta_primary', 'Get Started')}</Link>
             </Button>
             <Button asChild size="lg" className="rounded-[4px] bg-white text-black hover:bg-white/80">
-              <Link href="/contact">Contact Sales</Link>
+              <Link href="/contact">{p('hero_cta_secondary', 'Contact Sales')}</Link>
             </Button>
           </div>
         </div>
@@ -34,22 +37,22 @@ export default function ConstructionPage() {
                 <HardHat className="w-4 h-4-white" />
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 text-white text-xs rounded-[5px] flex items-center justify-center">✓</span>
               </div>
-              <h3 className="font-semibold mb-2 text-gray-900">Project Management</h3>
-              <p className="text-sm text-gray-600">Track every job from bid to completion with real-time updates while predicting timelines.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card1_title', 'Project Management')}</h3>
+              <p className="text-sm text-gray-600">{p('card1_description', 'Track every job from bid to completion with real-time updates while predicting timelines.')}</p>
             </div>
             <div className="border border-gray-200 rounded-[5px] p-6">
               <div className="w-8 h-8 bg-blue-600 rounded-[5px] flex items-center justify-center mb-4">
                 <DollarSign className="w-4 h-4 text-white" />
               </div>
-              <h3 className="font-semibold mb-2 text-gray-900">Job Costing</h3>
-              <p className="text-sm text-gray-600">Understand cost fluctuations and predict expenses across reports with forecasting.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card2_title', 'Job Costing')}</h3>
+              <p className="text-sm text-gray-600">{p('card2_description', 'Understand cost fluctuations and predict expenses across reports with forecasting.')}</p>
             </div>
             <div className="border border-gray-200 rounded-[5px] p-6">
               <div className="w-8 h-8 bg-blue-600 rounded-[5px] flex items-center justify-center mb-4">
                 <Truck className="w-4 h-4 text-white" />
               </div>
-              <h3 className="font-semibold mb-2 text-gray-900">Equipment Tracking</h3>
-              <p className="text-sm text-gray-600">Track equipment and materials, identify risks early with intelligent alerts.</p>
+              <h3 className="font-semibold mb-2 text-gray-900">{p('card3_title', 'Equipment Tracking')}</h3>
+              <p className="text-sm text-gray-600">{p('card3_description', 'Track equipment and materials, identify risks early with intelligent alerts.')}</p>
             </div>
           </div>
 
@@ -68,8 +71,8 @@ export default function ConstructionPage() {
                   <FileText className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1 text-gray-900">Executive Project Reports</h3>
-                  <p className="text-sm text-gray-600">Get a real-time view of project status, costs, and timelines needing accuracy.</p>
+                  <h3 className="font-semibold mb-1 text-gray-900">{p('detail1_title', 'Executive Project Reports')}</h3>
+                  <p className="text-sm text-gray-600">{p('detail1_description', 'Get a real-time view of project status, costs, and timelines needing accuracy.')}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -77,8 +80,8 @@ export default function ConstructionPage() {
                   <DollarSign className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1 text-gray-900">Cost Breakdown Analysis</h3>
-                  <p className="text-sm text-gray-600">Get transparency into financial movements. Pryro categorizes costs automatically.</p>
+                  <h3 className="font-semibold mb-1 text-gray-900">{p('detail2_title', 'Cost Breakdown Analysis')}</h3>
+                  <p className="text-sm text-gray-600">{p('detail2_description', 'Get transparency into financial movements. Pryro categorizes costs automatically.')}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -86,8 +89,8 @@ export default function ConstructionPage() {
                   <Calendar className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1 text-gray-900">Scheduling & Time Tracking</h3>
-                  <p className="text-sm text-gray-600">Schedule crews and track time across multiple sites with automated management.</p>
+                  <h3 className="font-semibold mb-1 text-gray-900">{p('detail3_title', 'Scheduling & Time Tracking')}</h3>
+                  <p className="text-sm text-gray-600">{p('detail3_description', 'Schedule crews and track time across multiple sites with automated management.')}</p>
                 </div>
               </div>
               <div className="space-y-2 pt-4">
@@ -219,8 +222,8 @@ export default function ConstructionPage() {
 
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-semibold mb-4 text-gray-900">Trusted By Construction Teams Worldwide</h2>
-          <p className="text-gray-600 mb-10">See how businesses use Pryro to save time, cut costs, and grow faster.</p>
+          <h2 className="text-3xl font-semibold mb-4 text-gray-900">{p('cta_title', 'Trusted By Construction Teams Worldwide')}</h2>
+          <p className="text-gray-600 mb-10">{p('cta_description', 'See how businesses use Pryro to save time, cut costs, and grow faster.')}</p>
           <div className="bg-gray-50 rounded-[5px] p-8 mb-8 text-center">
             <p className="text-gray-700 mb-4">"Pryro's project tracking transformed how we manage budgets across teams. We now plan cash flow with confidence, avoid unexpected costs, and reclaim hours each week."</p>
             <div>
@@ -235,7 +238,7 @@ export default function ConstructionPage() {
           </div>
         </div>
       </section>
-
+      <CmsBlocks slug="construction" />
       <SimpleFooter />
     </div>
   )
