@@ -9,8 +9,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!session) return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
 
   const { id } = await params
-  const { alt_text, title } = await req.json()
-  await mediaLibraryModel.updateById(parseInt(id), { alt_text, title } as any)
+  const { alt_text, title, link_url } = await req.json()
+  await mediaLibraryModel.updateById(parseInt(id), { alt_text, title, link_url } as any)
   return NextResponse.json({ success: true })
 }
 

@@ -44,7 +44,7 @@ export async function GET() {
       systemSettingModel.getPublicSettings(),
       query('SELECT key_name, content FROM footer_content') as Promise<any[]>,
       query('SELECT key_name, value FROM dynamic_content') as Promise<any[]>,
-      query(`SELECT file_url, title, alt_text FROM media_library WHERE folder = 'icons' ORDER BY title ASC`) as Promise<any[]>,
+      query(`SELECT file_url, title, alt_text, link_url FROM media_library WHERE folder = 'icons' ORDER BY title ASC`) as Promise<any[]>,
     ])
 
     // Convert styles array → nested object { colors: { primary: '...' }, ... }
@@ -83,7 +83,7 @@ export async function GET() {
         seo: seoData,
         settings,
         pageContent,
-        carouselIcons: (carouselIcons as any[]).map(r => ({ url: r.file_url, name: r.title || r.alt_text || '' })),
+        carouselIcons: (carouselIcons as any[]).map(r => ({ url: r.file_url, name: r.title || r.alt_text || '', link: r.link_url || '' })),
       },
     })
   } catch (err) {

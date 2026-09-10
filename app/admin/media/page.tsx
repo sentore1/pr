@@ -15,6 +15,7 @@ interface MediaItem {
   alt_text: string
   title: string
   folder: string
+  link_url: string
   created_at: string
 }
 
@@ -78,11 +79,11 @@ export default function MediaPage() {
     load()
   }
 
-  async function updateMeta(id: number, alt_text: string, title: string) {
+  async function updateMeta(id: number, alt_text: string, title: string, link_url: string) {
     await fetch(`/api/admin/media/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ alt_text, title }),
+      body: JSON.stringify({ alt_text, title, link_url }),
     })
     flash('✓ Updated')
     load()
@@ -229,10 +230,15 @@ export default function MediaPage() {
                 <label className="text-xs text-gray-500 mb-1 block">Title</label>
                 <input defaultValue={selected.title || ''} id="title-input" className="w-full border border-gray-200 rounded px-2 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-400" />
               </div>
+              <div>
+                <label className="text-xs text-gray-500 mb-1 block">Link URL <span className="text-gray-400">(icons only)</span></label>
+                <input defaultValue={selected.link_url || ''} id="link-input" placeholder="e.g. /features" className="w-full border border-gray-200 rounded px-2 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-400" />
+              </div>
               <button onClick={() => {
                 const alt = (document.getElementById('alt-input') as HTMLInputElement)?.value || ''
                 const title = (document.getElementById('title-input') as HTMLInputElement)?.value || ''
-                updateMeta(selected.id, alt, title)
+                const link = (document.getElementById('link-input') as HTMLInputElement)?.value || ''
+                updateMeta(selected.id, alt, title, link)
               }} className="w-full text-xs bg-gray-800 text-white py-1.5 rounded-md hover:bg-gray-900">Save Metadata</button>
             </div>
             <button onClick={() => copyUrl(selected.file_url)}

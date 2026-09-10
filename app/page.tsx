@@ -16,18 +16,18 @@ import { CmsBlocks } from "@/components/cms-blocks"
 
 // Fallback carousel icons used when DB has no icons seeded yet
 const FALLBACK_CAROUSEL = [
-  { url: '/icon/accounting icon.png',         name: 'Accounting' },
-  { url: '/icon/ai business review icon.png', name: 'AI Business Review' },
-  { url: '/icon/budget icon.png',             name: 'Budget' },
-  { url: '/icon/CRM icon.png',               name: 'CRM' },
-  { url: '/icon/dashboard icon.png',         name: 'Dashboard' },
-  { url: '/icon/document icon.png',          name: 'Document' },
-  { url: '/icon/HR icon.png',               name: 'HR' },
-  { url: '/icon/Inventory icon.png',        name: 'Inventory' },
-  { url: '/icon/logistic icon.png',         name: 'Logistics' },
-  { url: '/icon/project icon.png',          name: 'Project' },
-  { url: '/icon/sales icon.png',            name: 'Sales' },
-  { url: '/icon/subscription icon.png',    name: 'Subscription' },
+  { url: '/icon/accounting icon.png',         name: 'Accounting',        link: '' },
+  { url: '/icon/ai business review icon.png', name: 'AI Business Review', link: '' },
+  { url: '/icon/budget icon.png',             name: 'Budget',            link: '' },
+  { url: '/icon/CRM icon.png',               name: 'CRM',               link: '' },
+  { url: '/icon/dashboard icon.png',         name: 'Dashboard',         link: '' },
+  { url: '/icon/document icon.png',          name: 'Document',          link: '' },
+  { url: '/icon/HR icon.png',               name: 'HR',                link: '' },
+  { url: '/icon/Inventory icon.png',        name: 'Inventory',         link: '' },
+  { url: '/icon/logistic icon.png',         name: 'Logistics',         link: '' },
+  { url: '/icon/project icon.png',          name: 'Project',           link: '' },
+  { url: '/icon/sales icon.png',            name: 'Sales',             link: '' },
+  { url: '/icon/subscription icon.png',    name: 'Subscription',      link: '' },
 ]
 
 function CardCounter({ target, prefix = "", suffix = "", className = "" }: { target: number; prefix?: string; suffix?: string; className?: string }) {
@@ -1553,28 +1553,30 @@ export default function PryroPage() {
                 <div className="industry-carousel-full overflow-hidden">
                   <div className="industry-carousel-track flex gap-0.5">
                     {[...carouselIcons, ...carouselIcons].map((industry, i) => (
-                      <div
+                      <a
                         key={i}
-                        className="flex flex-col items-center justify-center flex-shrink-0 w-20 md:w-24 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
+                        href={industry.link || '#'}
+                        className="flex flex-col items-center justify-center flex-shrink-0 w-20 md:w-24 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1 hover:border-blue-300 hover:shadow-blue-100 transition-all"
                       >
                         <img src={industry.url} alt={industry.name} className="w-12 h-12 md:w-14 md:h-14 object-contain" />
                         <span className="text-[8px] text-gray-500 text-center leading-tight w-full truncate px-0.5">{industry.name}</span>
-                      </div>
+                      </a>
                     ))}
                   </div>
                 </div>
 
-                {/* Second Row - Scrolling Right to Left */}
+                {/* Second Row - Scrolling Right to Left (offset by half to look different) */}
                 <div className="industry-carousel-full overflow-hidden">
                   <div className="industry-carousel-track-reverse flex gap-0.5" style={{ animationDirection: 'reverse' }}>
-                    {[...carouselIcons, ...carouselIcons].map((industry, i) => (
-                      <div
+                    {[...carouselIcons.slice(Math.floor(carouselIcons.length / 2)), ...carouselIcons.slice(0, Math.floor(carouselIcons.length / 2)), ...carouselIcons].map((industry, i) => (
+                      <a
                         key={i}
-                        className="flex flex-col items-center justify-center flex-shrink-0 w-20 md:w-24 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1"
+                        href={industry.link || '#'}
+                        className="flex flex-col items-center justify-center flex-shrink-0 w-20 md:w-24 rounded-[5px] bg-white border border-gray-200/50 p-2 pt-2.5 shadow-lg gap-1 hover:border-blue-300 hover:shadow-blue-100 transition-all"
                       >
                         <img src={industry.url} alt={industry.name} className="w-12 h-12 md:w-14 md:h-14 object-contain" />
                         <span className="text-[8px] text-gray-500 text-center leading-tight w-full truncate px-0.5">{industry.name}</span>
-                      </div>
+                      </a>
                     ))}
                   </div>
                 </div>
