@@ -15,7 +15,7 @@ import {
 } from '@/lib/db/models'
 import { query } from '@/lib/db/connection'
 
-export const revalidate = 60 // ISR: revalidate every 60s
+export const revalidate = 0 // Always fetch fresh data
 
 export async function GET() {
   try {
