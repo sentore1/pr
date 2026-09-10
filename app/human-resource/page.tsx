@@ -7,6 +7,7 @@ import ContentSection from "@/components/content-2"
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import { usePageContent } from "@/lib/use-page-content"
+import { CmsBlocks } from "@/components/cms-blocks"
 
 export default function HumanResourcePage() {
   const p = usePageContent('human-resource')

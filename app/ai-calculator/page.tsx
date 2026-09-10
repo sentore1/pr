@@ -4,6 +4,7 @@ import { Header } from "@/components/header"
 import { SimpleFooter } from "@/components/simple-footer"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { CmsBlocks } from "@/components/cms-blocks"
 
 export default function AICalculatorPage() {
   const [formData, setFormData] = useState({

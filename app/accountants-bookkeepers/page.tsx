@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Users, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
 import { usePageContent } from "@/lib/use-page-content"
+import { CmsBlocks } from "@/components/cms-blocks"
 
 export default function AccountantsBookkeepersPage() {
   const p = usePageContent('accountants-bookkeepers')

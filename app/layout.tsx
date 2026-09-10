@@ -20,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const siteName = cms.settings?.site_name || config.seo.siteName
 
   return {
+    metadataBase: new URL(config.seo.siteUrl),
     title:       seo?.meta_title       || `${siteName} — Business Management Platform`,
     description: seo?.meta_description || 'Complete ERP solution with AI-powered insights.',
     keywords:    seo?.meta_keywords    || 'ERP, business management, accounting software',
